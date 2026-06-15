@@ -118,7 +118,7 @@
             <div style="padding:16px 18px 18px;border-top:2px solid var(--pewi-ink);display:flex;flex-direction:column;gap:4px">
               <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
                 <h3 style="font-family:var(--font-display);font-size:19px;text-transform:uppercase;margin:0;line-height:1">{{ m.name }}</h3>
-                <span style="font-family:var(--font-display);font-size:17px;color:var(--pewi-ink)">$19.990</span>
+                <span style="font-family:var(--font-display);font-size:17px;color:var(--pewi-ink)">{{ m.price }}</span>
               </div>
               <div style="font-size:12px;color:var(--text-muted);letter-spacing:.03em">{{ m.placeNote }}</div>
               <div onClick="{{ m.onPick }}" style="margin-top:10px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-ink);border-bottom:2px solid var(--accent);width:fit-content;padding-bottom:3px">Personalizar →</div>
@@ -380,7 +380,10 @@
   </footer>
 
   <!-- ===== DEV / AJUSTES ===== -->
+  <!-- ===== DEV / AJUSTES (solo modo administrador: agrega #admin a la URL) ===== -->
+  <sc-if value="{{ admin }}" hint-placeholder-val="">
   <div onClick="{{ toggleDev }}" style="position:fixed;right:18px;bottom:18px;z-index:90;cursor:pointer;display:flex;align-items:center;gap:8px;background:var(--accent);color:var(--pewi-ink);border:2px solid var(--pewi-ink);border-radius:999px;padding:11px 18px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;box-shadow:3px 3px 0 rgba(0,0,0,.3)">{{ devLabel }}</div>
+  </sc-if>
 
   <sc-if value="{{ dev }}" hint-placeholder-val="">
     <div style="position:fixed;top:0;right:0;bottom:0;width:344px;z-index:95;background:#0B0B0D;color:#fff;overflow:auto;padding:20px 18px 96px;box-shadow:-10px 0 34px rgba(0,0,0,.45)">
@@ -458,6 +461,7 @@
         <div style="display:flex;flex-direction:column;gap:13px">
           <label style="display:block"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">Dominio</span><input type="text" value="{{ store.domain }}" onInput="{{ onStoreDomain }}" placeholder="sarkpew1.com" style="{{ devInput }}"></label>
           <label style="display:block"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">Handle del producto</span><input type="text" value="{{ store.handle }}" onInput="{{ onStoreHandle }}" placeholder="hoodie-personalizado" style="{{ devInput }}"></label>
+          <label style="display:block"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">WhatsApp (con código país)</span><input type="text" value="{{ store.whatsapp }}" onInput="{{ onStoreWhatsapp }}" placeholder="56912345678" style="{{ devInput }}"></label>
           <div style="height:1px;background:#222;margin:2px 0"></div>
           <div style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Variantes (precio + ID)</div>
           <div style="font-size:10px;color:var(--pewi-gray-300);line-height:1.5;margin:-4px 0 2px">El precio debe coincidir con la variante en Shopify; el ID conecta el botón al carrito.</div>
@@ -510,11 +514,21 @@
               <span style="font-family:var(--font-display);font-size:18px">{{ totalFmt }}</span>
             </div>
           </div>
-          <div style="margin-top:18px;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap">
-            <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Button" hint-size="auto,44px" variant="secondary" on-click="{{ closeOrder }}">Seguir creando</x-import>
-            <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Button" hint-size="auto,44px" variant="accent" on-click="{{ goShopify }}">{{ shopifyLabel }}</x-import>
+          <div style="margin-top:16px">
+            <div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--text-strong);margin-bottom:7px">Notas para tu pedido <span style="color:var(--text-faint);font-weight:600;text-transform:none;letter-spacing:0">(opcional)</span></div>
+            <textarea value="{{ notes }}" onInput="{{ onNotes }}" placeholder="Detalles extra: color exacto, ajuste de talla, referencia del diseño, dirección, etc." style="width:100%;min-height:74px;resize:vertical;padding:11px 13px;border:2px solid var(--pewi-ink);border-radius:8px;font-family:var(--font-text);font-size:13px;line-height:1.5;color:var(--text-strong);outline:none;box-sizing:border-box"></textarea>
           </div>
-          <div style="margin-top:12px;font-size:11px;line-height:1.5;color:var(--text-faint);text-align:center">Te llevamos a la tienda PEW1 en Shopify para completar el pago. Tu configuración se copia automáticamente para pegarla en las notas del pedido.</div>
+          <div style="margin-top:16px;display:flex;gap:14px;justify-content:space-between;align-items:center;flex-wrap:wrap">
+            <div style="display:flex;gap:16px;flex-wrap:wrap">
+              <span onClick="{{ copyReport }}" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--pewi-ink);border-bottom:2px solid var(--accent);padding-bottom:3px">{{ copyReportLabel }}</span>
+              <span onClick="{{ whatsappOrder }}" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--pewi-ink);border-bottom:2px solid var(--accent);padding-bottom:3px">Enviar por WhatsApp</span>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Button" hint-size="auto,44px" variant="secondary" on-click="{{ closeOrder }}">Seguir creando</x-import>
+              <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Button" hint-size="auto,44px" variant="accent" on-click="{{ goShopify }}">{{ shopifyLabel }}</x-import>
+            </div>
+          </div>
+          <div style="margin-top:12px;font-size:11px;line-height:1.5;color:var(--text-faint);text-align:center">Te llevamos a la tienda PEW1 en Shopify para completar el pago. Tu pedido (con las notas) se copia para pegarlo en el carrito.</div>
         </div>
       </div>
     </div>
@@ -533,14 +547,16 @@ class Component extends DCLogic {
     technique: 'serigrafia',
     size: 'M',
     qty: 1,
+    notes: '',
     placed: false,
     orderRef: '',
+    admin: false,
     dev: false,
     devTab: 'pos',
     overrides: {},
     overrides3d: {},
     imgOverrides: {},
-    store: { domain:'sarkpew1.com', handle:'hoodie-personalizado', v1:'', v2:'', v3:'', v4:'', p1:'39990', p2:'44990', p3:'47990', p4:'49990' },
+    store: { domain:'sarkpew1.com', handle:'hoodie-personalizado', v1:'', v2:'', v3:'', v4:'', p1:'39990', p2:'44990', p3:'47990', p4:'49990', whatsapp:'' },
     prices: { hoodie:39990, hoodiezip:44990, poleron:37990, tee:29990, grande:2000, mediano:1000, bordado:4000 },
     exported: false,
     mag: 3,
@@ -550,7 +566,14 @@ class Component extends DCLogic {
   };
 
   componentDidMount(){
-    try { const r = localStorage.getItem('pewi-dev'); if (r) { const d = JSON.parse(r); this.setState({ overrides: d.overrides || {}, overrides3d: d.overrides3d || {}, imgOverrides: d.imgOverrides || {}, store: Object.assign({ domain:'sarkpew1.com', handle:'hoodie-personalizado', v1:'', v2:'', v3:'', v4:'', p1:'39990', p2:'44990', p3:'47990', p4:'49990' }, d.store || {}), prices: Object.assign({ hoodie:39990, hoodiezip:44990, poleron:37990, tee:29990, grande:2000, mediano:1000, bordado:4000 }, d.prices || {}) }); } } catch(e){}
+    // Admin gating: dev mode only when URL has #admin (or ?admin) — clients never see it.
+    try {
+      const h = (location.hash || '') + ' ' + (location.search || '');
+      const isAdmin = /admin/i.test(h);
+      if (isAdmin) this.setState({ admin: true });
+      window.addEventListener('hashchange', () => { this.setState({ admin: /admin/i.test(location.hash || '') }); });
+    } catch(e){}
+    try { const r = localStorage.getItem('pewi-dev'); if (r) { const d = JSON.parse(r); this.setState({ overrides: d.overrides || {}, overrides3d: d.overrides3d || {}, imgOverrides: d.imgOverrides || {}, store: Object.assign({ domain:'sarkpew1.com', handle:'hoodie-personalizado', v1:'', v2:'', v3:'', v4:'', p1:'39990', p2:'44990', p3:'47990', p4:'49990', whatsapp:'' }, d.store || {}), prices: Object.assign({ hoodie:39990, hoodiezip:44990, poleron:37990, tee:29990, grande:2000, mediano:1000, bordado:4000 }, d.prices || {}) }); } } catch(e){}
     // scroll-reveal animations
     try {
       this._io = new IntersectionObserver((es) => {
@@ -586,11 +609,8 @@ class Component extends DCLogic {
     const tiers = [ {p:+st.p1||39990,v:st.v1}, {p:+st.p2||44990,v:st.v2}, {p:+st.p3||47990,v:st.v3}, {p:+st.p4||49990,v:st.v4} ];
     let best = null, bd = 1e9;
     tiers.forEach(t => { const d = Math.abs(t.p - unit); if (t.v && d < bd) { bd = d; best = t.v; } });
-    // copy configuration to clipboard for the order note
-    try {
-      const lines = (this.renderVals().summaryLines || []).map(l => l.k + ': ' + l.v).join('\n');
-      navigator.clipboard && navigator.clipboard.writeText('PEDIDO PEW1 ' + this.state.orderRef + '\n' + lines);
-    } catch(e){}
+    // copy full order report (incl. client notes) to clipboard for the cart note
+    try { navigator.clipboard && navigator.clipboard.writeText(this.orderReport()); } catch(e){}
     let url;
     if (best) url = 'https://' + st.domain + '/cart/' + encodeURIComponent(best) + ':' + this.state.qty;
     else url = 'https://' + st.domain + '/products/' + st.handle;
@@ -678,6 +698,28 @@ class Component extends DCLogic {
   resetAll(){ this.setState({ overrides: {}, overrides3d: {} }, () => this.persist()); }
   setZoom(v){ this.setState({ zoom: v }, () => this.persist()); }
   toggleDev(){ this.setState(s => ({ dev: !s.dev })); }
+  setNotes(v){ this.setState({ notes: v }); }
+  orderReport(){
+    const s = this.state;
+    const vals = this.renderVals();
+    const lines = (vals.summaryLines || []).map(l => l.k.toUpperCase() + ': ' + l.v);
+    let txt = 'PEDIDO PEW1 STREET WEAR\n';
+    txt += 'Folio: ' + (s.orderRef || '—') + '\n';
+    txt += 'Fecha: ' + new Date().toLocaleString('es-CL') + '\n';
+    txt += '----------------------------------\n';
+    txt += lines.join('\n') + '\n';
+    txt += 'PRECIO UNITARIO: ' + this.fmt(this.unitPrice(s)) + '\n';
+    txt += 'TOTAL: ' + this.fmt(this.unitPrice(s) * s.qty) + '\n';
+    if ((s.notes || '').trim()) txt += '----------------------------------\nNOTAS DEL CLIENTE:\n' + s.notes.trim() + '\n';
+    return txt;
+  }
+  copyReport(){ try { navigator.clipboard.writeText(this.orderReport()); } catch(e){} this.setState({ copiedReport:true }); setTimeout(() => this.setState({ copiedReport:false }), 1600); }
+  whatsappOrder(){
+    const phone = (this.state.store && this.state.store.whatsapp || '').replace(/[^0-9]/g,'');
+    const msg = encodeURIComponent(this.orderReport());
+    const url = phone ? ('https://wa.me/' + phone + '?text=' + msg) : ('https://wa.me/?text=' + msg);
+    window.open(url, '_blank');
+  }
   exportValues(){ try { navigator.clipboard.writeText(JSON.stringify({ overrides:this.state.overrides, overrides3d:this.state.overrides3d }, null, 1)); } catch(e){} this.setState({ exported: true }); setTimeout(() => this.setState({ exported: false }), 1600); }
 
   get colors() {
@@ -995,6 +1037,13 @@ class Component extends DCLogic {
       orderRef: s.orderRef,
       closeOrder: () => this.setState({ placed:false }),
       summaryLines,
+      notes: s.notes,
+      onNotes: e => this.setNotes(e.target.value),
+      admin: s.admin,
+      copyReport: () => this.copyReport(),
+      copyReportLabel: s.copiedReport ? 'Informe copiado ✓' : 'Copiar informe',
+      whatsappOrder: () => this.whatsappOrder(),
+      onStoreWhatsapp: e => this.setStore('whatsapp', e.target.value),
       dev: s.dev,
       devLabel: s.dev ? 'Cerrar ajustes' : 'Modo desarrollo',
       toggleDev: () => this.toggleDev(),
