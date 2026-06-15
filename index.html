@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<template id="__bundler_thumbnail">
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#0A0F2E"/><text x="50" y="46" font-family="Archivo Black, sans-serif" font-size="26" font-weight="900" fill="#FF9800" text-anchor="middle">PEW1</text><text x="50" y="66" font-family="Montserrat, sans-serif" font-size="9" letter-spacing="3" fill="#fff" text-anchor="middle">STREET WEAR</text></svg>
+</template>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/pew1-system-d6ec5226-1a70-4e6e-a7c4-219350cb1eaa/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/pew1-system-d6ec5226-1a70-4e6e-a7c4-219350cb1eaa/tokens/colors.css">
+<link rel="stylesheet" href="_ds/pew1-system-d6ec5226-1a70-4e6e-a7c4-219350cb1eaa/tokens/typography.css">
+<link rel="stylesheet" href="_ds/pew1-system-d6ec5226-1a70-4e6e-a7c4-219350cb1eaa/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/pew1-system-d6ec5226-1a70-4e6e-a7c4-219350cb1eaa/tokens/base.css">
+<link rel="stylesheet" href="_ds/pew1-system-d6ec5226-1a70-4e6e-a7c4-219350cb1eaa/styles.css">
+<script src="_ds/pew1-system-d6ec5226-1a70-4e6e-a7c4-219350cb1eaa/_ds_bundle.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#0A0F2E}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:#0B0B0D}
+  @keyframes pewmarq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes pewpop{0%{transform:scale(.7) translateY(10px);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+  @keyframes pewrise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<div style="font-family:var(--font-text);background:var(--surface-page);color:var(--text-strong);min-height:100vh;overflow-x:hidden">
+
+  <!-- ===== NAV ===== -->
+  <nav style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:24px;height:64px;padding:0 28px;background:var(--pewi-navy);border-bottom:2px solid var(--accent)">
+    <div style="display:flex;align-items:center;gap:12px;cursor:pointer" onClick="{{ goTop }}">
+      <img src="assets/brand/pew1-lockup-white.png" alt="PEWÏ STREETWEAR" style="height:38px;display:block">
+    </div>
+    <div style="display:flex;align-items:center;gap:6px">
+      <span onClick="{{ goColeccion }}" style="cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;padding:8px 12px">Colección</span>
+      <span onClick="{{ goDetalles }}" style="cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;padding:8px 12px">Detalles</span>
+      <span onClick="{{ goConfig }}" style="cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--pewi-navy);background:var(--accent);padding:9px 16px;border:2px solid var(--pewi-ink);border-radius:6px">Personalizar</span>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <header style="position:relative;background:var(--pewi-navy);color:#fff;overflow:hidden;padding:60px 28px 52px">
+    <img src="assets/brand/pewi-icon-white.png" alt="" style="position:absolute;right:-70px;top:-50px;height:460px;opacity:.05;pointer-events:none">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center">
+      <div style="animation:pewrise .6s var(--ease-out) both">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:18px">Arte que transforma · Hecho a pedido</div>
+        <h1 style="font-family:var(--font-display);font-size:clamp(2.6rem,5.6vw,4.6rem);line-height:.96;letter-spacing:-.01em;text-transform:uppercase;margin:0 0 20px">Cuatro tintas.<br>Una identidad.</h1>
+        <p style="font-size:17px;line-height:1.6;color:var(--pewi-gray-200);max-width:470px;margin:0 0 28px">Cuervo, Casa, Felino y Nido — cuatro diseños originales sobre algodón.</p><div>&nbsp;Cada prenda es diseñada por Nicolas Sark.&nbsp;</div><div>Personaliza tu prenda : Tú eliges el corte, el diseño de estampado , color y la talla.</div><div><span style="font-family: var(--font-text);">&nbsp;Confección nacional a pedido&nbsp;</span></div><div><span style="font-family: var(--font-text);">Entrega de 10-15 Dias.</span></div><p></p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:30px">
+          <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Button" hint-size="auto,52px" variant="accent" size="lg" on-click="{{ goConfig }}">Personaliza tu prenda</x-import>
+          <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Button" hint-size="auto,52px" variant="secondary" size="lg" on-click="{{ goColeccion }}" style="{{ heroGhostStyle }}">Ver los diseños</x-import>
+        </div>
+        <div style="display:flex;gap:28px;border-top:1px solid var(--border-on-dark);padding-top:20px;max-width:480px">
+          <div><div style="font-family:var(--font-display);font-size:26px">4</div><div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--pewi-gray-300)">Diseños</div></div>
+          <div><div style="font-family:var(--font-display);font-size:26px">3</div><div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--pewi-gray-300)">Cortes</div></div>
+          <div><div style="font-family:var(--font-display);font-size:26px">6</div><div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--pewi-gray-300)">Tallas</div></div>
+          <div><div style="font-family:var(--font-display);font-size:26px">320g</div><div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--pewi-gray-300)">Algodón</div></div>
+        </div>
+      </div>
+      <div style="position:relative;background:radial-gradient(circle at 50% 38%,#f4f4f1,#d2d2cc 84%);border:2px solid var(--accent);border-radius:10px;padding:18px;display:flex;align-items:center;justify-content:center;animation:pewpop .7s var(--ease-out) both">
+        <div style="position:absolute;top:14px;left:16px;z-index:2;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--pewi-ink)">Cuervo · espalda</div>
+        <div style="width:100%;max-width:360px;filter:drop-shadow(0 26px 32px rgba(0,0,0,.55))">{{ heroGarment }}</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MARQUEE ===== -->
+  <div style="background:var(--accent);border-top:2px solid var(--pewi-ink);border-bottom:2px solid var(--pewi-ink);overflow:hidden;white-space:nowrap">
+    <div style="display:inline-flex;animation:pewmarq 26s linear infinite;will-change:transform">
+      
+    <span style="font-family:var(--font-display);font-size:18px;text-transform:uppercase;color:var(--pewi-ink);padding:12px 0">HECHO A MANO EN CHIGUAYANTE / PEW1 STREETWEAR / DISEÑOS UNICOS / HECHO A MANO EN CHIGUAYANTE / PEW1/STREETWEAR / DISEÑOS UNICOS / HECHO A MANO EN CHIGUAYANTE / PEW1 STREETWEAR / DISEÑOS UNICOS / HECHO A MANO EN CHIGUAYANTE / PEW1/STREETWEAR / DISEÑOS UNICOS</span></div>
+  </div>
+
+  <!-- ===== LOOKBOOK ===== -->
+  <section id="coleccion" data-screen-label="Coleccion" style="max-width:1200px;margin:0 auto;padding:74px 28px 40px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:18px;margin-bottom:38px">
+      <div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)">La colección · Drop 01</div>
+        <div style="width:48px;height:4px;background:var(--accent);margin:10px 0 16px"></div>
+        <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem);line-height:1;text-transform:uppercase;margin:0">Cuatro diseños.<br>Una firma.</h2>
+      </div>
+      
+    </div>
+
+    <div style="position:relative">
+      <div id="lookrail" style="display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 16px;scroll-behavior:smooth">
+        <sc-for list="{{ models }}" as="m" hint-placeholder-count="6">
+          <div style="flex:0 0 290px;scroll-snap-align:start;border:2px solid var(--pewi-ink);border-radius:10px;overflow:hidden;background:#fff;display:flex;flex-direction:column">
+            <div style="position:relative;background:radial-gradient(circle at 50% 36%,#f1f1ee,#d6d6cf 86%);padding:18px 16px 6px;display:flex;align-items:center;justify-content:center;min-height:300px">
+              <div style="position:absolute;top:12px;left:12px;z-index:2;display:flex;gap:6px;flex-wrap:wrap">
+                <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Badge" hint-size="auto,22px" variant="accent">{{ m.sizeTag }}</x-import>
+              </div>
+              <div style="position:absolute;top:12px;right:12px;z-index:2;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--text-faint)">{{ m.viewLabel }}</div>
+              <div style="width:100%;max-width:230px;filter:drop-shadow(0 16px 22px rgba(0,0,0,.5))">{{ m.art }}</div>
+            </div>
+            <div style="padding:16px 18px 18px;border-top:2px solid var(--pewi-ink);display:flex;flex-direction:column;gap:4px">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+                <h3 style="font-family:var(--font-display);font-size:19px;text-transform:uppercase;margin:0;line-height:1">{{ m.name }}</h3>
+                <span style="font-family:var(--font-display);font-size:17px;color:var(--pewi-ink)">$19.990</span>
+              </div>
+              <div style="font-size:12px;color:var(--text-muted);letter-spacing:.03em">{{ m.placeNote }}</div>
+              <div onClick="{{ m.onPick }}" style="margin-top:10px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-ink);border-bottom:2px solid var(--accent);width:fit-content;padding-bottom:3px">Personalizar →</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:6px">
+        <span onClick="{{ railPrev }}" style="cursor:pointer;user-select:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:2px solid var(--pewi-ink);border-radius:8px;background:#fff;font-size:20px;font-weight:800;color:var(--pewi-ink)">‹</span>
+        <span onClick="{{ railNext }}" style="cursor:pointer;user-select:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:2px solid var(--pewi-ink);border-radius:8px;background:var(--accent);font-size:20px;font-weight:800;color:var(--pewi-ink)">›</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONFIGURADOR ===== -->
+  <section id="config" data-screen-label="Configurador" style="background:var(--pewi-paper-2);border-top:2px solid var(--pewi-ink);padding:68px 28px 40px;margin-top:36px">
+    <div style="max-width:1240px;margin:0 auto">
+      <div style="text-align:center;margin-bottom:36px">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)">Configurador a pedido</div>
+        <h2 style="font-family:var(--font-display);font-size:clamp(2.2rem,4.5vw,3.4rem);line-height:1;text-transform:uppercase;margin:14px 0 0">Confecciona la tuya.</h2>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:28px;align-items:start">
+
+        <!-- LEFT: live preview front + back -->
+        <div style="position:sticky;top:80px">
+          <div style="background:radial-gradient(circle at 50% 32%,#f3f3f0,#d4d4cd 90%);border:2px solid var(--pewi-ink);border-radius:12px;padding:22px 20px 16px">
+            <sc-if value="{{ is3D }}" hint-placeholder-val="{{ true }}">
+              <div style="position:relative;height:478px;border-radius:10px;overflow:hidden;background:radial-gradient(circle at 50% 34%,#2b2f38,#14161b 92%)">
+                <x-import component-from-global-scope="pewi-3d" from="./pewi3d.js" model="{{ model3d }}" color="{{ color3d }}" print-mode="{{ printMode3d }}" front-axis="{{ frontAxis3d }}" decal-depth="{{ decalDepth3d }}" rot-y="{{ rotY3d }}" front-design="{{ frontDesign3d }}" back-design="{{ backDesign3d }}" front-x="{{ fX }}" front-y="{{ fY }}" front-scale="{{ fS }}" front-rot="{{ fR }}" back-x="{{ bX }}" back-y="{{ bY }}" back-scale="{{ bS }}" back-rot="{{ bR }}" view="{{ view3d }}" autorotate="{{ spin3d }}" hint-size="100%,478px" style="position:absolute;inset:0;width:100%;height:100%"></x-import>
+                <div style="position:absolute;top:12px;right:12px;display:flex;gap:6px;z-index:5">
+                  <sc-for list="{{ view3dOpts }}" as="o" hint-placeholder-count="3"><span onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</span></sc-for>
+                </div>
+                <div style="position:absolute;left:13px;bottom:11px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9aa3b0;z-index:5;pointer-events:none">Arrastra para girar · scroll = zoom</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap">
+                <span style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)">Vista 3D real</span>
+                <span style="font-size:11px;color:var(--text-faint);letter-spacing:.02em;flex:1;min-width:160px">Gira la prenda y abre <strong style="color:var(--text-strong)">Modo desarrollo</strong> para mover y escalar cada diseño.</span>
+              </div>
+            </sc-if>
+            <sc-if value="{{ is2D }}" hint-placeholder-val="">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+                  <div style="width:100%;border-radius:8px;filter:drop-shadow(0 18px 24px rgba(0,0,0,.5))">{{ frontGarment }}</div>
+                  <span style="font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted)">Frente</span>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+                  <div style="width:100%;border-radius:8px;filter:drop-shadow(0 18px 24px rgba(0,0,0,.5))">{{ backGarment }}</div>
+                  <span style="font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted)">Espalda</span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,0,0,0.12);flex-wrap:wrap">
+                <span style="font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted)">Lupa</span>
+                <div style="display:flex;gap:6px">
+                  <sc-for list="{{ magOpts }}" as="o" hint-placeholder-count="3"><span onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</span></sc-for>
+                </div>
+                <span style="font-size:11px;color:var(--text-faint);letter-spacing:.02em;flex:1;min-width:160px">Pasa el cursor sobre la prenda para ver el detalle de la serigrafía.</span>
+              </div>
+            </sc-if>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:12px;background:#fff;border:2px solid var(--pewi-ink);border-radius:9px;padding:11px 14px">
+            <img src="assets/brand/pewi-icon.png" style="height:26px;flex:none">
+            <div style="font-size:12px;line-height:1.4;color:var(--text-body)"><strong style="color:var(--text-strong)">Distribución:</strong> {{ placementNote }}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap">
+            <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Tag" hint-size="auto,30px">{{ currentProductLabel }}</x-import>
+            <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Tag" hint-size="auto,30px">{{ currentDesignLabel }}</x-import>
+            <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Tag" hint-size="auto,30px">{{ currentColorName }}</x-import>
+            <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Tag" hint-size="auto,30px">Talla {{ size }}</x-import>
+          </div>
+
+          <div style="margin-top:14px;background:#fff;border:2px solid var(--pewi-ink);border-radius:10px;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;background:var(--pewi-ink);color:#fff;padding:10px 14px">
+              <span style="font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase">Tabla de medidas</span>
+              <span style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--pewi-gray-300)">cm · referencial</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;font-size:12px">
+              <div style="padding:8px 12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);border-bottom:2px solid var(--border-hair)">Talla</div>
+              <div style="padding:8px 12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);border-bottom:2px solid var(--border-hair)">Ancho</div>
+              <div style="padding:8px 12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);border-bottom:2px solid var(--border-hair)">Largo</div>
+              <div style="padding:8px 12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);border-bottom:2px solid var(--border-hair)">Manga</div>
+              <sc-for list="{{ sizeRows }}" as="r" hint-placeholder-count="6">
+                <div style="{{ r.cellTalla }}">{{ r.size }}</div>
+                <div style="{{ r.cell }}">{{ r.ancho }}</div>
+                <div style="{{ r.cell }}">{{ r.largo }}</div>
+                <div style="{{ r.cell }}">{{ r.manga }}</div>
+              </sc-for>
+            </div>
+            <div style="padding:8px 12px;font-size:10px;color:var(--text-faint);letter-spacing:.02em">Corte oversize · medidas aproximadas, las ajustamos con datos reales.</div>
+          </div>
+        </div>
+
+        <!-- RIGHT: options -->
+        <div style="display:flex;flex-direction:column;gap:24px">
+
+          <div>
+            <div style="font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--text-strong);margin-bottom:12px">01 · Producto</div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+              <sc-for list="{{ productOpts }}" as="o" hint-placeholder-count="4">
+                <div onClick="{{ o.onClick }}" style="{{ o.style }}"><span>{{ o.label }}</span><span style="font-weight:600;font-size:10px;opacity:.62;letter-spacing:.05em">{{ o.sub }}</span></div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div>
+            <div style="font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--text-strong);margin-bottom:12px">02 · Diseño</div>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px">
+              <sc-for list="{{ designOpts }}" as="o" hint-placeholder-count="5">
+                <div onClick="{{ o.onClick }}" style="{{ o.boxStyle }}">
+                  <div style="height:54px;display:flex;align-items:center;justify-content:center;background:#0e0f12;border-radius:6px;width:100%;padding:5px">{{ o.thumb }}</div>
+                  <span style="font-size:10px;font-weight:800;letter-spacing:.02em;text-transform:uppercase;line-height:1.05;text-align:center">{{ o.name }}</span>
+                  <span style="font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)">{{ o.tag }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <sc-if value="{{ showUbicacion }}" hint-placeholder-val="">
+          <div style="border-left:3px solid var(--accent);padding-left:18px">
+            <div style="font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin-bottom:4px">Ubicación del diseño</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">Sin gorro y sin canguro — el diseño va donde quieras.</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <sc-for list="{{ sideOpts }}" as="o" hint-placeholder-count="2"><div onClick="{{ o.onClick }}" style="{{ o.style }}"><span>{{ o.label }}</span></div></sc-for>
+            </div>
+          </div>
+          </sc-if>
+
+          <div>
+            <div style="font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--text-strong);margin-bottom:12px">03 · Color · <span style="color:var(--text-muted);font-weight:700">{{ currentColorName }}</span></div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+              <sc-for list="{{ colorOpts }}" as="o" hint-placeholder-count="3"><div onClick="{{ o.onClick }}" style="{{ o.style }}" title="{{ o.name }}"></div></sc-for>
+              <span style="font-size:11px;color:var(--text-faint);letter-spacing:.02em;max-width:180px">Diseños en blanco/plata · ideales sobre tonos oscuros.</span>
+            </div>
+          </div>
+
+          <div>
+            <div style="font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--text-strong);margin-bottom:12px">04 · Técnica</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <sc-for list="{{ techOpts }}" as="o" hint-placeholder-count="3"><div onClick="{{ o.onClick }}" style="{{ o.style }}"><span>{{ o.label }}</span><span style="font-weight: 600; font-size: 9px; opacity: .62; letter-spacing: .04em">{{ o.sub }}</span></div></sc-for>
+            </div>
+          </div>
+
+          <div>
+            <div style="font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--text-strong);margin-bottom:12px">05 · Talla</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <sc-for list="{{ sizeOpts }}" as="o" hint-placeholder-count="6"><div onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</div></sc-for>
+            </div>
+            <div style="font-size:11px;color:var(--text-faint);margin-top:10px;letter-spacing:.02em">Corte oversize · 100% algodón pesado 320g/m² · lavar a 30°<div>ENTREGA EN 15 a 20 Dias Habiles desde la realizacion del pedido .</div><div><br></div></div>
+          </div>
+
+          <!-- price bar -->
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--pewi-ink);color:#fff;border-radius:10px;padding:18px 22px;margin-top:4px">
+            <div>
+              <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--pewi-gray-300)">Precio unitario</div>
+              <div style="font-family:var(--font-display);font-size:30px;line-height:1.05">{{ unitFmt }}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px">
+              <div style="display:flex;align-items:center;border:2px solid #fff;border-radius:8px;overflow:hidden">
+                <span onClick="{{ decQty }}" style="cursor:pointer;padding:8px 14px;font-size:18px;font-weight:800;user-select:none">−</span>
+                <span style="padding:8px 6px;min-width:30px;text-align:center;font-weight:800">{{ qty }}</span>
+                <span onClick="{{ incQty }}" style="cursor:pointer;padding:8px 14px;font-size:18px;font-weight:800;user-select:none">+</span>
+              </div>
+              <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Button" hint-size="auto,52px" variant="accent" size="lg" on-click="{{ onPlace }}">Confeccionar · {{ totalFmt }}</x-import>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DETALLES ===== -->
+  <section id="detalles" data-screen-label="Detalles" style="background:var(--pewi-navy);color:#fff;padding:74px 28px">
+    <div style="max-width:1200px;margin:0 auto">
+      <div style="font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)">Detalles de confección</div>
+      <div style="width:48px;height:4px;background:var(--accent);margin:10px 0 16px"></div>
+      <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);line-height:1;text-transform:uppercase;margin:0 0 38px">El diablo está<br>en la costura.</h2><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+        <div style="background:#0d1338;border:2px solid var(--accent);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px">
+          <div style="height:130px;border-radius:6px;background:repeating-linear-gradient(135deg,#0A0F2E 0 3px,#10173d 3px 6px);display:flex;align-items:center;justify-content:center">
+            <div style="background:#E7E0CE;border:2px solid #0B0B0D;border-radius:3px;padding:8px 12px;display:flex;align-items:center;gap:8px;box-shadow:3px 3px 0 rgba(0,0,0,.4)">
+              <img src="assets/brand/pewi-icon.png" style="height:26px"><span style="font-family:var(--font-display);font-size:15px;color:#0B0B0D">PEWÏ</span>
+            </div>
+          </div>
+          <div><h3 style="font-family:var(--font-display);font-size:17px;text-transform:uppercase;margin:0 0 8px">Etiqueta tejida</h3><p style="font-size:13px;line-height:1.55;color:var(--pewi-gray-200);margin:0">Etiqueta de cuello tejida en jacquard con el ícono de la casa. Cosida, no impresa.</p></div>
+        </div>
+        <div style="background:#0d1338;border:2px solid var(--accent);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px">
+          <div style="height:130px;border-radius:6px;background:#0B0B0D;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+            <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0 5px,rgba(255,255,255,.03) 5px 6px)"></div>
+            <img src="assets/brand/pewi-icon-white.png" style="height:70px;filter:drop-shadow(1.5px 1.5px 0 var(--accent))">
+          </div>
+          <div><h3 style="font-family:var(--font-display);font-size:17px;text-transform:uppercase;margin:0 0 8px">Bordado</h3><p style="font-size:13px;line-height:1.55;color:var(--pewi-gray-200);margin:0">El tag SARK bordado al pecho en hilo de alta densidad. Relieve al tacto. +$4.000.</p></div>
+        </div>
+        <div style="background:#0d1338;border:2px solid var(--accent);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px">
+          <div style="height:130px;border-radius:6px;overflow:hidden;position:relative;background:#0B0B0D">
+            <img src="assets/detail/serigrafia.png" style="width:100%;height:100%;object-fit:cover;display:block">
+            <span style="position:absolute;bottom:8px;right:8px;background:var(--accent);color:var(--pewi-ink);font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:4px">Detalle · trama</span>
+          </div>
+          <div><h3 style="font-family:var(--font-display);font-size:17px;text-transform:uppercase;margin:0 0 8px">Serigrafía</h3><p style="font-size:13px;line-height:1.55;color:var(--pewi-gray-200);margin:0">Estampado a mano cuadro por cuadro. Tintas plastisol opacas sobre algodón pesado — mira la trama del estampado sobre la fibra.</p></div>
+        </div>
+        
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ===== CÓMO FUNCIONA ===== -->
+  <section id="pasos" data-screen-label="Pasos" style="background:var(--surface-page);padding:74px 28px;border-top:2px solid var(--pewi-ink)">
+    <div style="max-width:1100px;margin:0 auto;text-align:center">
+      <div style="font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)">Cómo funciona</div>
+      <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);line-height:1;text-transform:uppercase;margin:14px 0 8px">Del pedido a tu puerta.</h2>
+      <p style="font-size:15px;color:var(--text-body);max-width:520px;margin:0 auto 44px">Cada prenda se confecciona a pedido, por eso la entrega toma 10–15 días hábiles.</p>
+
+      <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px">
+
+        <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:26px 18px;border:2px solid var(--pewi-ink);border-radius:12px;background:#fff;box-shadow:5px 5px 0 var(--pewi-ink)">
+          <div style="position:relative;width:72px;height:72px;border-radius:50%;background:var(--accent);border:2px solid var(--pewi-ink);display:flex;align-items:center;justify-content:center">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0B0B0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7"></path><path d="M4 10V3"></path><path d="M12 21v-9"></path><path d="M12 8V3"></path><path d="M20 21v-5"></path><path d="M20 12V3"></path><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+            <span style="position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;background:var(--pewi-ink);color:#fff;font-family:var(--font-display);font-size:13px;display:flex;align-items:center;justify-content:center">1</span>
+          </div>
+          <h3 style="font-family:var(--font-display);font-size:18px;text-transform:uppercase;margin:0">Personaliza tu pedido</h3>
+          <p style="font-size:13px;line-height:1.55;color:var(--text-body);margin:0">Eliges prenda, diseño, color y talla en el configurador. Confirmamos el boceto contigo.</p>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:center;color:var(--accent)">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg>
+        </div>
+
+        <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:26px 18px;border:2px solid var(--pewi-ink);border-radius:12px;background:#fff;box-shadow:5px 5px 0 var(--pewi-ink)">
+          <div style="position:relative;width:72px;height:72px;border-radius:50%;background:var(--accent);border:2px solid var(--pewi-ink);display:flex;align-items:center;justify-content:center">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0B0B0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg>
+            <span style="position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;background:var(--pewi-ink);color:#fff;font-family:var(--font-display);font-size:13px;display:flex;align-items:center;justify-content:center">2</span>
+          </div>
+          <h3 style="font-family:var(--font-display);font-size:18px;text-transform:uppercase;margin:0">Confección</h3>
+          <p style="font-size:13px;line-height:1.55;color:var(--text-body);margin:0">Estampamos a mano —serigrafía o bordado— sobre algodón pesado 320g. Hecho en Chiguayante.</p>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:center;color:var(--accent)">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg>
+        </div>
+
+        <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:26px 18px;border:2px solid var(--pewi-ink);border-radius:12px;background:var(--pewi-ink);color:#fff;box-shadow:5px 5px 0 var(--accent)">
+          <div style="position:relative;width:72px;height:72px;border-radius:50%;background:var(--accent);border:2px solid #fff;display:flex;align-items:center;justify-content:center">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0B0B0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+            <span style="position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;background:#fff;color:var(--pewi-ink);font-family:var(--font-display);font-size:13px;display:flex;align-items:center;justify-content:center">3</span>
+          </div>
+          <h3 style="font-family:var(--font-display);font-size:18px;text-transform:uppercase;margin:0">Envío y entrega</h3>
+          <p style="font-size:13px;line-height:1.55;color:var(--pewi-gray-200);margin:0">Despachamos a todo Chile. Recibes tu prenda única en <strong style="color:var(--accent)">10–15 días hábiles</strong>.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer style="background:var(--pewi-ink);color:#fff;padding:52px 28px;text-align:center">
+    <img src="assets/brand/pew1-lockup-white.png" style="height:60px;margin-bottom:18px">
+    <div style="font-family:var(--font-display);font-size:22px;letter-spacing:-.01em;text-transform:uppercase">Arte que transforma. Identidad que perdura.</div>
+    <div style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--pewi-gray-300);margin-top:14px">PEWÏ Streetwear · Hecho a pedido en Chile</div>
+  </footer>
+
+  <!-- ===== DEV / AJUSTES ===== -->
+  <div onClick="{{ toggleDev }}" style="position:fixed;right:18px;bottom:18px;z-index:90;cursor:pointer;display:flex;align-items:center;gap:8px;background:var(--accent);color:var(--pewi-ink);border:2px solid var(--pewi-ink);border-radius:999px;padding:11px 18px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;box-shadow:3px 3px 0 rgba(0,0,0,.3)">{{ devLabel }}</div>
+
+  <sc-if value="{{ dev }}" hint-placeholder-val="">
+    <div style="position:fixed;top:0;right:0;bottom:0;width:332px;z-index:95;background:#0B0B0D;color:#fff;overflow:auto;padding:20px 18px 96px;box-shadow:-10px 0 34px rgba(0,0,0,.45)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <div style="font-family:var(--font-display);font-size:18px;text-transform:uppercase">Ajustes · diseño</div>
+        <span onClick="{{ toggleDev }}" style="cursor:pointer;font-size:22px;line-height:1;padding:2px 8px;color:var(--pewi-gray-300)">×</span>
+      </div>
+      <p style="font-size:11px;color:var(--pewi-gray-300);line-height:1.5;margin:0 0 18px">Mueve y escala el diseño visible en la prenda actual. Cambia de producto/diseño para ajustar cada combinación. Se guarda solo.</p>
+      <sc-for list="{{ devEditors }}" as="d" hint-placeholder-count="2">
+        <div style="border:1px solid #2a2a2e;border-radius:9px;padding:13px;margin-bottom:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:11px">
+            <span style="font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase">{{ d.label }}</span>
+            <span onClick="{{ d.onReset }}" style="cursor:pointer;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)">reset</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ d.fields }}" as="f" hint-placeholder-count="3">
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300);margin-bottom:4px"><span>{{ f.label }}</span><span>{{ f.disp }}</span></div>
+                <input type="range" min="{{ f.min }}" max="{{ f.max }}" step="{{ f.step }}" value="{{ f.value }}" onInput="{{ f.onInput }}" style="width:100%;accent-color:var(--accent)">
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <span onClick="{{ resetAll }}" style="flex:1;text-align:center;cursor:pointer;border:2px solid #fff;border-radius:8px;padding:10px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase">Reiniciar todo</span>
+        <span onClick="{{ exportValues }}" style="flex:1;text-align:center;cursor:pointer;background:var(--accent);color:var(--pewi-ink);border:2px solid var(--pewi-ink);border-radius:8px;padding:10px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase">{{ exportLabel }}</span>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===== ORDER MODAL ===== -->
+  <sc-if value="{{ placed }}" hint-placeholder-val="">
+    <div onClick="{{ closeOrder }}" style="position:fixed;inset:0;z-index:100;background:rgba(10,15,46,.74);display:flex;align-items:center;justify-content:center;padding:24px;animation:pewrise .25s ease both">
+      <div style="background:#fff;border:2px solid var(--pewi-ink);border-radius:12px;max-width:460px;width:100%;overflow:hidden;box-shadow:8px 8px 0 var(--accent)">
+        <div style="background:var(--accent);border-bottom:2px solid var(--pewi-ink);padding:18px 24px;display:flex;align-items:center;gap:12px">
+          <img src="assets/brand/pewi-icon.png" style="height:34px">
+          <div>
+            <div style="font-family:var(--font-display);font-size:18px;text-transform:uppercase;color:var(--pewi-ink)">Pedido recibido</div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--pewi-ink)">Folio {{ orderRef }}</div>
+          </div>
+        </div>
+        <div style="padding:22px 24px">
+          <p style="font-size:14px;line-height:1.55;color:var(--text-body);margin:0 0 16px">Tu prenda entra a confección a pedido. Te contacto para confirmar el diseño y la talla antes de estampar.</p>
+          <div style="display:flex;flex-direction:column;gap:1px;border:2px solid var(--pewi-ink);border-radius:8px;overflow:hidden">
+            <sc-for list="{{ summaryLines }}" as="l" hint-placeholder-count="6">
+              <div style="display:flex;justify-content:space-between;gap:14px;padding:10px 14px;background:#fff;border-bottom:1px solid var(--border-hair)">
+                <span style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)">{{ l.k }}</span>
+                <span style="font-size:13px;font-weight:700;color:var(--text-strong);text-align:right">{{ l.v }}</span>
+              </div>
+            </sc-for>
+            <div style="display:flex;justify-content:space-between;gap:14px;padding:13px 14px;background:var(--pewi-ink);color:#fff">
+              <span style="font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase">Total</span>
+              <span style="font-family:var(--font-display);font-size:18px">{{ totalFmt }}</span>
+            </div>
+          </div>
+          <div style="margin-top:18px;display:flex;justify-content:flex-end">
+            <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Button" hint-size="auto,44px" variant="primary" on-click="{{ closeOrder }}">Seguir creando</x-import>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    product: 'hoodie',
+    designId: 'cuervo',
+    side: 'espalda',
+    colorId: 'negro',
+    technique: 'serigrafia',
+    size: 'M',
+    qty: 1,
+    placed: false,
+    orderRef: '',
+    dev: false,
+    overrides: {},
+    overrides3d: {},
+    exported: false,
+    mag: 3,
+    view3d: 'front',
+    spin: false,
+    lens: { pane:null, fx:0.5, fy:0.5, w:0, h:0, active:false }
+  };
+
+  componentDidMount(){
+    try { const r = localStorage.getItem('pewi-dev'); if (r) { const d = JSON.parse(r); this.setState({ overrides: d.overrides || {}, overrides3d: d.overrides3d || {} }); } } catch(e){}
+  }
+  persist(){ try { localStorage.setItem('pewi-dev', JSON.stringify({ overrides: this.state.overrides, overrides3d: this.state.overrides3d })); } catch(e){} }
+
+  // ---- 3D model availability + placement ----
+  has3D(product){ return false; }
+  get models3D(){
+    const B = 'https://pew1sark.github.io/3D-MODELO-/';
+    return {
+      hoodie:    { url:B+'hoodie_with_hood_up-v2.glb', frontAxis:1, depth:0.22, rotY:0 },
+      hoodiezip: { url:B+'hoodie_with_hood_up-v2.glb', frontAxis:1, depth:0.22, rotY:0 },
+      poleron:   { url:B+'men_chest_printed_raglan_sweatshirt_with_a_pose.glb', frontAxis:1, depth:0.18, rotY:0 },
+      tee:       { url:B+'t-shirt.glb', frontAxis:1, depth:0.16, rotY:-90 }
+    };
+  }
+  modelCfg(product){ return this.models3D[product] || this.models3D.hoodie; }
+  modelUrl(product){ return this.modelCfg(product).url; }
+
+  // default decal transform (world units; scale = width). view: 'front'|'back'
+  default3D(product, view, id){
+    const meta = this.designs.find(d => d.id === id) || {};
+    const isZip = product === 'hoodiezip';
+    if (id === 'sark') {
+      if (view === 'front') return isZip ? { x:-0.13, y:0.27, scale:0.12, rot:0 } : { x:0, y:0.30, scale:0.15, rot:0 };
+      return { x:0, y:0.34, scale:0.15, rot:0 };
+    }
+    const bigBack  = { cuervo:0.30, casa:0.36, felino:0.42, nido:0.44 };
+    const bigFront = { cuervo:0.28, casa:0.34, felino:0.42, nido:0.44 };
+    const medFront = { felino:0.34, nido:0.36 };
+    if (view === 'back') return { x:0, y:0.05, scale:(bigBack[id]||0.34), rot:0 };
+    if (meta.size === 'mediano') return { x:0, y:0.11, scale:(medFront[id]||0.34), rot:0 };
+    return { x:0, y:0.05, scale:(bigFront[id]||0.32), rot:0 };
+  }
+  // merged transform (default + override) for a side's decal
+  tf3D(product, view, id){
+    const def = this.default3D(product, view, id);
+    const key = product + ':' + view + ':' + id;
+    return Object.assign({}, def, this.state.overrides3d[key] || {});
+  }
+  setOv3d(key, def, field, val){ this.setState(s => { const cur = s.overrides3d[key] || def; const nv = Object.assign({}, cur, { [field]: val }); return { overrides3d: Object.assign({}, s.overrides3d, { [key]: nv }) }; }, () => this.persist()); }
+  resetOv3d(key){ this.setState(s => { const ov = Object.assign({}, s.overrides3d); delete ov[key]; return { overrides3d: ov }; }, () => this.persist()); }
+  setView3d(v){ this.setState({ view3d:v, spin:false }); }
+  toggleSpin(){ this.setState(s => ({ spin:!s.spin })); }
+  onLensMove(view, e){
+    const r = e.currentTarget.getBoundingClientRect();
+    const fx = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+    const fy = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
+    this.setState({ lens: { pane:view, fx, fy, w:r.width, h:r.height, active:true } });
+  }
+  onLensLeave(){ this.setState(s => ({ lens: Object.assign({}, s.lens, { active:false }) })); }
+  setMag(m){ this.setState({ mag:m }); }
+  interactivePane(view, product, color, overlays, key){
+    const s = this.state, lens = s.lens, mag = s.mag || 3;
+    const active = lens.active && lens.pane === view;
+    const children = [ this.mockup(view, product, color, overlays, key + '-g') ];
+    if (active) {
+      const L = 216;
+      const cw = lens.w * mag, ch = lens.h * mag;
+      children.push(React.createElement('div', { key:'lens', style:{
+        position:'absolute', left:(lens.fx*lens.w - L/2)+'px', top:(lens.fy*lens.h - L/2)+'px',
+        width:L+'px', height:L+'px', borderRadius:'50%', overflow:'hidden',
+        border:'3px solid #FF9800', boxShadow:'0 10px 30px rgba(0,0,0,.55)', background:'#0e0f12',
+        pointerEvents:'none', zIndex:8
+      }},
+        React.createElement('div', { style:{ position:'absolute', left:(L/2 - lens.fx*cw)+'px', top:(L/2 - lens.fy*ch)+'px', width:cw+'px' } }, this.mockup(view, product, color, overlays, key + '-z')),
+        React.createElement('div', { style:{ position:'absolute', inset:0, borderRadius:'50%', boxShadow:'inset 0 0 26px rgba(0,0,0,.4)', pointerEvents:'none' } }),
+        React.createElement('div', { style:{ position:'absolute', left:0, right:0, top:'50%', height:'1px', background:'rgba(255,152,0,.35)', pointerEvents:'none' } }),
+        React.createElement('div', { style:{ position:'absolute', top:0, bottom:0, left:'50%', width:'1px', background:'rgba(255,152,0,.35)', pointerEvents:'none' } })
+      ));
+    }
+    return React.createElement('div', { key,
+      onMouseMove: e => this.onLensMove(view, e),
+      onMouseEnter: e => this.onLensMove(view, e),
+      onMouseLeave: () => this.onLensLeave(),
+      style:{ position:'relative', width:'100%', cursor: active ? 'none' : 'zoom-in' }
+    }, children);
+  }
+  pre(p){ return p === 'poleron' ? 'poleron' : (p === 'tee' ? 'tee' : 'hoodie'); }
+  pctBox(b){ return { top: parseFloat(b.top), left: parseFloat(b.left), width: parseFloat(b.width) }; }
+  nameOf(id){ const d = this.designs.find(x => x.id === id); return d ? d.name : id; }
+  setOv(key, def, field, val){ this.setState(s => { const cur = s.overrides[key] || def; const nv = Object.assign({}, cur, { [field]: val }); return { overrides: Object.assign({}, s.overrides, { [key]: nv }) }; }, () => this.persist()); }
+  resetOv(key){ this.setState(s => { const ov = Object.assign({}, s.overrides); delete ov[key]; return { overrides: ov }; }, () => this.persist()); }
+  resetAll(){ this.setState({ overrides: {}, overrides3d: {} }, () => this.persist()); }
+  setZoom(v){ this.setState({ zoom: v }, () => this.persist()); }
+  toggleDev(){ this.setState(s => ({ dev: !s.dev })); }
+  exportValues(){ try { navigator.clipboard.writeText(JSON.stringify({ overrides:this.state.overrides, overrides3d:this.state.overrides3d }, null, 1)); } catch(e){} this.setState({ exported: true }); setTimeout(() => this.setState({ exported: false }), 1600); }
+
+  get colors() {
+    return [
+      { id:'negro',   name:'Negro Ink',     hex:'#141416', dark:true },
+      { id:'marino',  name:'Azul Marino',   hex:'#1d2f73', dark:true },
+      { id:'grafito', name:'Gris Grafito',  hex:'#565c64', dark:true },
+      { id:'militar', name:'Verde Militar', hex:'#47542f', dark:true },
+      { id:'vino',    name:'Burdeo',        hex:'#5e2434', dark:true },
+      { id:'blanco',  name:'Blanco',        hex:'#eef0ec', dark:false },
+      { id:'hueso',   name:'Hueso',         hex:'#e7e0ce', dark:false },
+      { id:'perla',   name:'Gris Perla',    hex:'#cfd2d4', dark:false },
+      { id:'arena',   name:'Arena',         hex:'#d2c2a0', dark:false },
+      { id:'cielo',   name:'Celeste',       hex:'#bcc8d6', dark:false }
+    ];
+  }
+  get designs() {
+    return [
+      { id:'sark',   name:'SARK',   size:'logo',    tag:'Logo' },
+      { id:'cuervo', name:'Cuervo', size:'grande',  tag:'Grande' },
+      { id:'casa',   name:'Casa',   size:'grande',  tag:'Grande' },
+      { id:'felino', name:'Felino', size:'mediano', tag:'Mediano' },
+      { id:'nido',   name:'Nido',   size:'mediano', tag:'Mediano' }
+    ];
+  }
+  get products() {
+    return [
+      { id:'hoodie',    label:'Hoodie',     sub:'Con gorro · canguro' },
+      { id:'hoodiezip', label:'Hoodie Zip', sub:'Con cierre' },
+      { id:'poleron',   label:'Polo',       sub:'Sin gorro · sin canguro' },
+      { id:'tee',       label:'Camiseta',   sub:'Oversize' }
+    ];
+  }
+
+  // placement boxes (% of garment image)
+  get B() {
+    return {
+      logoChest:   { top:'26%', left:'37%', width:'26%' },
+      logoRight:   { top:'25%', left:'23%', width:'16%' },
+      logoBackTop: { top:'15%', left:'42%', width:'17%' },
+      backLarge: {
+        cuervo:{ top:'21%', left:'33%', width:'34%' },
+        casa:  { top:'19%', left:'26%', width:'48%' },
+        felino:{ top:'29%', left:'28%', width:'44%' },
+        nido:  { top:'29%', left:'27%', width:'46%' }
+      },
+      frontMedium: {
+        felino:{ top:'30%', left:'29%', width:'42%' },
+        nido:  { top:'25%', left:'28%', width:'44%' }
+      },
+      frontLarge: {
+        cuervo:{ top:'19%', left:'34%', width:'32%' },
+        casa:  { top:'18%', left:'28%', width:'44%' }
+      }
+    };
+  }
+
+  resolve(product, designId, side) {
+    const B = this.B;
+    const meta = this.designs.find(d => d.id === designId);
+    const isZip = product === 'hoodiezip';
+    const free = product === 'poleron' || product === 'tee';
+    const chestLogo = isZip ? B.logoRight : B.logoChest;
+    const front = [], back = [];
+
+    if (meta.size === 'logo') {
+      front.push({ id:'sark', box: chestLogo });
+    } else if (isZip) {
+      back.push({ id:designId, box: B.backLarge[designId] });
+      front.push({ id:'sark', box: chestLogo });
+    } else if (meta.size === 'grande') {
+      if (free && side === 'pecho') {
+        front.push({ id:designId, box: B.frontLarge[designId] });
+        back.push({ id:'sark', box: B.logoBackTop });
+      } else {
+        back.push({ id:designId, box: B.backLarge[designId] });
+        front.push({ id:'sark', box: chestLogo });
+      }
+    } else { // mediano
+      if (free && side === 'espalda') {
+        back.push({ id:designId, box: B.backLarge[designId] });
+        front.push({ id:'sark', box: chestLogo });
+      } else {
+        front.push({ id:designId, box: B.frontMedium[designId] });
+        back.push({ id:'sark', box: B.logoBackTop });
+      }
+    }
+    return { front, back };
+  }
+
+  placementText(product, designId, side) {
+    const meta = this.designs.find(d => d.id === designId);
+    const isZip = product === 'hoodiezip';
+    const logoSpot = isZip ? 'pecho derecho' : 'pecho';
+    if (meta.size === 'logo') return 'Tag SARK en el ' + logoSpot + ' (tamaño logo).';
+    if (isZip) return meta.name + ' a la espalda · tag SARK en el pecho derecho (junto al cierre).';
+    if (meta.size === 'grande') {
+      if ((product==='poleron'||product==='tee') && side==='pecho') return meta.name + ' al pecho · tag SARK a la espalda.';
+      return meta.name + ' a la espalda (diseño grande) · tag SARK al pecho.';
+    }
+    if ((product==='poleron'||product==='tee') && side==='espalda') return meta.name + ' a la espalda · tag SARK al pecho.';
+    return meta.name + ' al pecho (diseño mediano) · tag SARK a la espalda.';
+  }
+
+  mockup(view, product, colorId, overlays, key) {
+    const prefix = this.pre(product);
+    const color = this.colors.find(c => c.id === colorId) || this.colors[0];
+    const lightFabric = color.dark === false;
+    const base = 'assets/mockup/' + prefix + '-' + view + '-' + colorId + '.png';
+    const kids = [ React.createElement('img', { key:'b', src: base, style:{ width:'100%', display:'block' } }) ];
+    const dir = lightFabric ? 'assets/designs-ink/' : 'assets/designs/';
+    const shadow = lightFabric ? 'drop-shadow(0 0.5px 0.5px rgba(0,0,0,0.18))' : 'drop-shadow(0 1px 1.5px rgba(0,0,0,0.35))';
+    (overlays || []).forEach((ov, i) => {
+      const ok = prefix + ':' + view + ':' + ov.id;
+      const o = this.state.overrides[ok];
+      const box = o ? { top:o.top+'%', left:o.left+'%', width:o.width+'%' } : ov.box;
+      kids.push(React.createElement('img', { key:'o'+i, src: dir + ov.id + '.png', style:{
+        position:'absolute', top:box.top, left:box.left, width:box.width,
+        opacity:0.96, pointerEvents:'none', filter:shadow
+      } }));
+    });
+    if (product === 'hoodiezip' && view === 'front') {
+      kids.push(React.createElement('div', { key:'zip', style:{ position:'absolute', left:'50%', top:'23%', width:'0', height:'58%', transform:'translateX(-50%)', borderLeft:'2px dashed rgba(225,225,225,0.5)' } }));
+      kids.push(React.createElement('div', { key:'zt', style:{ position:'absolute', left:'50%', top:'26%', width:'7px', height:'15px', transform:'translateX(-50%)', background:'#E7E0CE', borderRadius:'2px', boxShadow:'0 0 0 1px rgba(0,0,0,.35)' } }));
+    }
+    return React.createElement('div', { key, style:{ position:'relative', width:'100%' } }, kids);
+  }
+
+  fmt(n){ return '$' + String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+
+  unitPrice(s){
+    let p = { hoodie:39990, hoodiezip:44990, poleron:37990, tee:29990 }[s.product];
+    const meta = this.designs.find(d => d.id === s.designId);
+    if (meta.size === 'grande') p += 2000;
+    else if (meta.size === 'mediano') p += 1000;
+    if (s.technique === 'bordado') p += 4000;
+    return p;
+  }
+
+  scrollTo(id){ const el = document.getElementById(id); if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 64, behavior:'smooth' }); }
+
+  loadModel(m){
+    this.setState({ product:m.product, designId:m.designId, side:m.side, colorId:m.colorId });
+    setTimeout(() => this.scrollTo('config'), 40);
+  }
+  railScroll(dir){ const el = document.getElementById('lookrail'); if (el) el.scrollBy({ left: dir * (el.clientWidth * 0.8), behavior:'smooth' }); }
+
+  chip(active){ return { padding:'11px 14px', cursor:'pointer', userSelect:'none', border:'2px solid var(--pewi-ink)', borderRadius:'8px', background: active?'var(--pewi-ink)':'#fff', color: active?'#fff':'var(--pewi-ink)', fontFamily:'var(--font-text)', fontWeight:'700', fontSize:'13px', letterSpacing:'0.03em', textTransform:'uppercase', lineHeight:'1.15', transition:'all .15s', display:'flex', flexDirection:'column', gap:'2px', textAlign:'left' }; }
+  smallChip(active){ return { padding:'9px 13px', cursor:'pointer', userSelect:'none', border:'2px solid var(--pewi-ink)', borderRadius:'7px', background: active?'var(--pewi-ink)':'#fff', color: active?'#fff':'var(--pewi-ink)', fontFamily:'var(--font-text)', fontWeight:'700', fontSize:'12px', letterSpacing:'0.03em', textTransform:'uppercase', lineHeight:'1.1', transition:'all .15s', display:'flex', flexDirection:'column', gap:'2px', alignItems:'center' }; }
+  sizeStyle(active){ return { width:'46px', height:'46px', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', userSelect:'none', border:'2px solid var(--pewi-ink)', borderRadius:'7px', background: active?'var(--accent)':'#fff', color:'var(--pewi-ink)', fontWeight:'800', fontSize:'14px', transition:'all .15s' }; }
+  swatchStyle(hex, active){ return { width:'40px', height:'40px', borderRadius:'999px', background:hex, cursor:'pointer', border: active?'3px solid var(--accent)':'2px solid var(--pewi-ink)', boxShadow: active?'0 0 0 3px rgba(255,152,0,0.25)':'none', transition:'all .12s' }; }
+  designBox(active){ return { display:'flex', flexDirection:'column', alignItems:'center', gap:'6px', padding:'8px 5px', cursor:'pointer', borderRadius:'9px', border: active?'2px solid var(--accent)':'2px solid rgba(11,11,13,0.16)', background: active?'rgba(255,152,0,0.10)':'#fff', transition:'all .12s' }; }
+
+  renderVals(){
+    const s = this.state;
+    const col = this.colors.find(c => c.id === s.colorId) || this.colors[0];
+    const dmeta = this.designs.find(d => d.id === s.designId);
+    const free = s.product === 'poleron' || s.product === 'tee';
+    const place = this.resolve(s.product, s.designId, s.side);
+    const unit = this.unitPrice(s);
+    const total = unit * s.qty;
+
+    // dev-mode editors for the currently visible overlays (3D for hoodie, 2D % otherwise)
+    const prefix = this.pre(s.product);
+    const is3D = this.has3D(s.product);
+    const devEditors = [];
+    const r2 = n => (Math.round(n*100)/100).toFixed(2);
+    [['front', place.front], ['back', place.back]].forEach(pair => {
+      const view = pair[0];
+      pair[1].forEach(o => {
+        if (is3D) {
+          const key = s.product + ':' + view + ':' + o.id;
+          const def = this.default3D(s.product, view, o.id);
+          const cur = Object.assign({}, def, s.overrides3d[key] || {});
+          devEditors.push({
+            label: (view === 'front' ? 'Frente' : 'Espalda') + ' · ' + this.nameOf(o.id),
+            onReset: () => this.resetOv3d(key),
+            fields: [
+              { label:'Horizontal', min:-0.3, max:0.3, step:0.005, value:cur.x, disp:r2(cur.x), onInput: e => this.setOv3d(key, def, 'x', +e.target.value) },
+              { label:'Vertical',   min:-0.4, max:0.6, step:0.005, value:cur.y, disp:r2(cur.y), onInput: e => this.setOv3d(key, def, 'y', +e.target.value) },
+              { label:'Tamaño',     min:0.05, max:0.7, step:0.005, value:cur.scale, disp:r2(cur.scale), onInput: e => this.setOv3d(key, def, 'scale', +e.target.value) },
+              { label:'Rotación',   min:-180, max:180, step:1,     value:cur.rot, disp:Math.round(cur.rot)+'°', onInput: e => this.setOv3d(key, def, 'rot', +e.target.value) }
+            ]
+          });
+        } else {
+          const key = prefix + ':' + view + ':' + o.id;
+          const def = this.pctBox(o.box);
+          const cur = s.overrides[key] || def;
+          devEditors.push({
+            label: (view === 'front' ? 'Frente' : 'Espalda') + ' · ' + this.nameOf(o.id),
+            onReset: () => this.resetOv(key),
+            fields: [
+              { label:'Arriba',    min:0, max:82, step:1, value:cur.top,   disp:cur.top+'%',   onInput: e => this.setOv(key, def, 'top',   +e.target.value) },
+              { label:'Izquierda', min:0, max:82, step:1, value:cur.left,  disp:cur.left+'%',  onInput: e => this.setOv(key, def, 'left',  +e.target.value) },
+              { label:'Tamaño',    min:8, max:72, step:1, value:cur.width, disp:cur.width+'%', onInput: e => this.setOv(key, def, 'width', +e.target.value) }
+            ]
+          });
+        }
+      });
+    });
+    const magStyle = on => ({ cursor:'pointer', userSelect:'none', padding:'6px 12px', borderRadius:'6px', border:'2px solid var(--pewi-ink)', background: on?'var(--pewi-ink)':'#fff', color: on?'#fff':'var(--pewi-ink)', fontSize:'11px', fontWeight:'800', letterSpacing:'.04em' });
+    const magOpts = [2,3,5].map(m => ({ label: m+'×', style: magStyle(s.mag===m), onClick: () => this.setMag(m) }));
+
+    // ---- 3D viewer props ----
+    const dir3d = col.dark === false ? 'assets/designs-ink/' : 'assets/designs/';
+    const fOv = place.front[0], bOv = place.back[0];
+    const fTf = fOv ? this.tf3D(s.product, 'front', fOv.id) : null;
+    const bTf = bOv ? this.tf3D(s.product, 'back', bOv.id) : null;
+    const vbtn = on => ({ cursor:'pointer', userSelect:'none', padding:'7px 13px', borderRadius:'7px', border:'2px solid var(--pewi-ink)', background: on?'var(--accent)':'#fff', color:'var(--pewi-ink)', fontSize:'11px', fontWeight:'800', letterSpacing:'.06em', textTransform:'uppercase' });
+    const view3dOpts = [
+      { label:'Frente',  on: !s.spin && s.view3d==='front', onClick: () => this.setView3d('front') },
+      { label:'Espalda', on: !s.spin && s.view3d==='back',  onClick: () => this.setView3d('back') },
+      { label:'Girar',   on: s.spin, onClick: () => this.toggleSpin() }
+    ].map(o => ({ label:o.label, style:vbtn(o.on), onClick:o.onClick }));
+
+    // lookbook models — varied product / design / color / view
+    const mraw = [
+      { name:'Cuervo Negro',  product:'hoodie',    designId:'cuervo', side:'espalda', colorId:'negro',   view:'back',  sizeTag:'Grande' },
+      { name:'Casa Burdeo',   product:'hoodiezip', designId:'casa',   side:'espalda', colorId:'vino',    view:'back',  sizeTag:'Grande' },
+      { name:'Felino Hueso',  product:'poleron',   designId:'felino', side:'pecho',   colorId:'hueso',   view:'front', sizeTag:'Mediano' },
+      { name:'Nido Arena',    product:'tee',       designId:'nido',   side:'pecho',   colorId:'arena',   view:'front', sizeTag:'Mediano' },
+      { name:'Cuervo Polo',   product:'poleron',   designId:'cuervo', side:'pecho',   colorId:'marino',  view:'front', sizeTag:'Grande' },
+      { name:'Casa Militar',  product:'hoodie',    designId:'casa',   side:'espalda', colorId:'militar', view:'back',  sizeTag:'Grande' },
+      { name:'Felino Marino', product:'hoodie',    designId:'felino', side:'pecho',   colorId:'marino',  view:'front', sizeTag:'Mediano' },
+      { name:'Nido Grafito',  product:'hoodie',    designId:'nido',   side:'pecho',   colorId:'grafito', view:'front', sizeTag:'Mediano' },
+      { name:'SARK Celeste',  product:'tee',       designId:'sark',   side:'pecho',   colorId:'cielo',   view:'front', sizeTag:'Logo' }
+    ];
+    const models = mraw.map((m, i) => {
+      const pl = this.resolve(m.product, m.designId, m.side);
+      const ov = m.view === 'back' ? pl.back : pl.front;
+      const cn = (this.colors.find(c => c.id === m.colorId) || {}).name || '';
+      return Object.assign({}, m, {
+        art: this.mockup(m.view, m.product, m.colorId, ov, 'lb-' + i),
+        viewLabel: m.view === 'back' ? 'Espalda' : 'Frente',
+        price: this.fmt(this.unitPrice({ product:m.product, designId:m.designId, technique:'serigrafia' })),
+        placeNote: this.products.find(p => p.id === m.product).label + ' · ' + cn,
+        onPick: () => this.loadModel(m)
+      });
+    });
+
+    const productOpts = this.products.map(p => Object.assign({}, p, { active:s.product===p.id, style:this.chip(s.product===p.id), onClick:() => this.setState({ product:p.id }) }));
+    const designOpts = this.designs.map(d => ({ name:d.name, tag:d.tag, active:s.designId===d.id, boxStyle:this.designBox(s.designId===d.id),
+      thumb: React.createElement('img', { src:'assets/designs/'+d.id+'.png', style:{ maxWidth:'100%', maxHeight:'44px', objectFit:'contain' } }),
+      onClick:() => this.setState({ designId:d.id }) }));
+    const sideOpts = [{ k:'pecho', label:'Al pecho' }, { k:'espalda', label:'A la espalda' }].map(o => ({ label:o.label, style:this.smallChip(s.side===o.k), onClick:() => this.setState({ side:o.k }) }));
+    const colorOpts = this.colors.map(c => ({ name:c.name, active:s.colorId===c.id, style:this.swatchStyle(c.hex, s.colorId===c.id), onClick:() => this.setState({ colorId:c.id }) }));
+    const techOpts = [
+      { k:'serigrafia', label:'Serigrafía', sub:'Incluido' },
+      { k:'bordado', label:'Bordado', sub:'+$4.000' }
+    ].map(o => ({ label:o.label, sub:o.sub, style:this.smallChip(s.technique===o.k), onClick:() => this.setState({ technique:o.k }) }));
+    const sizeOpts = ['XS','S','M','L','XL','XXL'].map(z => ({ label:z, style:this.sizeStyle(s.size===z), onClick:() => this.setState({ size:z }) }));
+
+    const sizeData = [['XS',52,68,58],['S',54,70,59],['M',56,72,60],['L',58,74,61],['XL',60,76,62],['XXL',62,78,63]];
+    const cellBase = on => ({ padding:'8px 12px', borderBottom:'1px solid var(--border-hair)', color: on?'var(--pewi-ink)':'var(--text-body)', fontWeight: on?'800':'600', background: on?'rgba(255,152,0,0.14)':'transparent' });
+    const sizeRows = sizeData.map(r => ({ size:r[0], ancho:r[1], largo:r[2], manga:r[3],
+      cellTalla: Object.assign({}, cellBase(s.size===r[0]), { fontWeight:'800', letterSpacing:'.04em' }),
+      cell: cellBase(s.size===r[0]) }));
+
+    const techName = { serigrafia:'Serigrafía', bordado:'Bordado' }[s.technique];
+    const productLabel = this.products.find(p => p.id === s.product).label;
+    const summaryLines = [
+      { k:'Producto', v:productLabel },
+      { k:'Diseño', v:dmeta.name + ' (' + dmeta.tag.toLowerCase() + ')' },
+      { k:'Distribución', v:this.placementText(s.product, s.designId, s.side) },
+      { k:'Color', v:col.name },
+      { k:'Técnica', v:techName },
+      { k:'Talla', v:s.size },
+      { k:'Cantidad', v:String(s.qty) + (s.qty>1?' prendas':' prenda') }
+    ];
+
+    return {
+      goTop: () => window.scrollTo({ top:0, behavior:'smooth' }),
+      goColeccion: () => this.scrollTo('coleccion'),
+      goDetalles: () => this.scrollTo('detalles'),
+      goConfig: () => this.scrollTo('config'),
+      railPrev: () => this.railScroll(-1),
+      railNext: () => this.railScroll(1),
+      heroGhostStyle: { background:'transparent', color:'#fff', borderColor:'#fff' },
+      marqueeText: 'CUERVO · CASA · FELINO · NIDO · TAG SARK · SERIGRAFÍA · BORDADO · ALGODÓN 320G · HECHO A PEDIDO · ',
+      heroGarment: this.mockup('back', 'hoodie', 'negro', this.resolve('hoodie','cuervo','espalda').back, 'hero'),
+      models,
+      frontGarment: this.interactivePane('front', s.product, s.colorId, place.front, 'cf-' + s.product + s.colorId + s.designId + s.side),
+      backGarment: this.interactivePane('back', s.product, s.colorId, place.back, 'cb-' + s.product + s.colorId + s.designId + s.side),
+      magOpts,
+      is3D, is2D: !is3D,
+      model3d: this.modelUrl(s.product),
+      frontAxis3d: this.modelCfg(s.product).frontAxis,
+      decalDepth3d: this.modelCfg(s.product).depth,
+      rotY3d: this.modelCfg(s.product).rotY,
+      color3d: col.hex,
+      printMode3d: col.dark === false ? 'dark' : 'white',
+      frontDesign3d: fOv ? (dir3d + fOv.id + '.png') : 'none',
+      backDesign3d:  bOv ? (dir3d + bOv.id + '.png') : 'none',
+      fX: fTf ? fTf.x : 0, fY: fTf ? fTf.y : 0.12, fS: fTf ? fTf.scale : 0.3, fR: fTf ? fTf.rot : 0,
+      bX: bTf ? bTf.x : 0, bY: bTf ? bTf.y : 0.05, bS: bTf ? bTf.scale : 0.3, bR: bTf ? bTf.rot : 0,
+      view3d: s.view3d,
+      spin3d: s.spin ? '1' : '0',
+      view3dOpts,
+      placementNote: this.placementText(s.product, s.designId, s.side),
+      productOpts, designOpts, sideOpts, colorOpts, techOpts, sizeOpts, sizeRows,
+      showUbicacion: free,
+      currentProductLabel: productLabel,
+      currentDesignLabel: dmeta.name,
+      currentColorName: col.name,
+      size: s.size,
+      qty: s.qty,
+      unitFmt: this.fmt(unit),
+      totalFmt: this.fmt(total),
+      incQty: () => this.setState(st => ({ qty: Math.min(20, st.qty + 1) })),
+      decQty: () => this.setState(st => ({ qty: Math.max(1, st.qty - 1) })),
+      onPlace: () => this.setState({ placed:true, orderRef:'PEW-' + Math.floor(1000 + Math.random()*9000) }),
+      placed: s.placed,
+      orderRef: s.orderRef,
+      closeOrder: () => this.setState({ placed:false }),
+      summaryLines,
+      dev: s.dev,
+      devLabel: s.dev ? 'Cerrar ajustes' : 'Modo desarrollo',
+      toggleDev: () => this.toggleDev(),
+      devEditors,
+      resetAll: () => this.resetAll(),
+      exportValues: () => this.exportValues(),
+      exportLabel: s.exported ? 'Copiado ✓' : 'Exportar',
+    };
+  }
+}
+</script>
+</body>
+</html>
