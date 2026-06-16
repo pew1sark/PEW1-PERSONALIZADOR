@@ -1,7 +1,9 @@
 /* ============================================================
-   PEW1 — Spacing, radii, borders, shadows, motion
-   Soft & clean: rounded surfaces, diffuse low-contrast shadows,
-   hairline (or no) borders. Imagery leads; chrome recedes.
+   PEWÏ — Spacing, radii, borders, shadows, motion
+   HYBRID BY CONTEXT: hard, graphic, screen-printed for brand moments
+   (hero, posters, stickers — square radii, 2px keyline, hard-offset
+   shadow); soft & clean for functional UI (forms, drawers — hairline,
+   small radii, diffuse shadows). Imagery leads; chrome recedes.
    ============================================================ */
 :root {
   /* ---- Spacing scale (4px base) ---- */
@@ -20,26 +22,29 @@
   --sp-24:  96px;
   --sp-32:  128px;
 
-  /* ---- Radii — soft & rounded ---- */
-  --radius-0:   0px;
+  /* ---- Radii — sharp for brand moments, soft for UI ---- */
+  --radius-0:   0px;   /* brand default: poster cards, stamps */
+  --radius-xs:  4px;   /* inputs & buttons (3–6px sweet spot) */
   --radius-sm:  8px;
   --radius-md:  14px;
   --radius-lg:  22px;
   --radius-xl:  30px;
   --radius-pill:999px;
 
-  /* ---- Borders — hairline only; no heavy keylines ---- */
-  --bw-hair:    1px;
-  --bw-key:     1px;        /* legacy alias — now a hairline */
-  --bw-heavy:   1px;
+  /* ---- Borders — TWO systems (hybrid by context) ----
+     Soft hairline for functional UI; hard ink keyline for brand moments. */
+  --bw-hair:    1px;   /* functional UI: forms, drawers, lists */
+  --bw-key:     2px;   /* brand moments: poster cards, stamps, hero */
+  --bw-heavy:   2px;
 
-  /* ---- Shadows — soft, diffuse, low-contrast ---- */
+  /* ---- Shadows — TWO systems (hybrid by context) ----
+     (1) Soft & diffuse for floating/functional UI. */
   --shadow-sm:  0 2px 8px rgba(11,11,13,0.05);
   --shadow-md:  0 10px 30px rgba(11,11,13,0.07);
   --shadow-lg:  0 24px 60px rgba(11,11,13,0.10);
-  /* Legacy aliases kept so nothing breaks; remapped to soft. */
-  --shadow-hard:0 14px 40px rgba(11,11,13,0.08);
-  --shadow-hard-accent: 0 16px 44px rgba(255,152,0,0.18);
+  /* (2) Hard graphic offset for posters, stickers & brand emphasis. */
+  --shadow-hard:        6px 6px 0 var(--pewi-ink);
+  --shadow-hard-accent: 6px 6px 0 var(--pewi-orange);
 
   /* ---- Motion ---- */
   --ease-out:   cubic-bezier(0.22, 1, 0.36, 1); /* @kind other */
