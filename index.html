@@ -467,6 +467,16 @@
           <div style="font-size:10px;color:var(--pewi-gray-300);line-height:1.5;margin:-4px 0 2px">Sube la imagen del diseño a tu Cloudinary y la adjunta al pedido. Déjalo vacío para usar solo el link del diseño.</div>
           <label style="display:block"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">Cloud name</span><input type="text" value="{{ store.cloudName }}" onInput="{{ onStoreCloudName }}" placeholder="tu-cloud-name" style="{{ devInput }}"></label>
           <label style="display:block"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">Upload preset (unsigned)</span><input type="text" value="{{ store.uploadPreset }}" onInput="{{ onStoreUploadPreset }}" placeholder="pew1_pedidos" style="{{ devInput }}"></label>
+          <div style="height:1px;background:#222;margin:6px 0 2px"></div>
+          <div style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Publicación automática (GitHub)</div>
+          <div style="font-size:10px;color:var(--pewi-gray-300);line-height:1.5;margin:-4px 0 2px">Con esto "Publicar" sube la configuración al repo y queda en vivo para todos en ~1 min, sin copiar y pegar. El token se guarda <b>solo en este dispositivo</b> y nunca se muestra a los clientes.</div>
+          <label style="display:block"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">Token de GitHub (fine-grained · permiso Contents: write)</span><input type="password" autocomplete="off" value="{{ gh.token }}" onInput="{{ onGhToken }}" placeholder="github_pat_..." style="{{ devInput }}"></label>
+          <div style="display:flex;gap:8px">
+            <label style="display:block;flex:1"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">Owner</span><input type="text" value="{{ gh.owner }}" onInput="{{ onGhOwner }}" placeholder="pew1sark" style="{{ devInput }}"></label>
+            <label style="display:block;flex:1"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">Repo</span><input type="text" value="{{ gh.repo }}" onInput="{{ onGhRepo }}" placeholder="PEW1-PERSONALIZADOR" style="{{ devInput }}"></label>
+            <label style="display:block;flex:0 0 78px"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">Rama</span><input type="text" value="{{ gh.branch }}" onInput="{{ onGhBranch }}" placeholder="main" style="{{ devInput }}"></label>
+          </div>
+          <span onClick="{{ clearGhToken }}" style="cursor:pointer;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--pewi-gray-300)">Borrar token de este dispositivo</span>
         </div>
       </sc-if>
 
@@ -475,7 +485,8 @@
         <span onClick="{{ exportValues }}" style="flex:1;text-align:center;cursor:pointer;background:var(--accent);color:var(--pewi-ink);border:2px solid var(--pewi-ink);border-radius:8px;padding:10px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase">{{ exportLabel }}</span>
       </div>
       <span onClick="{{ publishConfig }}" style="display:block;text-align:center;cursor:pointer;background:var(--pewi-ink);color:#fff;border:2px solid var(--pewi-ink);border-radius:8px;padding:11px;margin-top:10px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase">{{ publishLabel }}</span>
-      <div style="font-size:10px;color:var(--pewi-gray-300);line-height:1.5;margin-top:8px">"Publicar" copia toda tu configuración. Pégala en <b>config.json</b> del repo y haz commit para que todos los clientes la vean.</div>
+      <sc-if value="{{ pubMsg }}" hint-placeholder-val=""><div style="{{ pubMsgStyle }}">{{ pubMsg }}</div></sc-if>
+      <div style="font-size:10px;color:var(--pewi-gray-300);line-height:1.5;margin-top:8px">"Publicar" sube tu configuración al repo y la deja en vivo para todos los clientes en ~1 minuto. Si aún no conectas el token de GitHub, la copia al portapapeles como respaldo.</div>
     </div>
   </sc-if>
 
@@ -561,6 +572,11 @@ class Component extends DCLogic {
     prices: { hoodie:44990, hoodiezip:49990, poleron:39990, tee:19990, grande:0, mediano:0 },
     exported: false,
     published: false,
+    // Auto-publish to the repo via the GitHub API. Token lives only on the admin's device (localStorage),
+    // never in config.json and never shipped to clients. Owner/repo/branch auto-detected from the Pages URL.
+    gh: { token:'', owner:'', repo:'', branch:'main' },
+    pubState: 'idle', // idle | working | done | error
+    pubMsg: '',
     mag: 3,
     view3d: 'front',
     spin: false,
@@ -574,6 +590,20 @@ class Component extends DCLogic {
       const isAdmin = /admin/i.test(h);
       if (isAdmin) this.setState({ admin: true });
       window.addEventListener('hashchange', () => { this.setState({ admin: /admin/i.test(location.hash || '') }); });
+    } catch(e){}
+    // Publishing target: auto-detect owner/repo from the GitHub Pages URL, restore the saved token (admin device only).
+    try {
+      const gh = Object.assign({}, this.state.gh);
+      const host = location.hostname || '';                 // e.g. pew1sark.github.io
+      const seg = (location.pathname || '').split('/').filter(Boolean); // e.g. ["PEW1-PERSONALIZADOR"]
+      if (/\.github\.io$/i.test(host)) gh.owner = host.replace(/\.github\.io$/i, '');
+      if (seg.length) gh.repo = seg[0];
+      const saved = JSON.parse(localStorage.getItem('pewi-gh') || '{}');
+      if (saved.token)  gh.token  = saved.token;
+      if (saved.owner)  gh.owner  = saved.owner;
+      if (saved.repo)   gh.repo   = saved.repo;
+      if (saved.branch) gh.branch = saved.branch;
+      this.setState({ gh });
     } catch(e){}
     // A browser with a saved working copy = admin device → keep editing locally.
     // A browser without it = a client → load the published config.json instead.
@@ -641,7 +671,53 @@ class Component extends DCLogic {
       store: this.state.store
     }, null, 2);
   }
-  publishConfig(){ try { navigator.clipboard.writeText(this.configJSON()); } catch(e){} this.setState({ published:true }); setTimeout(() => this.setState({ published:false }), 1600); }
+  // Persist the GitHub publishing settings on the admin device only (separate key, never inside config.json).
+  setGh(field, val){ this.setState(s => ({ gh: Object.assign({}, s.gh, { [field]: val }) }), () => {
+    try { localStorage.setItem('pewi-gh', JSON.stringify(this.state.gh)); } catch(e){}
+  }); }
+  clearGhToken(){ this.setState(s => ({ gh: Object.assign({}, s.gh, { token:'' }), pubState:'idle', pubMsg:'' }), () => {
+    try { const g = Object.assign({}, this.state.gh); localStorage.setItem('pewi-gh', JSON.stringify(g)); } catch(e){}
+  }); }
+  // UTF-8 safe base64 (config carries accented design names).
+  b64(str){ return btoa(unescape(encodeURIComponent(str))); }
+
+  // "Publicar": commit config.json straight to the repo via the GitHub API → GitHub Pages goes live for
+  // every client in ~1 min. No copy/paste. Falls back to clipboard if no token is configured yet.
+  async publishConfig(){
+    const gh = this.state.gh || {};
+    if (!gh.token || !gh.owner || !gh.repo) {
+      try { await navigator.clipboard.writeText(this.configJSON()); } catch(e){}
+      this.setState({ pubState:'error', pubMsg:'Falta el token de GitHub. Config copiada al portapapeles como respaldo — pégala en config.json.' });
+      return;
+    }
+    const branch = gh.branch || 'main';
+    const api = 'https://api.github.com/repos/' + encodeURIComponent(gh.owner) + '/' + encodeURIComponent(gh.repo) + '/contents/config.json';
+    const headers = { 'Authorization': 'token ' + gh.token, 'Accept': 'application/vnd.github+json' };
+    this.setState({ pubState:'working', pubMsg:'Publicando en GitHub…' });
+    try {
+      // Current file sha (needed to update an existing file). 404 = file doesn't exist yet → create it.
+      let sha;
+      const cur = await fetch(api + '?ref=' + encodeURIComponent(branch) + '&_=' + Date.now(), { headers });
+      if (cur.ok) { sha = (await cur.json()).sha; }
+      else if (cur.status !== 404) { throw new Error('No se pudo leer config.json (HTTP ' + cur.status + ').'); }
+
+      const body = { message: 'Publicar configuración del personalizador', content: this.b64(this.configJSON()), branch };
+      if (sha) body.sha = sha;
+      const put = await fetch(api, { method:'PUT', headers, body: JSON.stringify(body) });
+      if (!put.ok) {
+        let detail = 'HTTP ' + put.status;
+        try { const j = await put.json(); if (j && j.message) detail = j.message; } catch(e){}
+        if (put.status === 401 || put.status === 403) detail = 'Token inválido o sin permiso de escritura (Contents) en el repo.';
+        if (put.status === 409) detail = 'Conflicto con un cambio reciente. Vuelve a intentar.';
+        throw new Error(detail);
+      }
+      this.setState({ published:true, pubState:'done', pubMsg:'¡Publicado! En vivo para todos en ~1 minuto.' });
+      setTimeout(() => this.setState({ published:false }), 4000);
+    } catch(err) {
+      try { await navigator.clipboard.writeText(this.configJSON()); } catch(e){}
+      this.setState({ pubState:'error', pubMsg:'No se pudo publicar: ' + (err && err.message ? err.message : err) + ' · Config copiada al portapapeles como respaldo.' });
+    }
+  }
 
   // ---- image override (dev upload) ----
   imgSrc(path){ const o = this.state.imgOverrides[path]; return o || path; }
@@ -1226,7 +1302,15 @@ class Component extends DCLogic {
       exportValues: () => this.exportValues(),
       exportLabel: s.exported ? 'Copiado ✓' : 'Exportar',
       publishConfig: () => this.publishConfig(),
-      publishLabel: s.published ? 'Config copiada ✓ — pégala en config.json' : 'Publicar (copiar config)',
+      publishLabel: s.pubState === 'working' ? 'Publicando…' : (s.pubState === 'done' ? '¡Publicado! ✓' : 'Publicar'),
+      pubMsg: s.pubMsg,
+      pubMsgStyle: 'font-size:10px;line-height:1.5;margin-top:8px;font-weight:700;color:' + (s.pubState === 'error' ? '#ff8d6b' : (s.pubState === 'done' ? '#7CFFB2' : 'var(--pewi-gray-300)')),
+      gh: s.gh,
+      onGhToken: e => this.setGh('token', e.target.value),
+      onGhOwner: e => this.setGh('owner', e.target.value),
+      onGhRepo: e => this.setGh('repo', e.target.value),
+      onGhBranch: e => this.setGh('branch', e.target.value),
+      clearGhToken: () => this.clearGhToken(),
       goShopify: () => this.goShopify(),
       shopifyLabel: (this.state.store.v1||this.state.store.v2||this.state.store.v3||this.state.store.v4) ? 'Ir a pagar →' : 'Ir a la tienda →',
       devTab: s.devTab,
