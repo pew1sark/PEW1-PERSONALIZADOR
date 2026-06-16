@@ -1,5 +1,126 @@
 {
-  "overrides": {},
+  "overrides": {
+    "hoodie:front:sark": {
+      "top": 33,
+      "left": 54,
+      "width": 20
+    },
+    "hoodie:back:cuervo": {
+      "top": 24,
+      "left": 23,
+      "width": 51
+    },
+    "hoodie:back:sark": {
+      "top": 32,
+      "left": 42,
+      "width": 18
+    },
+    "hoodie:front:felino": {
+      "top": 21,
+      "left": 29,
+      "width": 42
+    },
+    "hoodie:back:casa": {
+      "top": 30,
+      "left": 29,
+      "width": 44
+    },
+    "poleron:back:felino": {
+      "top": 17,
+      "left": 28,
+      "width": 44
+    },
+    "tee:back:felino": {
+      "top": 13,
+      "left": 28,
+      "width": 44
+    },
+    "tee:back:cuervo": {
+      "top": 14,
+      "left": 21,
+      "width": 51
+    },
+    "tee:front:sark": {
+      "top": 26,
+      "left": 39,
+      "width": 23
+    },
+    "tee:back:nido": {
+      "top": 21,
+      "left": 22,
+      "width": 56
+    },
+    "poleron:back:sark": {
+      "top": 15,
+      "left": 42,
+      "width": 19
+    },
+    "poleron:front:cuervo": {
+      "top": 18,
+      "left": 23,
+      "width": 53
+    },
+    "poleron:front:casa": {
+      "top": 18,
+      "left": 28,
+      "width": 47
+    },
+    "poleron:front:felino": {
+      "top": 18,
+      "left": 29,
+      "width": 48
+    },
+    "poleron:front:nido": {
+      "top": 18,
+      "left": 21,
+      "width": 60
+    },
+    "poleron:front:sark": {
+      "top": 26,
+      "left": 37,
+      "width": 28
+    },
+    "poleron:back:cuervo": {
+      "top": 17,
+      "left": 30,
+      "width": 44
+    },
+    "hoodie:front:nido": {
+      "top": 28,
+      "left": 22,
+      "width": 54
+    },
+    "hoodie:back:nido": {
+      "top": 29,
+      "left": 20,
+      "width": 57
+    },
+    "poleron:back:nido": {
+      "top": 12,
+      "left": 21,
+      "width": 61
+    },
+    "tee:back:sark": {
+      "top": 15,
+      "left": 42,
+      "width": 16
+    },
+    "tee:front:nido": {
+      "top": 17,
+      "left": 23,
+      "width": 59
+    },
+    "tee:front:felino": {
+      "top": 14,
+      "left": 29,
+      "width": 42
+    },
+    "tee:front:cuervo": {
+      "top": 14,
+      "left": 24,
+      "width": 50
+    }
+  },
   "overrides3d": {},
   "prices": {
     "hoodie": 44990,
@@ -7,7 +128,8 @@
     "poleron": 39990,
     "tee": 19990,
     "grande": 0,
-    "mediano": 0
+    "mediano": 0,
+    "bordado": 0
   },
   "store": {
     "domain": "sarkpew1.com",
@@ -20,8 +142,8 @@
     "p2": "39990",
     "p3": "44990",
     "p4": "49990",
-    "whatsapp": "",
-    "cloudName": "dduribvey",
-    "uploadPreset": "PEW1"
+    "whatsapp": "56935733021",
+    "cloudName": "",
+    "uploadPreset": ""
   }
 }
