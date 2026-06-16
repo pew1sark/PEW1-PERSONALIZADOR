@@ -1,0 +1,28 @@
+{
+  "overrides": {},
+  "overrides3d": {},
+  "prices": {
+    "hoodie": 44990,
+    "hoodiezip": 49990,
+    "poleron": 39990,
+    "tee": 19990,
+    "grande": 0,
+    "mediano": 0,
+    "bordado": 0
+  },
+  "store": {
+    "domain": "sarkpew1.com",
+    "handle": "hoodie-personalizado",
+    "v1": "45190191677537",
+    "v2": "45190191644769",
+    "v3": "45190191284321",
+    "v4": "45190191612001",
+    "p1": "19990",
+    "p2": "39990",
+    "p3": "44990",
+    "p4": "49990",
+    "whatsapp": "",
+    "cloudName": "",
+    "uploadPreset": ""
+  }
+}
