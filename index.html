@@ -692,7 +692,6 @@ class Component extends DCLogic {
       fd.append('file', dataUrl);
       fd.append('upload_preset', st.uploadPreset);
       fd.append('folder', 'pedidos');
-      if (this.state.orderRef) fd.append('public_id', 'pedidos/' + this.state.orderRef);
       const res = await fetch('https://api.cloudinary.com/v1_1/' + st.cloudName + '/image/upload', { method:'POST', body: fd });
       const j = await res.json();
       return j.secure_url || '';
