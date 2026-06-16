@@ -295,7 +295,7 @@
     <div data-reveal style="max-width:1200px;margin:0 auto">
       <div style="font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)">Detalles de confección</div>
       <div style="width:48px;height:4px;background:var(--accent);margin:10px 0 16px"></div>
-      <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);line-height:1;text-transform:uppercase;margin:0 0 38px">El diablo está<br>en la costura.</h2><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+      <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);line-height:1;text-transform:uppercase;margin:0 0 38px">El diablo está<br>en la costura.</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
         <div style="background:#0d1338;border:2px solid var(--accent);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px">
           <div style="height:130px;border-radius:6px;background:repeating-linear-gradient(135deg,#0A0F2E 0 3px,#10173d 3px 6px);display:flex;align-items:center;justify-content:center">
             <div style="background:#E7E0CE;border:2px solid #0B0B0D;border-radius:3px;padding:8px 12px;display:flex;align-items:center;gap:8px;box-shadow:3px 3px 0 rgba(0,0,0,.4)">
@@ -303,13 +303,6 @@
             </div>
           </div>
           <div><h3 style="font-family:var(--font-display);font-size:17px;text-transform:uppercase;margin:0 0 8px">Etiqueta tejida</h3><p style="font-size:13px;line-height:1.55;color:var(--pewi-gray-200);margin:0">Etiqueta de cuello tejida en jacquard con el ícono de la casa. Cosida, no impresa.</p></div>
-        </div>
-        <div style="background:#0d1338;border:2px solid var(--accent);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px">
-          <div style="height:130px;border-radius:6px;background:#0B0B0D;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
-            <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0 5px,rgba(255,255,255,.03) 5px 6px)"></div>
-            <img src="assets/brand/pewi-icon-white.png" style="height:70px;filter:drop-shadow(1.5px 1.5px 0 var(--accent))">
-          </div>
-          <div><h3 style="font-family:var(--font-display);font-size:17px;text-transform:uppercase;margin:0 0 8px">Bordado</h3><p style="font-size:13px;line-height:1.55;color:var(--pewi-gray-200);margin:0">El tag SARK bordado al pecho en hilo de alta densidad. Relieve al tacto. +$4.000.</p></div>
         </div>
         <div style="background:#0d1338;border:2px solid var(--accent);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px">
           <div style="height:130px;border-radius:6px;overflow:hidden;position:relative;background:#0B0B0D">
@@ -352,7 +345,7 @@
             <span style="position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;background:var(--pewi-ink);color:#fff;font-family:var(--font-display);font-size:13px;display:flex;align-items:center;justify-content:center">2</span>
           </div>
           <h3 style="font-family:var(--font-display);font-size:18px;text-transform:uppercase;margin:0">Confección</h3>
-          <p style="font-size:13px;line-height:1.55;color:var(--text-body);margin:0">Estampamos a mano —serigrafía o bordado— sobre algodón pesado 320g. Hecho en Chiguayante.</p>
+          <p style="font-size:13px;line-height:1.55;color:var(--text-body);margin:0">Estampamos a mano —serigrafía— sobre algodón pesado 320g. Hecho en Chiguayante.</p>
         </div>
 
         <div style="display:flex;align-items:center;justify-content:center;color:var(--accent)">
@@ -565,7 +558,7 @@ class Component extends DCLogic {
     overrides3d: {},
     imgOverrides: {},
     store: { domain:'sarkpew1.com', handle:'hoodie-personalizado', v1:'45190191677537', v2:'45190191644769', v3:'45190191284321', v4:'45190191612001', p1:'19990', p2:'39990', p3:'44990', p4:'49990', whatsapp:'', cloudName:'', uploadPreset:'' },
-    prices: { hoodie:44990, hoodiezip:49990, poleron:39990, tee:19990, grande:0, mediano:0, bordado:0 },
+    prices: { hoodie:44990, hoodiezip:49990, poleron:39990, tee:19990, grande:0, mediano:0 },
     exported: false,
     published: false,
     mag: 3,
@@ -1031,12 +1024,11 @@ class Component extends DCLogic {
   fmt(n){ return '$' + String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
 
   unitPrice(s){
-    const pr = s.prices || { hoodie:39990, hoodiezip:44990, poleron:37990, tee:29990, grande:2000, mediano:1000, bordado:4000 };
+    const pr = s.prices || { hoodie:44990, hoodiezip:49990, poleron:39990, tee:19990, grande:0, mediano:0 };
     let p = +pr[s.product] || 0;
     const meta = this.designs.find(d => d.id === s.designId);
     if (meta.size === 'grande') p += (+pr.grande || 0);
     else if (meta.size === 'mediano') p += (+pr.mediano || 0);
-    if (s.technique === 'bordado') p += (+pr.bordado || 0);
     return p;
   }
   setPrice(key, val){ const n = String(val).replace(/[^0-9]/g,''); this.setState(s => ({ prices: Object.assign({}, s.prices, { [key]: +n || 0 }) }), () => this.persist()); }
@@ -1149,8 +1141,7 @@ class Component extends DCLogic {
     const sideOpts = [{ k:'pecho', label:'Al pecho' }, { k:'espalda', label:'A la espalda' }].map(o => ({ label:o.label, style:this.smallChip(s.side===o.k), onClick:() => this.setState({ side:o.k }) }));
     const colorOpts = this.colors.map(c => ({ name:c.name, active:s.colorId===c.id, style:this.swatchStyle(c.hex, s.colorId===c.id), onClick:() => this.setState({ colorId:c.id }) }));
     const techOpts = [
-      { k:'serigrafia', label:'Serigrafía', sub:'Incluido' },
-      { k:'bordado', label:'Bordado', sub:'+$4.000' }
+      { k:'serigrafia', label:'Serigrafía', sub:'Incluido' }
     ].map(o => ({ label:o.label, sub:o.sub, style:this.smallChip(s.technique===o.k), onClick:() => this.setState({ technique:o.k }) }));
     const sizeOpts = ['XS','S','M','L','XL','XXL'].map(z => ({ label:z, style:this.sizeStyle(s.size===z), onClick:() => this.setState({ size:z }) }));
 
@@ -1160,7 +1151,7 @@ class Component extends DCLogic {
       cellTalla: Object.assign({}, cellBase(s.size===r[0]), { fontWeight:'800', letterSpacing:'.04em' }),
       cell: cellBase(s.size===r[0]) }));
 
-    const techName = { serigrafia:'Serigrafía', bordado:'Bordado' }[s.technique];
+    const techName = { serigrafia:'Serigrafía' }[s.technique] || 'Serigrafía';
     const productLabel = this.products.find(p => p.id === s.product).label;
     const summaryLines = [
       { k:'Producto', v:productLabel },
@@ -1180,7 +1171,7 @@ class Component extends DCLogic {
       railPrev: () => this.railScroll(-1),
       railNext: () => this.railScroll(1),
       heroGhostStyle: { background:'transparent', color:'#fff', borderColor:'#fff' },
-      marqueeText: 'CUERVO · CASA · FELINO · NIDO · TAG SARK · SERIGRAFÍA · BORDADO · ALGODÓN 320G · HECHO A PEDIDO · ',
+      marqueeText: 'CUERVO · CASA · FELINO · NIDO · TAG SARK · SERIGRAFÍA · ALGODÓN 320G · HECHO A PEDIDO · ',
       heroGarment: this.mockup('back', 'hoodie', 'negro', this.resolve('hoodie','cuervo','espalda').back, 'hero'),
       models,
       frontGarment: this.interactivePane('front', s.product, s.colorId, place.front, 'cf-' + s.product + s.colorId + s.designId + s.side),
@@ -1256,8 +1247,7 @@ class Component extends DCLogic {
       priceItems: this.products.map(p => ({ label:p.label, value: (s.prices||{})[p.id], inputStyle: this.priceInputStyle(), onInput: e => this.setPrice(p.id, e.target.value) })),
       surchargeItems: [
         { k:'grande', label:'Diseño grande' },
-        { k:'mediano', label:'Diseño mediano' },
-        { k:'bordado', label:'Bordado' }
+        { k:'mediano', label:'Diseño mediano' }
       ].map(x => ({ label:x.label, value: (s.prices||{})[x.k], inputStyle: this.priceInputStyle(), onInput: e => this.setPrice(x.k, e.target.value) })),
       onStoreP1: e => this.setStore('p1', e.target.value),
       onStoreP2: e => this.setStore('p2', e.target.value),
