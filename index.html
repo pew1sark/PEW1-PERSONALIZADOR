@@ -522,6 +522,7 @@
             <div style="display:flex;gap:16px;flex-wrap:wrap">
               <span onClick="{{ copyReport }}" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--pewi-ink);border-bottom:2px solid var(--accent);padding-bottom:3px">{{ copyReportLabel }}</span>
               <span onClick="{{ whatsappOrder }}" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--pewi-ink);border-bottom:2px solid var(--accent);padding-bottom:3px">Enviar por WhatsApp</span>
+              <span onClick="{{ downloadImage }}" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--pewi-ink);border-bottom:2px solid var(--accent);padding-bottom:3px">Descargar imagen</span>
             </div>
             <div style="display:flex;gap:10px;flex-wrap:wrap">
               <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Button" hint-size="auto,44px" variant="secondary" on-click="{{ closeOrder }}">Seguir creando</x-import>
@@ -556,8 +557,8 @@ class Component extends DCLogic {
     overrides: {},
     overrides3d: {},
     imgOverrides: {},
-    store: { domain:'sarkpew1.com', handle:'hoodie-personalizado', v1:'', v2:'', v3:'', v4:'', p1:'39990', p2:'44990', p3:'47990', p4:'49990', whatsapp:'' },
-    prices: { hoodie:39990, hoodiezip:44990, poleron:37990, tee:29990, grande:2000, mediano:1000, bordado:4000 },
+    store: { domain:'sarkpew1.com', handle:'hoodie-personalizado', v1:'45190191677537', v2:'45190191644769', v3:'45190191284321', v4:'45190191612001', p1:'19990', p2:'39990', p3:'44990', p4:'49990', whatsapp:'' },
+    prices: { hoodie:44990, hoodiezip:49990, poleron:39990, tee:19990, grande:0, mediano:0, bordado:0 },
     exported: false,
     mag: 3,
     view3d: 'front',
@@ -573,7 +574,31 @@ class Component extends DCLogic {
       if (isAdmin) this.setState({ admin: true });
       window.addEventListener('hashchange', () => { this.setState({ admin: /admin/i.test(location.hash || '') }); });
     } catch(e){}
-    try { const r = localStorage.getItem('pewi-dev'); if (r) { const d = JSON.parse(r); this.setState({ overrides: d.overrides || {}, overrides3d: d.overrides3d || {}, imgOverrides: d.imgOverrides || {}, store: Object.assign({ domain:'sarkpew1.com', handle:'hoodie-personalizado', v1:'', v2:'', v3:'', v4:'', p1:'39990', p2:'44990', p3:'47990', p4:'49990', whatsapp:'' }, d.store || {}), prices: Object.assign({ hoodie:39990, hoodiezip:44990, poleron:37990, tee:29990, grande:2000, mediano:1000, bordado:4000 }, d.prices || {}) }); } } catch(e){}
+    try {
+      const r = localStorage.getItem('pewi-dev');
+      if (r) {
+        const d = JSON.parse(r);
+        const ns = { overrides: d.overrides || {}, overrides3d: d.overrides3d || {}, imgOverrides: d.imgOverrides || {} };
+        // Only honor a saved store/prices when it was actually admin-configured (carries variant IDs).
+        // Otherwise keep the real defaults above, so client carts always receive the correct variant.
+        const ss = d.store || {};
+        if (ss.v1 || ss.v2 || ss.v3 || ss.v4) {
+          ns.store = Object.assign({}, this.state.store, ss);
+          ns.prices = Object.assign({}, this.state.prices, d.prices || {});
+        } else if (ss.whatsapp) {
+          ns.store = Object.assign({}, this.state.store, { whatsapp: ss.whatsapp });
+        }
+        this.setState(ns);
+      }
+    } catch(e){}
+    // Deep link: reproduce an exact design from URL params (used by the order report link).
+    try {
+      const sp = new URLSearchParams(location.search);
+      const patch = {};
+      const map = { p:'product', d:'designId', c:'colorId', t:'technique', z:'size', s:'side' };
+      Object.keys(map).forEach(k => { const val = sp.get(k); if (val) patch[map[k]] = val; });
+      if (Object.keys(patch).length) this.setState(patch);
+    } catch(e){}
     // scroll-reveal animations
     try {
       this._io = new IntersectionObserver((es) => {
@@ -602,19 +627,113 @@ class Component extends DCLogic {
   priceInputStyle(){ return { width:'104px', padding:'9px 0', background:'transparent', border:'none', color:'#fff', fontSize:'14px', fontWeight:'700', fontFamily:'var(--font-text)', textAlign:'right', outline:'none' }; }
 
   // ---- Shopify checkout ----
-  goShopify(){
-    const st = this.state.store;
-    const unit = this.unitPrice(this.state);
-    // pick a variant id by price tier if provided
-    const tiers = [ {p:+st.p1||39990,v:st.v1}, {p:+st.p2||44990,v:st.v2}, {p:+st.p3||47990,v:st.v3}, {p:+st.p4||49990,v:st.v4} ];
+  // Resolve the Shopify variant id for the current product by matching its base price
+  // against the configured tiers (surcharges are 0 → the base price is an exact match).
+  variantFor(s){
+    const st = s.store;
+    const base = +((s.prices || {})[s.product]) || this.unitPrice(s);
+    const tiers = [ {p:+st.p1||0,v:st.v1}, {p:+st.p2||0,v:st.v2}, {p:+st.p3||0,v:st.v3}, {p:+st.p4||0,v:st.v4} ];
     let best = null, bd = 1e9;
-    tiers.forEach(t => { const d = Math.abs(t.p - unit); if (t.v && d < bd) { bd = d; best = t.v; } });
-    // copy full order report (incl. client notes) to clipboard for the cart note
+    tiers.forEach(t => { const d = Math.abs(t.p - base); if (t.v && d < bd) { bd = d; best = t.v; } });
+    return best;
+  }
+  // Shareable deep link that reproduces this exact design (used as an order line-item property).
+  designLink(){
+    const s = this.state;
+    let baseUrl;
+    try { baseUrl = location.origin + location.pathname; } catch(e){ baseUrl = 'https://pew1sark.github.io/PEW1-PERSONALIZADOR/'; }
+    const q = 'p=' + s.product + '&d=' + s.designId + '&c=' + s.colorId + '&t=' + s.technique + '&z=' + encodeURIComponent(s.size) + '&s=' + s.side;
+    return baseUrl + '?' + q;
+  }
+  goShopify(){
+    const s = this.state, st = s.store;
+    const best = this.variantFor(s);
+    // Save a visual screenshot of the design so every order has a confección report (image + labels).
+    try { this.downloadDesignImage(); } catch(e){}
+    // Keep the full text report on the clipboard as a fallback for the maker.
     try { navigator.clipboard && navigator.clipboard.writeText(this.orderReport()); } catch(e){}
     let url;
-    if (best) url = 'https://' + st.domain + '/cart/' + encodeURIComponent(best) + ':' + this.state.qty;
-    else url = 'https://' + st.domain + '/products/' + st.handle;
+    if (best) {
+      // Carry the made-to-order spec as line-item properties so it shows on the order.
+      const vals = this.renderVals();
+      const props = {};
+      (vals.summaryLines || []).forEach(l => { props[l.k] = l.v; });
+      if (s.orderRef) props['Folio'] = s.orderRef;
+      props['Diseño (link)'] = this.designLink();
+      if ((s.notes || '').trim()) props['Notas'] = s.notes.trim();
+      const qs = Object.keys(props)
+        .map(k => 'properties[' + encodeURIComponent(k) + ']=' + encodeURIComponent(props[k]))
+        .join('&');
+      url = 'https://' + st.domain + '/cart/add?id=' + encodeURIComponent(best) + '&quantity=' + (s.qty || 1) + (qs ? '&' + qs : '');
+    } else {
+      url = 'https://' + st.domain + '/products/' + st.handle;
+    }
     window.open(url, '_blank');
+  }
+
+  // ---- Design screenshot (confección report image) ----
+  loadImage(src){ return new Promise((res, rej) => { const im = new Image(); im.crossOrigin = 'anonymous'; im.onload = () => res(im); im.onerror = rej; im.src = src; }); }
+  async captureDesign(){
+    const s = this.state;
+    const place = this.resolve(s.product, s.designId, s.side);
+    const prefix = this.pre(s.product);
+    const color = this.colors.find(c => c.id === s.colorId) || this.colors[0];
+    const dir = color.dark === false ? 'assets/designs-ink/' : 'assets/designs/';
+    const pct = v => parseFloat(String(v)) / 100;
+    // Build one column (a garment view) onto its own canvas at the base image's native size.
+    const buildView = async (view, overlays) => {
+      const base = await this.loadImage(this.imgSrc('assets/mockup/' + prefix + '-' + view + '-' + s.colorId + '.png'));
+      const cv = document.createElement('canvas');
+      cv.width = base.naturalWidth; cv.height = base.naturalHeight;
+      const ctx = cv.getContext('2d');
+      ctx.drawImage(base, 0, 0, cv.width, cv.height);
+      for (let i = 0; i < (overlays || []).length; i++){
+        const ov = overlays[i];
+        const o = this.state.overrides[prefix + ':' + view + ':' + ov.id];
+        const box = o ? { top:o.top+'%', left:o.left+'%', width:o.width+'%' } : ov.box;
+        try {
+          const im = await this.loadImage(this.imgSrc(dir + ov.id + '.png'));
+          const w = pct(box.width) * cv.width;
+          const h = w * (im.naturalHeight / im.naturalWidth);
+          ctx.drawImage(im, pct(box.left) * cv.width, pct(box.top) * cv.height, w, h);
+        } catch(e){}
+      }
+      return cv;
+    };
+    const front = await buildView('front', place.front);
+    const back  = await buildView('back', place.back);
+    // Compose: header band with labels + the two garment views side by side.
+    const vals = this.renderVals();
+    const lines = (vals.summaryLines || []).map(l => l.k + ': ' + l.v);
+    lines.unshift('Folio: ' + (s.orderRef || '—') + '  ·  ' + new Date().toLocaleString('es-CL'));
+    if ((s.notes || '').trim()) lines.push('Notas: ' + s.notes.trim());
+    const colW = Math.max(front.width, back.width);
+    const colH = Math.max(front.height, back.height);
+    const pad = 40, gap = 40, lineH = 34;
+    const headerH = 70 + lines.length * lineH;
+    const W = pad * 2 + colW * 2 + gap;
+    const H = headerH + colH + pad;
+    const out = document.createElement('canvas');
+    out.width = W; out.height = H;
+    const ctx = out.getContext('2d');
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#0B0B0D';
+    ctx.font = '700 30px Arial, sans-serif';
+    ctx.fillText('PEW1 STREET WEAR · INFORME DE PEDIDO', pad, 46);
+    ctx.font = '400 22px Arial, sans-serif';
+    lines.forEach((ln, i) => { ctx.fillStyle = i === 0 ? '#6b6b6b' : '#222'; ctx.fillText(ln, pad, 70 + 26 + i * lineH); });
+    ctx.drawImage(front, pad, headerH, colW, colH);
+    ctx.drawImage(back, pad + colW + gap, headerH, colW, colH);
+    return out.toDataURL('image/png');
+  }
+  async downloadDesignImage(){
+    try {
+      const dataUrl = await this.captureDesign();
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = 'PEW1-' + (this.state.orderRef || 'pedido') + '-' + this.state.product + '.png';
+      document.body.appendChild(a); a.click(); a.remove();
+    } catch(e){ console.warn('captureDesign falló', e); }
   }
 
   // ---- 3D model availability + placement ----
@@ -1043,6 +1162,7 @@ class Component extends DCLogic {
       copyReport: () => this.copyReport(),
       copyReportLabel: s.copiedReport ? 'Informe copiado ✓' : 'Copiar informe',
       whatsappOrder: () => this.whatsappOrder(),
+      downloadImage: () => this.downloadDesignImage(),
       onStoreWhatsapp: e => this.setStore('whatsapp', e.target.value),
       dev: s.dev,
       devLabel: s.dev ? 'Cerrar ajustes' : 'Modo desarrollo',
