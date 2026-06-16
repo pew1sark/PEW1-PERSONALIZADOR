@@ -469,6 +469,11 @@
           <div style="display:flex;gap:8px"><span style="display:inline-flex;align-items:center;gap:3px;background:#17171b;border:1px solid #2e2e34;border-radius:7px;padding:0 8px;flex:0 0 92px"><span style="color:var(--pewi-gray-300);font-size:12px">$</span><input type="text" inputmode="numeric" value="{{ store.p2 }}" onInput="{{ onStoreP2 }}" style="{{ devInputMini }}"></span><input type="text" value="{{ store.v2 }}" onInput="{{ onStoreV2 }}" placeholder="ID variante 2" style="{{ devInput }}"></div>
           <div style="display:flex;gap:8px"><span style="display:inline-flex;align-items:center;gap:3px;background:#17171b;border:1px solid #2e2e34;border-radius:7px;padding:0 8px;flex:0 0 92px"><span style="color:var(--pewi-gray-300);font-size:12px">$</span><input type="text" inputmode="numeric" value="{{ store.p3 }}" onInput="{{ onStoreP3 }}" style="{{ devInputMini }}"></span><input type="text" value="{{ store.v3 }}" onInput="{{ onStoreV3 }}" placeholder="ID variante 3" style="{{ devInput }}"></div>
           <div style="display:flex;gap:8px"><span style="display:inline-flex;align-items:center;gap:3px;background:#17171b;border:1px solid #2e2e34;border-radius:7px;padding:0 8px;flex:0 0 92px"><span style="color:var(--pewi-gray-300);font-size:12px">$</span><input type="text" inputmode="numeric" value="{{ store.p4 }}" onInput="{{ onStoreP4 }}" style="{{ devInputMini }}"></span><input type="text" value="{{ store.v4 }}" onInput="{{ onStoreV4 }}" placeholder="ID variante 4" style="{{ devInput }}"></div>
+          <div style="height:1px;background:#222;margin:6px 0 2px"></div>
+          <div style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Imagen del pedido (Cloudinary)</div>
+          <div style="font-size:10px;color:var(--pewi-gray-300);line-height:1.5;margin:-4px 0 2px">Sube la imagen del diseño a tu Cloudinary y la adjunta al pedido. Déjalo vacío para usar solo el link del diseño.</div>
+          <label style="display:block"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">Cloud name</span><input type="text" value="{{ store.cloudName }}" onInput="{{ onStoreCloudName }}" placeholder="tu-cloud-name" style="{{ devInput }}"></label>
+          <label style="display:block"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">Upload preset (unsigned)</span><input type="text" value="{{ store.uploadPreset }}" onInput="{{ onStoreUploadPreset }}" placeholder="pew1_pedidos" style="{{ devInput }}"></label>
         </div>
       </sc-if>
 
@@ -476,6 +481,8 @@
         <span onClick="{{ resetAll }}" style="flex:1;text-align:center;cursor:pointer;border:2px solid #fff;border-radius:8px;padding:10px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase">Reiniciar todo</span>
         <span onClick="{{ exportValues }}" style="flex:1;text-align:center;cursor:pointer;background:var(--accent);color:var(--pewi-ink);border:2px solid var(--pewi-ink);border-radius:8px;padding:10px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase">{{ exportLabel }}</span>
       </div>
+      <span onClick="{{ publishConfig }}" style="display:block;text-align:center;cursor:pointer;background:var(--pewi-ink);color:#fff;border:2px solid var(--pewi-ink);border-radius:8px;padding:11px;margin-top:10px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase">{{ publishLabel }}</span>
+      <div style="font-size:10px;color:var(--pewi-gray-300);line-height:1.5;margin-top:8px">"Publicar" copia toda tu configuración. Pégala en <b>config.json</b> del repo y haz commit para que todos los clientes la vean.</div>
     </div>
   </sc-if>
 
@@ -557,9 +564,10 @@ class Component extends DCLogic {
     overrides: {},
     overrides3d: {},
     imgOverrides: {},
-    store: { domain:'sarkpew1.com', handle:'hoodie-personalizado', v1:'45190191677537', v2:'45190191644769', v3:'45190191284321', v4:'45190191612001', p1:'19990', p2:'39990', p3:'44990', p4:'49990', whatsapp:'' },
+    store: { domain:'sarkpew1.com', handle:'hoodie-personalizado', v1:'45190191677537', v2:'45190191644769', v3:'45190191284321', v4:'45190191612001', p1:'19990', p2:'39990', p3:'44990', p4:'49990', whatsapp:'', cloudName:'', uploadPreset:'' },
     prices: { hoodie:44990, hoodiezip:49990, poleron:39990, tee:19990, grande:0, mediano:0, bordado:0 },
     exported: false,
+    published: false,
     mag: 3,
     view3d: 'front',
     spin: false,
@@ -574,9 +582,13 @@ class Component extends DCLogic {
       if (isAdmin) this.setState({ admin: true });
       window.addEventListener('hashchange', () => { this.setState({ admin: /admin/i.test(location.hash || '') }); });
     } catch(e){}
+    // A browser with a saved working copy = admin device → keep editing locally.
+    // A browser without it = a client → load the published config.json instead.
+    let hasLocal = false;
     try {
       const r = localStorage.getItem('pewi-dev');
       if (r) {
+        hasLocal = true;
         const d = JSON.parse(r);
         const ns = { overrides: d.overrides || {}, overrides3d: d.overrides3d || {}, imgOverrides: d.imgOverrides || {} };
         // Only honor a saved store/prices when it was actually admin-configured (carries variant IDs).
@@ -585,12 +597,13 @@ class Component extends DCLogic {
         if (ss.v1 || ss.v2 || ss.v3 || ss.v4) {
           ns.store = Object.assign({}, this.state.store, ss);
           ns.prices = Object.assign({}, this.state.prices, d.prices || {});
-        } else if (ss.whatsapp) {
-          ns.store = Object.assign({}, this.state.store, { whatsapp: ss.whatsapp });
+        } else if (ss.whatsapp || ss.cloudName) {
+          ns.store = Object.assign({}, this.state.store, ss);
         }
         this.setState(ns);
       }
     } catch(e){}
+    if (!hasLocal) this.loadPublishedConfig();
     // Deep link: reproduce an exact design from URL params (used by the order report link).
     try {
       const sp = new URLSearchParams(location.search);
@@ -611,6 +624,31 @@ class Component extends DCLogic {
   }
   componentDidUpdate(){ if (this._scanReveals) this._scanReveals(); }
   persist(){ try { localStorage.setItem('pewi-dev', JSON.stringify({ overrides: this.state.overrides, overrides3d: this.state.overrides3d, imgOverrides: this.state.imgOverrides, store: this.state.store, prices: this.state.prices })); } catch(e){} }
+  // Published settings for every visitor (clients have no local working copy). Merges over code defaults.
+  loadPublishedConfig(){
+    fetch('config.json', { cache:'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(cfg => {
+        if (!cfg) return;
+        this.setState(s => ({
+          overrides:   cfg.overrides   ? Object.assign({}, s.overrides,   cfg.overrides)   : s.overrides,
+          overrides3d: cfg.overrides3d ? Object.assign({}, s.overrides3d, cfg.overrides3d) : s.overrides3d,
+          prices:      cfg.prices      ? Object.assign({}, s.prices,      cfg.prices)      : s.prices,
+          store:       cfg.store       ? Object.assign({}, s.store,       cfg.store)       : s.store
+        }));
+      })
+      .catch(() => {});
+  }
+  // Build the publishable config.json payload from the current (admin) state.
+  configJSON(){
+    return JSON.stringify({
+      overrides: this.state.overrides,
+      overrides3d: this.state.overrides3d,
+      prices: this.state.prices,
+      store: this.state.store
+    }, null, 2);
+  }
+  publishConfig(){ try { navigator.clipboard.writeText(this.configJSON()); } catch(e){} this.setState({ published:true }); setTimeout(() => this.setState({ published:false }), 1600); }
 
   // ---- image override (dev upload) ----
   imgSrc(path){ const o = this.state.imgOverrides[path]; return o || path; }
@@ -645,20 +683,49 @@ class Component extends DCLogic {
     const q = 'p=' + s.product + '&d=' + s.designId + '&c=' + s.colorId + '&t=' + s.technique + '&z=' + encodeURIComponent(s.size) + '&s=' + s.side;
     return baseUrl + '?' + q;
   }
-  goShopify(){
+  // Unsigned upload of the design PNG to Cloudinary → returns a public URL (or '' if not configured).
+  async uploadToCloudinary(dataUrl){
+    const st = this.state.store;
+    if (!st.cloudName || !st.uploadPreset || !dataUrl) return '';
+    try {
+      const fd = new FormData();
+      fd.append('file', dataUrl);
+      fd.append('upload_preset', st.uploadPreset);
+      fd.append('folder', 'pedidos');
+      if (this.state.orderRef) fd.append('public_id', 'pedidos/' + this.state.orderRef);
+      const res = await fetch('https://api.cloudinary.com/v1_1/' + st.cloudName + '/image/upload', { method:'POST', body: fd });
+      const j = await res.json();
+      return j.secure_url || '';
+    } catch(e){ console.warn('Cloudinary upload falló', e); return ''; }
+  }
+  triggerDownload(dataUrl){
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = 'PEW1-' + (this.state.orderRef || 'pedido') + '-' + this.state.product + '.png';
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+  async goShopify(){
     const s = this.state, st = s.store;
     const best = this.variantFor(s);
-    // Save a visual screenshot of the design so every order has a confección report (image + labels).
-    try { this.downloadDesignImage(); } catch(e){}
+    // Reserve the destination tab inside the click gesture so it is not popup-blocked after the await.
+    const win = window.open('', '_blank');
+    // Build the design report image, upload it (for the order email) and save a local copy as backup.
+    let imageUrl = '';
+    try {
+      const dataUrl = await this.captureDesign();
+      imageUrl = await this.uploadToCloudinary(dataUrl);
+      this.triggerDownload(dataUrl);
+    } catch(e){ console.warn('captura/subida falló', e); }
     // Keep the full text report on the clipboard as a fallback for the maker.
     try { navigator.clipboard && navigator.clipboard.writeText(this.orderReport()); } catch(e){}
     let url;
     if (best) {
-      // Carry the made-to-order spec as line-item properties so it shows on the order.
+      // Carry the made-to-order spec (incl. the image URL) as line-item properties so it shows on the order.
       const vals = this.renderVals();
       const props = {};
       (vals.summaryLines || []).forEach(l => { props[l.k] = l.v; });
       if (s.orderRef) props['Folio'] = s.orderRef;
+      if (imageUrl) props['Imagen'] = imageUrl;
       props['Diseño (link)'] = this.designLink();
       if ((s.notes || '').trim()) props['Notas'] = s.notes.trim();
       const qs = Object.keys(props)
@@ -668,7 +735,7 @@ class Component extends DCLogic {
     } else {
       url = 'https://' + st.domain + '/products/' + st.handle;
     }
-    window.open(url, '_blank');
+    if (win) win.location = url; else window.open(url, '_blank');
   }
 
   // ---- Design screenshot (confección report image) ----
@@ -727,13 +794,8 @@ class Component extends DCLogic {
     return out.toDataURL('image/png');
   }
   async downloadDesignImage(){
-    try {
-      const dataUrl = await this.captureDesign();
-      const a = document.createElement('a');
-      a.href = dataUrl;
-      a.download = 'PEW1-' + (this.state.orderRef || 'pedido') + '-' + this.state.product + '.png';
-      document.body.appendChild(a); a.click(); a.remove();
-    } catch(e){ console.warn('captureDesign falló', e); }
+    try { this.triggerDownload(await this.captureDesign()); }
+    catch(e){ console.warn('captureDesign falló', e); }
   }
 
   // ---- 3D model availability + placement ----
@@ -1164,6 +1226,8 @@ class Component extends DCLogic {
       whatsappOrder: () => this.whatsappOrder(),
       downloadImage: () => this.downloadDesignImage(),
       onStoreWhatsapp: e => this.setStore('whatsapp', e.target.value),
+      onStoreCloudName: e => this.setStore('cloudName', e.target.value),
+      onStoreUploadPreset: e => this.setStore('uploadPreset', e.target.value),
       dev: s.dev,
       devLabel: s.dev ? 'Cerrar ajustes' : 'Modo desarrollo',
       toggleDev: () => this.toggleDev(),
@@ -1171,6 +1235,8 @@ class Component extends DCLogic {
       resetAll: () => this.resetAll(),
       exportValues: () => this.exportValues(),
       exportLabel: s.exported ? 'Copiado ✓' : 'Exportar',
+      publishConfig: () => this.publishConfig(),
+      publishLabel: s.published ? 'Config copiada ✓ — pégala en config.json' : 'Publicar (copiar config)',
       goShopify: () => this.goShopify(),
       shopifyLabel: (this.state.store.v1||this.state.store.v2||this.state.store.v3||this.state.store.v4) ? 'Ir a pagar →' : 'Ir a la tienda →',
       devTab: s.devTab,
