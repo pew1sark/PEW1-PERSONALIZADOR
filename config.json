@@ -43,7 +43,7 @@
     "tee:front:sark": {
       "top": 26,
       "left": 39,
-      "width": 23
+      "width": 22
     },
     "tee:back:nido": {
       "top": 21,
@@ -129,6 +129,11 @@
       "top": 5,
       "left": 28,
       "width": 48
+    },
+    "hoodie:back:felino": {
+      "top": 13,
+      "left": 28,
+      "width": 44
     }
   },
   "overrides3d": {},
