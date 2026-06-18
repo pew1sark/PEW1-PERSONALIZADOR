@@ -63,13 +63,18 @@
     #config [style*="padding:18px 22px"]{flex-direction:column !important;align-items:stretch !important;gap:14px !important;padding:16px 18px !important}
     #config [style*="padding:18px 22px"] > div:last-child{flex-wrap:wrap !important;justify-content:space-between !important;width:100% !important;gap:12px !important}
     /* El botón "Confeccionar" salta a su propia línea a ancho completo */
-    #config [style*="padding:18px 22px"] > div:last-child > x-import{flex:1 1 100% !important;width:100% !important;display:block !important}
+    #config [style*="padding:18px 22px"] > div:last-child > x-import{flex:1 1 100% !important;width:100% !important;display:block !important;text-align:center !important}
     /* Pasos "Cómo funciona": apilar tarjetas y girar las flechas */
     #pasos [style*="1fr auto 1fr auto 1fr"]{grid-template-columns:1fr !important;gap:14px !important}
     #pasos [style*="1fr auto 1fr auto 1fr"] > div:nth-child(even){transform:rotate(90deg)}
     /* Modal de pedido: permitir scroll para no cortar el formulario ni los botones */
     [style*="rgba(10,15,46,.74)"]{align-items:flex-start !important;overflow-y:auto !important;padding:14px !important;-webkit-overflow-scrolling:touch}
-    [style*="8px 8px 0 var(--accent)"]{margin:0 auto !important;box-shadow:5px 5px 0 var(--accent) !important}
+    [style*="8px 8px 0 var(--accent)"]{margin:14px auto !important;box-shadow:5px 5px 0 var(--accent) !important}
+    /* Acciones del modal: apiladas, ordenadas y a ancho completo */
+    [style*="8px 8px 0 var(--accent)"] [style*="margin-top:16px;display:flex;gap:14px"]{flex-direction:column !important;align-items:stretch !important;gap:16px !important}
+    [style*="8px 8px 0 var(--accent)"] [style*="gap:16px;flex-wrap:wrap"]{width:100% !important;justify-content:center !important;gap:14px 22px !important;padding-top:4px;border-top:1px solid var(--border-hair)}
+    [style*="8px 8px 0 var(--accent)"] [style*="gap:10px;flex-wrap:wrap"]{flex-direction:column-reverse !important;gap:10px !important;width:100% !important}
+    [style*="8px 8px 0 var(--accent)"] [style*="gap:10px;flex-wrap:wrap"] > x-import{display:block !important;width:100% !important;text-align:center !important}
     /* Panel admin: nunca más ancho que la pantalla */
     [style*="width:344px"]{width:100% !important;max-width:344px !important}
   }
@@ -841,7 +846,8 @@ class Component extends DCLogic {
     try {
       const dataUrl = await this.captureDesign();
       imageUrl = await this.uploadToCloudinary(dataUrl);
-      this.triggerDownload(dataUrl);
+      // No se descarga la imagen al cliente: el pedido ya lleva la imagen
+      // subida y el link del diseño, suficiente para gestionar el pedido.
     } catch(e){ console.warn('captura/subida falló', e); }
     // Keep the full text report on the clipboard as a fallback for the maker.
     try { navigator.clipboard && navigator.clipboard.writeText(this.orderReport()); } catch(e){}
