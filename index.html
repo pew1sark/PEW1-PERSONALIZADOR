@@ -99,10 +99,15 @@
     /* Modal: menos padding interno en pantallas chicas */
     .pew-modal > div:last-child{padding:18px 16px !important}
   }
+  @media (max-width:760px){
+    .pew-admin-panel{left:0 !important;width:100% !important}
+    .pew-admin-tabs{overflow-x:auto !important}
+    .pew-admin-tabs > span{flex:0 0 auto !important;min-width:82px !important}
+  }
 </style>
 </helmet>
 
-<div style="font-family:var(--font-text);background:transparent;color:#fff;min-height:100vh;overflow-x:hidden;position:relative">
+<div id="top" style="font-family:var(--font-text);background:transparent;color:#fff;min-height:100vh;overflow-x:hidden;position:relative">
 
   <!-- ===== LIQUID WALLPAPER (fixed, behind everything) ===== -->
   <x-import component-from-global-scope="pew-fluid" from="./pewfluid.js?v=20260618" intensity="0.85" calm="1" hint-size="100%,100%" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none"></x-import>
@@ -111,13 +116,11 @@
 
   <!-- ===== NAV ===== -->
   <nav class="pew-nav" style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:24px;height:66px;padding:0 28px;background:rgba(8,12,32,0.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,152,0,0.35)">
-    <div style="display:flex;align-items:center;gap:12px;cursor:pointer" onClick="{{ goTop }}">
+    <a href="{{ logoHref }}" target="{{ logoTarget }}" rel="{{ logoRel }}" style="display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none">
       <img src="{{ logoWhiteSrc }}" alt="PEWÏ STREETWEAR" style="height:38px;display:block">
-    </div>
+    </a>
     <div style="display:flex;align-items:center;gap:6px">
-      <span onClick="{{ goColeccion }}" style="cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;padding:8px 12px">Colección</span>
-      <span onClick="{{ goDetalles }}" style="cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;padding:8px 12px">Detalles</span>
-      <span onClick="{{ goConfig }}" style="cursor:pointer;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--pewi-ink);background:var(--accent);padding:10px 18px;border-radius:7px;box-shadow:0 4px 18px rgba(255,152,0,.4)">Personalizar</span>
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="3"><a href="{{ n.href }}" target="{{ n.target }}" rel="{{ n.rel }}" style="{{ n.style }}">{{ n.label }}</a></sc-for>
     </div>
   </nav>
 
@@ -125,13 +128,13 @@
   <header class="pew-hero" style="position:relative;color:#fff;overflow:hidden;min-height:calc(100vh - 66px);display:flex;align-items:center;padding:48px 28px 64px">
     <div class="pew-hero-grid" style="max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center">
       <div style="animation:pewrise .7s var(--ease-out) both">
-        <div style="display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:22px;background:rgba(255,152,0,0.10);border:1px solid rgba(255,152,0,0.35);padding:7px 14px;border-radius:999px">● Arte que transforma · Hecho a pedido</div>
-        <h1 style="font-family:var(--font-display);font-size:clamp(2.9rem,6.4vw,5.4rem);line-height:.94;letter-spacing:-.015em;text-transform:uppercase;margin:0 0 22px;text-shadow:0 8px 40px rgba(0,0,0,.5)">Cuatro tintas.<br><span style="color:var(--accent)">Una identidad.</span></h1>
-        <p style="font-size:17px;line-height:1.6;color:var(--pewi-gray-200);max-width:480px;margin:0 0 10px">Cuervo, Casa, Felino y Nido — cuatro diseños originales de Nicolas Sark sobre algodón pesado.</p>
-        <p style="font-size:15px;line-height:1.6;color:var(--pewi-gray-300);max-width:480px;margin:0 0 28px">Tú eliges el corte, el diseño, el color y la talla. Confección nacional a pedido · entrega 10–15 días.</p>
+        <div style="display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:22px;background:rgba(255,152,0,0.10);border:1px solid rgba(255,152,0,0.35);padding:7px 14px;border-radius:999px">{{ heroEyebrow }}</div>
+        <h1 style="font-family:var(--font-display);font-size:clamp(2.9rem,6.4vw,5.4rem);line-height:.94;letter-spacing:-.015em;text-transform:uppercase;margin:0 0 22px;text-shadow:0 8px 40px rgba(0,0,0,.5)">{{ heroTitle }}<br><span style="color:var(--accent)">{{ heroAccent }}</span></h1>
+        <p style="font-size:17px;line-height:1.6;color:var(--pewi-gray-200);max-width:480px;margin:0 0 10px">{{ heroLead }}</p>
+        <p style="font-size:15px;line-height:1.6;color:var(--pewi-gray-300);max-width:480px;margin:0 0 28px">{{ heroSub }}</p>
         <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:32px">
-          <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Button" hint-size="auto,52px" variant="accent" size="lg" on-click="{{ goConfig }}">Personaliza tu prenda</x-import>
-          <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Button" hint-size="auto,52px" variant="secondary" size="lg" on-click="{{ goColeccion }}" style="{{ heroGhostStyle }}">Ver los diseños</x-import>
+          <a href="{{ heroPrimaryHref }}" target="{{ heroPrimaryTarget }}" rel="{{ heroPrimaryRel }}" style="{{ heroPrimaryStyle }}">{{ heroPrimaryLabel }}</a>
+          <a href="{{ heroSecondaryHref }}" target="{{ heroSecondaryTarget }}" rel="{{ heroSecondaryRel }}" style="{{ heroSecondaryStyle }}">{{ heroSecondaryLabel }}</a>
         </div>
         <div style="display:flex;gap:28px;border-top:1px solid rgba(255,255,255,0.16);padding-top:20px;max-width:480px">
           <div><div style="font-family:var(--font-display);font-size:26px">4</div><div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--pewi-gray-300)">Diseños</div></div>
@@ -141,7 +144,7 @@
         </div>
       </div>
       <div style="position:relative;background:radial-gradient(circle at 50% 38%,rgba(244,244,241,.96),rgba(210,210,204,.92) 84%);border:2px solid var(--accent);border-radius:14px;padding:18px;display:flex;align-items:center;justify-content:center;animation:pewpop .8s var(--ease-out) both;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(255,152,0,.2)">
-        <div style="position:absolute;top:14px;left:16px;z-index:2;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--pewi-ink)">Cuervo · espalda</div>
+        <div style="position:absolute;top:14px;left:16px;z-index:2;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--pewi-ink)">{{ heroImageLabel }}</div>
         <div style="width:100%;max-width:360px;filter:drop-shadow(0 26px 32px rgba(0,0,0,.55));animation:pewfloat 6s ease-in-out infinite">{{ heroGarment }}</div>
       </div>
     </div>
@@ -159,12 +162,13 @@
   </div>
 
   <!-- ===== LOOKBOOK ===== -->
+  <sc-if value="{{ showColeccion }}" hint-placeholder-val="{{ true }}">
   <section id="coleccion" data-screen-label="Coleccion" style="max-width:1200px;margin:0 auto;padding:74px 28px 40px">
     <div data-reveal style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:18px;margin-bottom:38px">
       <div>
-        <div style="font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)">La colección · Drop 01</div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)">{{ collectionEyebrow }}</div>
         <div style="width:48px;height:4px;background:var(--accent);margin:10px 0 16px"></div>
-        <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem);line-height:1;text-transform:uppercase;margin:0">Cuatro diseños.<br>Una firma.</h2>
+        <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem);line-height:1;text-transform:uppercase;margin:0">{{ collectionTitle }}<br>{{ collectionSubtitle }}</h2>
       </div>
       
     </div>
@@ -197,6 +201,7 @@
       </div>
     </div>
   </section>
+  </sc-if>
 
   <!-- ===== CONFIGURADOR ===== -->
   <section id="config" data-screen-label="Configurador" style="padding:54px 22px 30px;margin-top:18px">
@@ -356,38 +361,41 @@
   </section>
 
   <!-- ===== DETALLES ===== -->
+  <sc-if value="{{ showDetalles }}" hint-placeholder-val="{{ true }}">
   <section id="detalles" data-screen-label="Detalles" style="color:#fff;padding:70px 28px">
     <div data-reveal style="max-width:1200px;margin:0 auto">
-      <div style="font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)">Detalles de confección</div>
+      <div style="font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)">{{ detailsEyebrow }}</div>
       <div style="width:48px;height:4px;background:var(--accent);margin:10px 0 16px"></div>
-      <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);line-height:1;text-transform:uppercase;margin:0 0 38px">El diablo está<br>en la costura.</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+      <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);line-height:1;text-transform:uppercase;margin:0 0 38px">{{ detailsTitle }}<br>{{ detailsSubtitle }}</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
         <div style="background:#0d1338;border:2px solid var(--accent);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px">
           <div style="height:130px;border-radius:6px;background:repeating-linear-gradient(135deg,#0A0F2E 0 3px,#10173d 3px 6px);display:flex;align-items:center;justify-content:center">
             <div style="background:#E7E0CE;border:2px solid #0B0B0D;border-radius:3px;padding:8px 12px;display:flex;align-items:center;gap:8px;box-shadow:3px 3px 0 rgba(0,0,0,.4)">
               <img src="{{ iconSrc }}" style="height:26px"><span style="font-family:var(--font-display);font-size:15px;color:#0B0B0D">PEWÏ</span>
             </div>
           </div>
-          <div><h3 style="font-family:var(--font-display);font-size:17px;text-transform:uppercase;margin:0 0 8px">Etiqueta tejida</h3><p style="font-size:13px;line-height:1.55;color:var(--pewi-gray-200);margin:0">Etiqueta de cuello tejida en jacquard con el ícono de la casa. Cosida, no impresa.</p></div>
+          <div><h3 style="font-family:var(--font-display);font-size:17px;text-transform:uppercase;margin:0 0 8px">{{ detailOneTitle }}</h3><p style="font-size:13px;line-height:1.55;color:var(--pewi-gray-200);margin:0">{{ detailOneText }}</p></div>
         </div>
         <div style="background:#0d1338;border:2px solid var(--accent);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px">
           <div style="height:130px;border-radius:6px;overflow:hidden;position:relative;background:#0B0B0D">
             <img src="{{ serigrafiaSrc }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block">
             <span style="position:absolute;bottom:8px;right:8px;background:var(--accent);color:var(--pewi-ink);font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:4px">Detalle · trama</span>
           </div>
-          <div><h3 style="font-family:var(--font-display);font-size:17px;text-transform:uppercase;margin:0 0 8px">Serigrafía</h3><p style="font-size:13px;line-height:1.55;color:var(--pewi-gray-200);margin:0">Estampado a mano cuadro por cuadro. Tintas plastisol opacas sobre algodón pesado — mira la trama del estampado sobre la fibra.</p></div>
+          <div><h3 style="font-family:var(--font-display);font-size:17px;text-transform:uppercase;margin:0 0 8px">{{ detailTwoTitle }}</h3><p style="font-size:13px;line-height:1.55;color:var(--pewi-gray-200);margin:0">{{ detailTwoText }}</p></div>
         </div>
         
       </div>
       
     </div>
   </section>
+  </sc-if>
 
   <!-- ===== CÓMO FUNCIONA ===== -->
+  <sc-if value="{{ showPasos }}" hint-placeholder-val="{{ true }}">
   <section id="pasos" data-screen-label="Pasos" style="padding:54px 22px">
     <div data-reveal style="max-width:1100px;margin:0 auto;text-align:center;background:var(--pewi-paper-2);border:1px solid rgba(255,152,0,0.32);border-radius:22px;padding:48px 30px;box-shadow:0 34px 90px rgba(0,0,0,.5)">
-      <div style="font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)">Cómo funciona</div>
-      <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);line-height:1;text-transform:uppercase;margin:14px 0 8px">Del pedido a tu puerta.</h2>
-      <p style="font-size:15px;color:var(--text-body);max-width:520px;margin:0 auto 44px">Cada prenda se confecciona a pedido, por eso la entrega toma 10–15 días hábiles.</p>
+      <div style="font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)">{{ stepsEyebrow }}</div>
+      <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);line-height:1;text-transform:uppercase;margin:14px 0 8px">{{ stepsTitle }}</h2>
+      <p style="font-size:15px;color:var(--text-body);max-width:520px;margin:0 auto 44px">{{ stepsIntro }}</p>
 
       <div class="pew-steps" style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px">
 
@@ -396,8 +404,8 @@
             <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0B0B0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7"></path><path d="M4 10V3"></path><path d="M12 21v-9"></path><path d="M12 8V3"></path><path d="M20 21v-5"></path><path d="M20 12V3"></path><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
             <span style="position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;background:var(--pewi-ink);color:#fff;font-family:var(--font-display);font-size:13px;display:flex;align-items:center;justify-content:center">1</span>
           </div>
-          <h3 style="font-family:var(--font-display);font-size:18px;text-transform:uppercase;margin:0">Personaliza tu pedido</h3>
-          <p style="font-size:13px;line-height:1.55;color:var(--text-body);margin:0">Eliges prenda, diseño, color y talla en el configurador. Confirmamos el boceto contigo.</p>
+          <h3 style="font-family:var(--font-display);font-size:18px;text-transform:uppercase;margin:0">{{ stepOneTitle }}</h3>
+          <p style="font-size:13px;line-height:1.55;color:var(--text-body);margin:0">{{ stepOneText }}</p>
         </div>
 
         <div style="display:flex;align-items:center;justify-content:center;color:var(--accent)">
@@ -409,8 +417,8 @@
             <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0B0B0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg>
             <span style="position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;background:var(--pewi-ink);color:#fff;font-family:var(--font-display);font-size:13px;display:flex;align-items:center;justify-content:center">2</span>
           </div>
-          <h3 style="font-family:var(--font-display);font-size:18px;text-transform:uppercase;margin:0">Confección</h3>
-          <p style="font-size:13px;line-height:1.55;color:var(--text-body);margin:0">Estampamos a mano —serigrafía— sobre algodón pesado 320g. Hecho en Chiguayante.</p>
+          <h3 style="font-family:var(--font-display);font-size:18px;text-transform:uppercase;margin:0">{{ stepTwoTitle }}</h3>
+          <p style="font-size:13px;line-height:1.55;color:var(--text-body);margin:0">{{ stepTwoText }}</p>
         </div>
 
         <div style="display:flex;align-items:center;justify-content:center;color:var(--accent)">
@@ -422,20 +430,35 @@
             <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0B0B0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
             <span style="position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;background:#fff;color:var(--pewi-ink);font-family:var(--font-display);font-size:13px;display:flex;align-items:center;justify-content:center">3</span>
           </div>
-          <h3 style="font-family:var(--font-display);font-size:18px;text-transform:uppercase;margin:0">Envío y entrega</h3>
-          <p style="font-size:13px;line-height:1.55;color:var(--pewi-gray-200);margin:0">Despachamos a todo Chile. Recibes tu prenda única en <strong style="color:var(--accent)">10–15 días hábiles</strong>.</p>
+          <h3 style="font-family:var(--font-display);font-size:18px;text-transform:uppercase;margin:0">{{ stepThreeTitle }}</h3>
+          <p style="font-size:13px;line-height:1.55;color:var(--pewi-gray-200);margin:0">{{ stepThreeText }}</p>
         </div>
 
       </div>
     </div>
   </section>
+  </sc-if>
+
+  <sc-for list="{{ customSections }}" as="cs" hint-placeholder-count="1">
+    <section id="{{ cs.anchor }}" style="{{ cs.sectionStyle }}">
+      <div data-reveal style="max-width:980px;margin:0 auto">
+        <div style="font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)">{{ cs.eyebrow }}</div>
+        <div style="width:48px;height:4px;background:var(--accent);margin:10px 0 16px"></div>
+        <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);line-height:1;text-transform:uppercase;margin:0 0 16px">{{ cs.title }}</h2>
+        <p style="font-size:16px;line-height:1.7;color:var(--pewi-gray-200);max-width:760px;margin:0 0 22px">{{ cs.text }}</p>
+        <a href="{{ cs.buttonUrl }}" target="{{ cs.target }}" rel="{{ cs.rel }}" style="{{ cs.buttonStyle }}">{{ cs.buttonLabel }}</a>
+      </div>
+    </section>
+  </sc-for>
 
   <!-- ===== FOOTER ===== -->
+  <sc-if value="{{ showFooter }}" hint-placeholder-val="{{ true }}">
   <footer style="color:#fff;padding:56px 28px 40px;text-align:center">
     <img src="{{ logoWhiteSrc }}" style="height:60px;margin-bottom:18px">
-    <div style="font-family:var(--font-display);font-size:22px;letter-spacing:-.01em;text-transform:uppercase">Arte que transforma. Identidad que perdura.</div>
-    <div style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--pewi-gray-300);margin-top:14px">PEWÏ Streetwear · Hecho a pedido en Chile</div>
+    <div style="font-family:var(--font-display);font-size:22px;letter-spacing:-.01em;text-transform:uppercase">{{ footerTitle }}</div>
+    <div style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--pewi-gray-300);margin-top:14px">{{ footerSub }}</div>
   </footer>
+  </sc-if>
 
   <!-- ===== DEV / AJUSTES ===== -->
   <!-- ===== DEV / AJUSTES (solo modo administrador: agrega #admin a la URL) ===== -->
@@ -444,17 +467,76 @@
   </sc-if>
 
   <sc-if value="{{ dev }}" hint-placeholder-val="">
-    <div style="position:fixed;top:0;right:0;bottom:0;width:344px;z-index:95;background:#0B0B0D;color:#fff;overflow:auto;padding:20px 18px 96px;box-shadow:-10px 0 34px rgba(0,0,0,.45)">
+    <div class="pew-admin-panel" style="position:fixed;top:0;right:0;bottom:0;width:390px;z-index:95;background:#0B0B0D;color:#fff;overflow:auto;padding:20px 18px 96px;box-shadow:-10px 0 34px rgba(0,0,0,.45)">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
         <div style="font-family:var(--font-display);font-size:18px;text-transform:uppercase">Modo desarrollo</div>
         <span onClick="{{ toggleDev }}" style="cursor:pointer;font-size:22px;line-height:1;padding:2px 8px;color:var(--pewi-gray-300)">×</span>
       </div>
-      <div style="display:flex;gap:4px;margin-bottom:16px;background:#17171b;border-radius:9px;padding:4px">
+      <div class="pew-admin-tabs" style="display:flex;gap:4px;margin-bottom:16px;background:#17171b;border-radius:9px;padding:4px">
+        <span onClick="{{ setTabContent }}" style="{{ tabContentStyle }}">Contenido</span>
         <span onClick="{{ setTabPos }}" style="{{ tabPosStyle }}">Posición</span>
         <span onClick="{{ setTabImg }}" style="{{ tabImgStyle }}">Imágenes</span>
         <span onClick="{{ setTabPrice }}" style="{{ tabPriceStyle }}">Precios</span>
         <span onClick="{{ setTabShop }}" style="{{ tabShopStyle }}">Tienda</span>
       </div>
+
+      <sc-if value="{{ tabIsContent }}" hint-placeholder-val="{{ true }}">
+        <p style="font-size:11px;color:var(--pewi-gray-300);line-height:1.5;margin:0 0 16px">Edita textos, botones, links y secciones visibles para clientes. El configurador queda intacto.</p>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="border:1px solid #2a2a2e;border-radius:9px;padding:13px">
+            <div style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px">Secciones visibles</div>
+            <sc-for list="{{ sectionToggles }}" as="sec" hint-placeholder-count="4">
+              <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0;font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase">
+                <span>{{ sec.label }}</span>
+                <input type="checkbox" checked="{{ sec.checked }}" onChange="{{ sec.onChange }}" style="width:18px;height:18px;accent-color:var(--accent)">
+              </label>
+            </sc-for>
+          </div>
+
+          <div style="border:1px solid #2a2a2e;border-radius:9px;padding:13px">
+            <div style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px">Header / navegación</div>
+            <label style="display:block;margin-bottom:10px"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">Link del logo</span><input type="text" value="{{ cLogoHref }}" onInput="{{ onCLogoHref }}" placeholder="#top o https://..." style="{{ devInput }}"></label>
+            <sc-for list="{{ navEditors }}" as="n" hint-placeholder-count="3">
+              <div style="border-top:1px solid #232327;padding-top:10px;margin-top:10px">
+                <label style="display:block;margin-bottom:8px"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">{{ n.name }} · texto</span><input type="text" value="{{ n.label }}" onInput="{{ n.onLabel }}" style="{{ devInput }}"></label>
+                <label style="display:block"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">{{ n.name }} · destino</span><input type="text" value="{{ n.href }}" onInput="{{ n.onHref }}" placeholder="#coleccion o https://..." style="{{ devInput }}"></label>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="border:1px solid #2a2a2e;border-radius:9px;padding:13px">
+            <div style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px">Hero</div>
+            <sc-for list="{{ heroEditors }}" as="f" hint-placeholder-count="8">
+              <label style="display:block;margin-bottom:9px"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">{{ f.label }}</span><textarea value="{{ f.value }}" onInput="{{ f.onInput }}" style="{{ f.style }}"></textarea></label>
+            </sc-for>
+          </div>
+
+          <div style="border:1px solid #2a2a2e;border-radius:9px;padding:13px">
+            <div style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px">Colección / detalles / pasos / footer</div>
+            <sc-for list="{{ pageTextEditors }}" as="f" hint-placeholder-count="14">
+              <label style="display:block;margin-bottom:9px"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">{{ f.label }}</span><textarea value="{{ f.value }}" onInput="{{ f.onInput }}" style="{{ f.style }}"></textarea></label>
+            </sc-for>
+          </div>
+
+          <div style="border:1px solid #2a2a2e;border-radius:9px;padding:13px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px">
+              <div style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)">Secciones extra</div>
+              <span onClick="{{ addCustomSection }}" style="cursor:pointer;background:var(--accent);color:var(--pewi-ink);border-radius:6px;padding:6px 9px;font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase">Agregar</span>
+            </div>
+            <sc-for list="{{ customEditors }}" as="cs" hint-placeholder-count="1">
+              <div style="border-top:1px solid #232327;padding-top:12px;margin-top:12px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                  <span style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase">{{ cs.name }}</span>
+                  <span onClick="{{ cs.onRemove }}" style="cursor:pointer;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#ff8d6b">Quitar</span>
+                </div>
+                <sc-for list="{{ cs.fields }}" as="f" hint-placeholder-count="6">
+                  <label style="display:block;margin-bottom:8px"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pewi-gray-300)">{{ f.label }}</span><textarea value="{{ f.value }}" onInput="{{ f.onInput }}" style="{{ f.style }}"></textarea></label>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
 
       <sc-if value="{{ tabIsPos }}" hint-placeholder-val="{{ true }}">
         <p style="font-size:11px;color:var(--pewi-gray-300);line-height:1.5;margin:0 0 16px">Mueve y escala el diseño visible en la prenda actual. Cambia de producto/diseño/color para ajustar cada combinación. Se guarda solo.</p>
@@ -629,12 +711,56 @@ class Component extends DCLogic {
     orderRef: '',
     admin: false,
     dev: false,
-    devTab: 'pos',
+    devTab: 'content',
     overrides: {},
     overrides3d: {},
     imgOverrides: {},
     store: { domain:'sarkpew1.com', handle:'hoodie-personalizado', v1:'45190191677537', v2:'45190191644769', v3:'45190191284321', v4:'45190191612001', p1:'19990', p2:'39990', p3:'44990', p4:'49990', whatsapp:'', cloudName:'', uploadPreset:'' },
     prices: { hoodie:44990, hoodiezip:49990, poleron:39990, tee:19990, grande:0, mediano:0 },
+    content: {
+      logoHref:'#top',
+      nav:[
+        { key:'coleccion', label:'Colección', href:'#coleccion', primary:false },
+        { key:'detalles', label:'Detalles', href:'#detalles', primary:false },
+        { key:'personalizar', label:'Personalizar', href:'#config', primary:true }
+      ],
+      sections:{ coleccion:true, detalles:true, pasos:true, footer:true },
+      hero:{
+        eyebrow:'● Arte que transforma · Hecho a pedido',
+        title:'Cuatro tintas.',
+        accent:'Una identidad.',
+        lead:'Cuervo, Casa, Felino y Nido — cuatro diseños originales de Nicolas Sark sobre algodón pesado.',
+        sub:'Tú eliges el corte, el diseño, el color y la talla. Confección nacional a pedido · entrega 10–15 días.',
+        primaryLabel:'Personaliza tu prenda',
+        primaryHref:'#config',
+        secondaryLabel:'Ver los diseños',
+        secondaryHref:'#coleccion',
+        imageLabel:'Cuervo · espalda'
+      },
+      collection:{ eyebrow:'La colección · Drop 01', title:'Cuatro diseños.', subtitle:'Una firma.' },
+      details:{
+        eyebrow:'Detalles de confección',
+        title:'El diablo está',
+        subtitle:'en la costura.',
+        oneTitle:'Etiqueta tejida',
+        oneText:'Etiqueta de cuello tejida en jacquard con el ícono de la casa. Cosida, no impresa.',
+        twoTitle:'Serigrafía',
+        twoText:'Estampado a mano cuadro por cuadro. Tintas plastisol opacas sobre algodón pesado — mira la trama del estampado sobre la fibra.'
+      },
+      steps:{
+        eyebrow:'Cómo funciona',
+        title:'Del pedido a tu puerta.',
+        intro:'Cada prenda se confecciona a pedido, por eso la entrega toma 10–15 días hábiles.',
+        oneTitle:'Personaliza tu pedido',
+        oneText:'Eliges prenda, diseño, color y talla en el configurador. Confirmamos el boceto contigo.',
+        twoTitle:'Confección',
+        twoText:'Estampamos a mano —serigrafía— sobre algodón pesado 320g. Hecho en Chiguayante.',
+        threeTitle:'Envío y entrega',
+        threeText:'Despachamos a todo Chile. Recibes tu prenda única en 10–15 días hábiles.'
+      },
+      footer:{ title:'Arte que transforma. Identidad que perdura.', sub:'PEWÏ Streetwear · Hecho a pedido en Chile' },
+      customSections:[]
+    },
     exported: false,
     published: false,
     // Auto-publish to the repo via the GitHub API. Token lives only on the admin's device (localStorage),
@@ -653,8 +779,11 @@ class Component extends DCLogic {
     try {
       const h = (location.hash || '') + ' ' + (location.search || '');
       const isAdmin = /admin/i.test(h);
-      if (isAdmin) this.setState({ admin: true });
-      window.addEventListener('hashchange', () => { this.setState({ admin: /admin/i.test(location.hash || '') }); });
+      if (isAdmin) this.setState({ admin: true, dev: true });
+      window.addEventListener('hashchange', () => {
+        const on = /admin/i.test(location.hash || '');
+        this.setState({ admin: on, dev: on ? true : this.state.dev });
+      });
     } catch(e){}
     // Publishing target: auto-detect owner/repo from the GitHub Pages URL, restore the saved token (admin device only).
     try {
@@ -679,6 +808,7 @@ class Component extends DCLogic {
         hasLocal = true;
         const d = JSON.parse(r);
         const ns = { overrides: d.overrides || {}, overrides3d: d.overrides3d || {}, imgOverrides: d.imgOverrides || {} };
+        if (d.content) ns.content = this.mergeContent(this.state.content, d.content);
         // Only honor a saved store/prices when it was actually admin-configured (carries variant IDs).
         // Otherwise keep the real defaults above, so client carts always receive the correct variant.
         const ss = d.store || {};
@@ -711,7 +841,7 @@ class Component extends DCLogic {
     } catch(e){}
   }
   componentDidUpdate(){ if (this._scanReveals) this._scanReveals(); }
-  persist(){ try { localStorage.setItem('pewi-dev', JSON.stringify({ overrides: this.state.overrides, overrides3d: this.state.overrides3d, imgOverrides: this.state.imgOverrides, store: this.state.store, prices: this.state.prices })); } catch(e){} }
+  persist(){ try { localStorage.setItem('pewi-dev', JSON.stringify({ overrides: this.state.overrides, overrides3d: this.state.overrides3d, imgOverrides: this.state.imgOverrides, store: this.state.store, prices: this.state.prices, content: this.state.content })); } catch(e){} }
   // Published settings for every visitor (clients have no local working copy). Merges over code defaults.
   loadPublishedConfig(){
     fetch('config.json', { cache:'no-store' })
@@ -722,7 +852,8 @@ class Component extends DCLogic {
           overrides:   cfg.overrides   ? Object.assign({}, s.overrides,   cfg.overrides)   : s.overrides,
           overrides3d: cfg.overrides3d ? Object.assign({}, s.overrides3d, cfg.overrides3d) : s.overrides3d,
           prices:      cfg.prices      ? Object.assign({}, s.prices,      cfg.prices)      : s.prices,
-          store:       cfg.store       ? Object.assign({}, s.store,       cfg.store)       : s.store
+          store:       cfg.store       ? Object.assign({}, s.store,       cfg.store)       : s.store,
+          content:     cfg.content     ? this.mergeContent(s.content, cfg.content)         : s.content
         }));
       })
       .catch(() => {});
@@ -734,7 +865,8 @@ class Component extends DCLogic {
       overrides3d: this.state.overrides3d,
       imgOverrides: this.state.imgOverrides,
       prices: this.state.prices,
-      store: this.state.store
+      store: this.state.store,
+      content: this.state.content
     }, null, 2);
   }
   // Persist the GitHub publishing settings on the admin device only (separate key, never inside config.json).
@@ -798,6 +930,88 @@ class Component extends DCLogic {
   setDevTab(t){ this.setState({ devTab:t }); }
   devTabStyle(on){ return { flex:'1', textAlign:'center', cursor:'pointer', userSelect:'none', padding:'8px 4px', borderRadius:'6px', fontSize:'10px', fontWeight:'800', letterSpacing:'.02em', textTransform:'uppercase', background: on?'var(--accent)':'transparent', color: on?'var(--pewi-ink)':'var(--pewi-gray-300)' }; }
   priceInputStyle(){ return { width:'104px', padding:'9px 0', background:'transparent', border:'none', color:'#fff', fontSize:'14px', fontWeight:'700', fontFamily:'var(--font-text)', textAlign:'right', outline:'none' }; }
+  textAreaStyle(lines){
+    return { width:'100%', minHeight:(lines || 1) * 34 + 'px', resize:'vertical', marginTop:'5px', padding:'9px 11px', background:'#17171b', border:'1px solid #2e2e34', borderRadius:'7px', color:'#fff', fontSize:'13px', lineHeight:'1.35', fontFamily:'var(--font-text)', outline:'none', boxSizing:'border-box' };
+  }
+  mergeContent(base, patch){
+    const out = Object.assign({}, base || {});
+    Object.keys(patch || {}).forEach(k => {
+      const v = patch[k];
+      if (Array.isArray(v)) out[k] = v.slice();
+      else if (v && typeof v === 'object') out[k] = this.mergeContent(out[k] || {}, v);
+      else out[k] = v;
+    });
+    return out;
+  }
+  setContent(path, val){
+    const parts = String(path).split('.');
+    this.setState(s => {
+      const root = this.mergeContent({}, s.content || {});
+      let cur = root;
+      for (let i = 0; i < parts.length - 1; i++) {
+        const p = parts[i];
+        cur[p] = Array.isArray(cur[p]) ? cur[p].slice() : Object.assign({}, cur[p] || {});
+        cur = cur[p];
+      }
+      cur[parts[parts.length - 1]] = val;
+      return { content: root };
+    }, () => this.persist());
+  }
+  getContent(path){
+    return String(path).split('.').reduce((cur, p) => cur && cur[p] != null ? cur[p] : '', this.state.content || '');
+  }
+  setContentField(path){ return e => this.setContent(path, e.target.value); }
+  setSectionVisible(key, checked){
+    this.setState(s => {
+      const c = this.mergeContent({}, s.content || {});
+      c.sections = Object.assign({}, c.sections || {}, { [key]: checked });
+      return { content:c };
+    }, () => this.persist());
+  }
+  setNavItem(i, field, val){
+    this.setState(s => {
+      const c = this.mergeContent({}, s.content || {});
+      c.nav = (c.nav || []).map((n, idx) => idx === i ? Object.assign({}, n, { [field]: val }) : n);
+      return { content:c };
+    }, () => this.persist());
+  }
+  addCustomSection(){
+    this.setState(s => {
+      const c = this.mergeContent({}, s.content || {});
+      const n = (c.customSections || []).length + 1;
+      c.customSections = (c.customSections || []).concat([{ enabled:true, eyebrow:'Nueva sección', title:'Título de sección', text:'Escribe aquí el contenido para tus clientes.', buttonLabel:'Ver más', buttonUrl:'#config' }]);
+      c.customSections[c.customSections.length - 1].anchor = 'seccion-' + n;
+      return { content:c };
+    }, () => this.persist());
+  }
+  setCustomSection(i, field, val){
+    this.setState(s => {
+      const c = this.mergeContent({}, s.content || {});
+      c.customSections = (c.customSections || []).map((x, idx) => idx === i ? Object.assign({}, x, { [field]: val }) : x);
+      return { content:c };
+    }, () => this.persist());
+  }
+  removeCustomSection(i){
+    this.setState(s => {
+      const c = this.mergeContent({}, s.content || {});
+      c.customSections = (c.customSections || []).filter((_, idx) => idx !== i);
+      return { content:c };
+    }, () => this.persist());
+  }
+  routeLink(href, e){
+    const url = String(href || '#').trim() || '#';
+    if (url.charAt(0) === '#') {
+      if (e && e.preventDefault) e.preventDefault();
+      const id = url === '#top' ? '' : url.slice(1);
+      if (!id) window.scrollTo({ top:0, behavior:'smooth' });
+      else this.scrollTo(id);
+      return;
+    }
+    if (e && e.preventDefault) e.preventDefault();
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+  linkTarget(href){ return String(href || '').charAt(0) === '#' ? '_self' : '_blank'; }
+  linkRel(href){ return String(href || '').charAt(0) === '#' ? '' : 'noopener noreferrer'; }
 
   // ---- Shopify checkout ----
   // Resolve the Shopify variant id for the current product by matching its base price
@@ -1296,6 +1510,41 @@ class Component extends DCLogic {
 
     const techName = { serigrafia:'Serigrafía' }[s.technique] || 'Serigrafía';
     const productLabel = this.products.find(p => p.id === s.product).label;
+    const c = s.content || {};
+    const hero = c.hero || {};
+    const sections = c.sections || {};
+    const input1 = this.textAreaStyle(1);
+    const input2 = this.textAreaStyle(2);
+    const input3 = this.textAreaStyle(3);
+    const navBase = n => ({ cursor:'pointer', textDecoration:'none', fontSize:'12px', fontWeight:n.primary?'800':'700', letterSpacing:'.12em', textTransform:'uppercase', color:n.primary?'var(--pewi-ink)':'#fff', background:n.primary?'var(--accent)':'transparent', padding:n.primary?'10px 18px':'8px 12px', borderRadius:n.primary?'7px':'0', boxShadow:n.primary?'0 4px 18px rgba(255,152,0,.4)':'none', whiteSpace:'nowrap' });
+    const navItems = (c.nav || []).map(n => ({ label:n.label, href:n.href || '#top', target:this.linkTarget(n.href), rel:this.linkRel(n.href), style:navBase(n) }));
+    const field = (label, path, lines) => ({ label, value:this.getContent(path), style:this.textAreaStyle(lines || 1), onInput:this.setContentField(path) });
+    const heroEditors = [
+      field('Cintillo', 'hero.eyebrow', 1), field('Título', 'hero.title', 1), field('Título destacado', 'hero.accent', 1),
+      field('Texto principal', 'hero.lead', 2), field('Texto secundario', 'hero.sub', 2), field('Etiqueta imagen', 'hero.imageLabel', 1),
+      field('Botón principal · texto', 'hero.primaryLabel', 1), field('Botón principal · link', 'hero.primaryHref', 1),
+      field('Botón secundario · texto', 'hero.secondaryLabel', 1), field('Botón secundario · link', 'hero.secondaryHref', 1)
+    ];
+    const pageTextEditors = [
+      field('Colección · cintillo', 'collection.eyebrow', 1), field('Colección · título 1', 'collection.title', 1), field('Colección · título 2', 'collection.subtitle', 1),
+      field('Detalles · cintillo', 'details.eyebrow', 1), field('Detalles · título 1', 'details.title', 1), field('Detalles · título 2', 'details.subtitle', 1),
+      field('Detalle 1 · título', 'details.oneTitle', 1), field('Detalle 1 · texto', 'details.oneText', 2), field('Detalle 2 · título', 'details.twoTitle', 1), field('Detalle 2 · texto', 'details.twoText', 2),
+      field('Pasos · cintillo', 'steps.eyebrow', 1), field('Pasos · título', 'steps.title', 1), field('Pasos · intro', 'steps.intro', 2),
+      field('Paso 1 · título', 'steps.oneTitle', 1), field('Paso 1 · texto', 'steps.oneText', 2), field('Paso 2 · título', 'steps.twoTitle', 1), field('Paso 2 · texto', 'steps.twoText', 2), field('Paso 3 · título', 'steps.threeTitle', 1), field('Paso 3 · texto', 'steps.threeText', 2),
+      field('Footer · frase', 'footer.title', 1), field('Footer · bajada', 'footer.sub', 1)
+    ];
+    const customEditors = (c.customSections || []).map((cs, i) => ({
+      name:'Sección ' + (i + 1),
+      onRemove:() => this.removeCustomSection(i),
+      fields:[
+        { label:'Ancla', value:cs.anchor || '', style:input1, onInput:e => this.setCustomSection(i, 'anchor', e.target.value) },
+        { label:'Cintillo', value:cs.eyebrow || '', style:input1, onInput:e => this.setCustomSection(i, 'eyebrow', e.target.value) },
+        { label:'Título', value:cs.title || '', style:input1, onInput:e => this.setCustomSection(i, 'title', e.target.value) },
+        { label:'Texto', value:cs.text || '', style:input3, onInput:e => this.setCustomSection(i, 'text', e.target.value) },
+        { label:'Botón · texto', value:cs.buttonLabel || '', style:input1, onInput:e => this.setCustomSection(i, 'buttonLabel', e.target.value) },
+        { label:'Botón · link', value:cs.buttonUrl || '', style:input1, onInput:e => this.setCustomSection(i, 'buttonUrl', e.target.value) }
+      ]
+    }));
     const summaryLines = [
       { k:'Producto', v:productLabel },
       { k:'Diseño', v:dmeta.name + ' (' + dmeta.tag.toLowerCase() + ')' },
@@ -1307,10 +1556,57 @@ class Component extends DCLogic {
     ];
 
     return {
+      logoHref: c.logoHref || '#top',
+      logoTarget: this.linkTarget(c.logoHref || '#top'),
+      logoRel: this.linkRel(c.logoHref || '#top'),
       goTop: () => window.scrollTo({ top:0, behavior:'smooth' }),
+      goTopEvent: e => this.routeLink(c.logoHref || '#top', e),
       goColeccion: () => this.scrollTo('coleccion'),
       goDetalles: () => this.scrollTo('detalles'),
       goConfig: () => this.scrollTo('config'),
+      navItems,
+      showColeccion: sections.coleccion !== false,
+      showDetalles: sections.detalles !== false,
+      showPasos: sections.pasos !== false,
+      showFooter: sections.footer !== false,
+      heroEyebrow: hero.eyebrow,
+      heroTitle: hero.title,
+      heroAccent: hero.accent,
+      heroLead: hero.lead,
+      heroSub: hero.sub,
+      heroPrimaryLabel: hero.primaryLabel,
+      heroSecondaryLabel: hero.secondaryLabel,
+      heroPrimaryHref: hero.primaryHref || '#config',
+      heroSecondaryHref: hero.secondaryHref || '#coleccion',
+      heroPrimaryTarget: this.linkTarget(hero.primaryHref || '#config'),
+      heroPrimaryRel: this.linkRel(hero.primaryHref || '#config'),
+      heroSecondaryTarget: this.linkTarget(hero.secondaryHref || '#coleccion'),
+      heroSecondaryRel: this.linkRel(hero.secondaryHref || '#coleccion'),
+      heroPrimaryStyle: { display:'inline-flex', alignItems:'center', justifyContent:'center', minHeight:'52px', padding:'0 22px', border:'2px solid var(--accent)', borderRadius:'8px', background:'var(--accent)', color:'var(--pewi-ink)', textDecoration:'none', fontSize:'13px', fontWeight:'900', letterSpacing:'.08em', textTransform:'uppercase', boxShadow:'0 8px 22px rgba(255,152,0,.28)' },
+      heroSecondaryStyle: { display:'inline-flex', alignItems:'center', justifyContent:'center', minHeight:'52px', padding:'0 22px', border:'2px solid #fff', borderRadius:'8px', background:'transparent', color:'#fff', textDecoration:'none', fontSize:'13px', fontWeight:'900', letterSpacing:'.08em', textTransform:'uppercase' },
+      heroImageLabel: hero.imageLabel,
+      collectionEyebrow: (c.collection || {}).eyebrow,
+      collectionTitle: (c.collection || {}).title,
+      collectionSubtitle: (c.collection || {}).subtitle,
+      detailsEyebrow: (c.details || {}).eyebrow,
+      detailsTitle: (c.details || {}).title,
+      detailsSubtitle: (c.details || {}).subtitle,
+      detailOneTitle: (c.details || {}).oneTitle,
+      detailOneText: (c.details || {}).oneText,
+      detailTwoTitle: (c.details || {}).twoTitle,
+      detailTwoText: (c.details || {}).twoText,
+      stepsEyebrow: (c.steps || {}).eyebrow,
+      stepsTitle: (c.steps || {}).title,
+      stepsIntro: (c.steps || {}).intro,
+      stepOneTitle: (c.steps || {}).oneTitle,
+      stepOneText: (c.steps || {}).oneText,
+      stepTwoTitle: (c.steps || {}).twoTitle,
+      stepTwoText: (c.steps || {}).twoText,
+      stepThreeTitle: (c.steps || {}).threeTitle,
+      stepThreeText: (c.steps || {}).threeText,
+      footerTitle: (c.footer || {}).title,
+      footerSub: (c.footer || {}).sub,
+      customSections: (c.customSections || []).map((cs, i) => ({ anchor:cs.anchor || ('seccion-' + (i + 1)), eyebrow:cs.eyebrow, title:cs.title, text:cs.text, buttonLabel:cs.buttonLabel, buttonUrl:cs.buttonUrl || '#config', target:this.linkTarget(cs.buttonUrl), rel:this.linkRel(cs.buttonUrl), sectionStyle:{ color:'#fff', padding:'62px 28px' }, buttonStyle:{ display:'inline-flex', alignItems:'center', justifyContent:'center', minHeight:'44px', padding:'0 18px', border:'2px solid var(--accent)', borderRadius:'8px', background:'var(--accent)', color:'var(--pewi-ink)', textDecoration:'none', fontSize:'12px', fontWeight:'900', letterSpacing:'.08em', textTransform:'uppercase' } })),
       railPrev: () => this.railScroll(-1),
       railNext: () => this.railScroll(1),
       heroGhostStyle: { background:'transparent', color:'#fff', borderColor:'#fff' },
@@ -1384,18 +1680,34 @@ class Component extends DCLogic {
       goShopify: () => this.goShopify(),
       shopifyLabel: (this.state.store.v1||this.state.store.v2||this.state.store.v3||this.state.store.v4) ? 'Ir a pagar →' : 'Ir a la tienda →',
       devTab: s.devTab,
+      setTabContent: () => this.setDevTab('content'),
       setTabPos: () => this.setDevTab('pos'),
       setTabImg: () => this.setDevTab('img'),
       setTabPrice: () => this.setDevTab('price'),
       setTabShop: () => this.setDevTab('shop'),
+      tabIsContent: s.devTab === 'content',
       tabIsPos: s.devTab === 'pos',
       tabIsImg: s.devTab === 'img',
       tabIsPrice: s.devTab === 'price',
       tabIsShop: s.devTab === 'shop',
+      tabContentStyle: this.devTabStyle(s.devTab === 'content'),
       tabPosStyle: this.devTabStyle(s.devTab === 'pos'),
       tabImgStyle: this.devTabStyle(s.devTab === 'img'),
       tabPriceStyle: this.devTabStyle(s.devTab === 'price'),
       tabShopStyle: this.devTabStyle(s.devTab === 'shop'),
+      cLogoHref: c.logoHref || '#top',
+      onCLogoHref: this.setContentField('logoHref'),
+      sectionToggles: [
+        { key:'coleccion', label:'Colección', checked:sections.coleccion !== false },
+        { key:'detalles', label:'Detalles', checked:sections.detalles !== false },
+        { key:'pasos', label:'Cómo funciona', checked:sections.pasos !== false },
+        { key:'footer', label:'Footer', checked:sections.footer !== false }
+      ].map(sec => Object.assign({}, sec, { onChange:e => this.setSectionVisible(sec.key, !!e.target.checked) })),
+      navEditors: (c.nav || []).map((n, i) => ({ name:'Link ' + (i + 1), label:n.label, href:n.href, onLabel:e => this.setNavItem(i, 'label', e.target.value), onHref:e => this.setNavItem(i, 'href', e.target.value) })),
+      heroEditors,
+      pageTextEditors,
+      customEditors,
+      addCustomSection: () => this.addCustomSection(),
       devInput: { width:'100%', marginTop:'5px', padding:'9px 11px', background:'#17171b', border:'1px solid #2e2e34', borderRadius:'7px', color:'#fff', fontSize:'13px', fontFamily:'var(--font-text)', outline:'none' },
       devInputMini: { width:'100%', padding:'9px 0', background:'transparent', border:'none', color:'#fff', fontSize:'13px', fontFamily:'var(--font-text)', outline:'none' },
       priceItems: this.products.map(p => ({ label:p.label, value: (s.prices||{})[p.id], inputStyle: this.priceInputStyle(), onInput: e => this.setPrice(p.id, e.target.value) })),
