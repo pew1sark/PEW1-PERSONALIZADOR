@@ -557,7 +557,7 @@
 
   <!-- ===== ORDER MODAL ===== -->
   <sc-if value="{{ placed }}" hint-placeholder-val="">
-    <div onClick="{{ closeOrder }}" class="pew-modal-ov" style="position:fixed;inset:0;z-index:100;background:rgba(10,15,46,.74);display:flex;align-items:center;justify-content:center;padding:24px;animation:pewrise .25s ease both">
+    <div onClick="{{ onOverlayClick }}" class="pew-modal-ov" style="position:fixed;inset:0;z-index:100;background:rgba(10,15,46,.74);display:flex;align-items:center;justify-content:center;padding:24px;animation:pewrise .25s ease both">
       <div class="pew-modal" style="background:#fff;border:2px solid var(--pewi-ink);border-radius:12px;max-width:460px;width:100%;overflow:hidden;box-shadow:8px 8px 0 var(--accent)">
         <div style="background:var(--accent);border-bottom:2px solid var(--pewi-ink);padding:18px 24px;display:flex;align-items:center;gap:12px">
           <img src="{{ iconSrc }}" style="height:34px">
@@ -1350,6 +1350,9 @@ class Component extends DCLogic {
       placed: s.placed,
       orderRef: s.orderRef,
       closeOrder: () => this.setState({ placed:false }),
+      // El overlay solo cierra al tocar el fondo; los clics en el contenido
+      // (links y botones del modal) no deben cerrarlo por propagación.
+      onOverlayClick: e => { if (e && e.target === e.currentTarget) this.setState({ placed:false }); },
       summaryLines,
       notes: s.notes,
       onNotes: e => this.setNotes(e.target.value),
