@@ -35,18 +35,51 @@
   [data-reveal-2]{opacity:0;transform:translateY(34px) scale(.985);transition:opacity .8s cubic-bezier(.22,1,.36,1) .12s,transform .8s cubic-bezier(.22,1,.36,1) .12s}
   [data-reveal-2].pew-in{opacity:1;transform:none}
   /* ===== Optimización móvil (PEW1 personalizador) ===== */
+  /* Anti scroll-horizontal: nada debe desbordar el ancho del viewport */
+  html,body{max-width:100%;overflow-x:hidden}
+  img{max-width:100%;height:auto}
   @media (max-width:820px){
-    .pew-nav{padding:0 16px !important;gap:10px !important}
+    .pew-nav{padding:0 14px !important;gap:8px !important}
     .pew-hero{min-height:auto !important;padding:30px 18px 40px !important}
     .pew-hero-grid{grid-template-columns:1fr !important;gap:26px !important}
     .pew-config-grid{grid-template-columns:1fr !important;gap:20px !important}
     .pew-config-preview{position:static !important;top:auto !important}
+    /* Configurador: menos padding lateral, evita textos pegados al borde */
+    #config{padding:40px 12px 24px !important}
+    #config > div[data-reveal]{padding:28px 16px 26px !important;border-radius:16px !important}
+    #detalles,#pasos{padding-left:14px !important;padding-right:14px !important}
+    /* 02 · Diseño: 5 columnas son ilegibles en móvil -> 3 */
+    #config [style*="repeat(5,1fr)"]{grid-template-columns:repeat(3,1fr) !important}
+    /* Barra de precio: apilar precio y acción, botón cómodo */
+    #config [style*="padding:18px 22px"]{flex-direction:column !important;align-items:stretch !important;gap:14px !important;padding:16px 18px !important}
+    #config [style*="padding:18px 22px"] > div:last-child{justify-content:space-between !important;width:100% !important}
+    /* Pasos "Cómo funciona": apilar tarjetas y girar las flechas */
+    #pasos [style*="1fr auto 1fr auto 1fr"]{grid-template-columns:1fr !important;gap:14px !important}
+    #pasos [style*="1fr auto 1fr auto 1fr"] > div:nth-child(even){transform:rotate(90deg)}
+    /* Modal de pedido: permitir scroll para no cortar el formulario ni los botones */
+    [style*="rgba(10,15,46,.74)"]{align-items:flex-start !important;overflow-y:auto !important;padding:14px !important;-webkit-overflow-scrolling:touch}
+    [style*="8px 8px 0 var(--accent)"]{margin:0 auto !important;box-shadow:5px 5px 0 var(--accent) !important}
+    /* Panel admin: nunca más ancho que la pantalla */
+    [style*="width:344px"]{width:100% !important;max-width:344px !important}
   }
   @media (max-width:560px){
-    .pew-nav img{height:30px !important}
-    .pew-nav span{padding:7px 9px !important;font-size:11px !important;letter-spacing:.08em !important}
-    .pew-hero h1{font-size:clamp(2.4rem,11vw,3.4rem) !important}
-    .pew-config-preview [style*="height:478px"]{height:62vh !important}
+    .pew-nav{height:60px !important}
+    .pew-nav img{height:27px !important}
+    .pew-nav > div:last-child{gap:2px !important}
+    .pew-nav span{padding:9px 8px !important;font-size:10.5px !important;letter-spacing:.04em !important}
+    .pew-nav span:last-child{padding:9px 12px !important}
+    .pew-hero h1{font-size:clamp(2.1rem,10vw,3.2rem) !important}
+    .pew-hero p{font-size:15px !important}
+    .pew-config-preview [style*="height:478px"]{height:56vh !important}
+    /* CTA del hero a ancho completo: tap fácil, sin textos cortados */
+    .pew-hero [style*="gap:14px;flex-wrap:wrap"]{flex-direction:column !important;align-items:stretch !important}
+    /* Stats del hero: que envuelvan en vez de cortarse */
+    .pew-hero [style*="gap:28px;border-top"]{gap:16px 22px !important;flex-wrap:wrap !important}
+    /* Tabla de medidas: celdas compactas y legibles */
+    #config [style*="1fr 1fr 1fr 1fr"]{font-size:11px !important}
+    #config [style*="1fr 1fr 1fr 1fr"] > div{padding-left:8px !important;padding-right:6px !important}
+    /* Modal: menos padding interno en pantallas chicas */
+    [style*="8px 8px 0 var(--accent)"] [style*="padding:22px 24px"]{padding:18px 16px !important}
   }
 </style>
 </helmet>
@@ -320,7 +353,7 @@
         </div>
         <div style="background:#0d1338;border:2px solid var(--accent);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px">
           <div style="height:130px;border-radius:6px;overflow:hidden;position:relative;background:#0B0B0D">
-            <img src="assets/detail/serigrafia.png" style="width:100%;height:100%;object-fit:cover;display:block">
+            <img src="assets/detail/serigrafia.png" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block">
             <span style="position:absolute;bottom:8px;right:8px;background:var(--accent);color:var(--pewi-ink);font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:4px">Detalle · trama</span>
           </div>
           <div><h3 style="font-family:var(--font-display);font-size:17px;text-transform:uppercase;margin:0 0 8px">Serigrafía</h3><p style="font-size:13px;line-height:1.55;color:var(--pewi-gray-200);margin:0">Estampado a mano cuadro por cuadro. Tintas plastisol opacas sobre algodón pesado — mira la trama del estampado sobre la fibra.</p></div>

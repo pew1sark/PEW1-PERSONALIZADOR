@@ -114,12 +114,17 @@
       this._life = (this.getAttribute('calm') === '1') ? 2.8 : 2.0;
       this._mouse = { x: 0.5, y: 0.5, has: false };
       this._last = { x: 0.5, y: 0.5 };
+      // Rendimiento: si el usuario pide menos animación, usa el fondo estático.
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        this.fallback(); return;
+      }
       this.boot();
     }
     disconnectedCallback() {
       if (this._raf) cancelAnimationFrame(this._raf);
       window.removeEventListener('pointermove', this._onMove);
       window.removeEventListener('resize', this._onResize);
+      if (this._onVis) document.removeEventListener('visibilitychange', this._onVis);
     }
 
     boot() {
@@ -146,7 +151,11 @@
       this._intensity = parseFloat(this.getAttribute('intensity'));
       if (isNaN(this._intensity)) this._intensity = 1.0;
       this._calm = this.getAttribute('calm') === '1' ? 1.0 : 0.0;
-      this._scale = 0.62;             // render at 62% for a soft liquid look + perf
+      // Render scale: en móviles bajamos la resolución interna para ahorrar
+      // GPU/batería (el shader fbm es costoso por píxel). Escritorio: 62%.
+      const mobile = Math.min(window.innerWidth, window.innerHeight) <= 820
+        || (navigator.maxTouchPoints || 0) > 0;
+      this._scale = mobile ? 0.4 : 0.62;
 
       this._onResize = () => this.resize();
       window.addEventListener('resize', this._onResize);
@@ -154,6 +163,17 @@
 
       this._onMove = (e) => this.pointer(e.clientX, e.clientY);
       window.addEventListener('pointermove', this._onMove, { passive: true });
+
+      // Pausa el bucle cuando la pestaña no está visible (ahorro de batería).
+      this._onVis = () => {
+        if (document.hidden) {
+          if (this._raf) { cancelAnimationFrame(this._raf); this._raf = null; this._pausedAt = performance.now(); }
+        } else if (!this._raf) {
+          if (this._pausedAt) { this._t0 += performance.now() - this._pausedAt; this._pausedAt = 0; }
+          this._raf = requestAnimationFrame(loop);
+        }
+      };
+      document.addEventListener('visibilitychange', this._onVis);
 
       this._t0 = performance.now();
       const loop = () => { this._raf = requestAnimationFrame(loop); this.frame(); };
