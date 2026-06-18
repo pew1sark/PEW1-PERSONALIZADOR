@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script src="./support.js?v=20260618"></script>
 </head>
 <body>
 <template id="__bundler_thumbnail">
@@ -103,7 +106,7 @@
 <div style="font-family:var(--font-text);background:transparent;color:#fff;min-height:100vh;overflow-x:hidden;position:relative">
 
   <!-- ===== LIQUID WALLPAPER (fixed, behind everything) ===== -->
-  <x-import component-from-global-scope="pew-fluid" from="./pewfluid.js" intensity="0.85" calm="1" hint-size="100%,100%" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none"></x-import>
+  <x-import component-from-global-scope="pew-fluid" from="./pewfluid.js?v=20260618" intensity="0.85" calm="1" hint-size="100%,100%" style="position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none"></x-import>
 
   <div style="position:relative;z-index:1">
 
@@ -211,7 +214,7 @@
           <div style="background:radial-gradient(circle at 50% 32%,#f3f3f0,#d4d4cd 90%);border:2px solid var(--pewi-ink);border-radius:12px;padding:22px 20px 16px">
             <sc-if value="{{ is3D }}" hint-placeholder-val="{{ true }}">
               <div style="position:relative;height:478px;border-radius:10px;overflow:hidden;background:radial-gradient(circle at 50% 34%,#2b2f38,#14161b 92%)">
-                <x-import component-from-global-scope="pewi-3d" from="./pewi3d.js" model="{{ model3d }}" color="{{ color3d }}" print-mode="{{ printMode3d }}" front-axis="{{ frontAxis3d }}" decal-depth="{{ decalDepth3d }}" rot-y="{{ rotY3d }}" front-design="{{ frontDesign3d }}" back-design="{{ backDesign3d }}" front-x="{{ fX }}" front-y="{{ fY }}" front-scale="{{ fS }}" front-rot="{{ fR }}" back-x="{{ bX }}" back-y="{{ bY }}" back-scale="{{ bS }}" back-rot="{{ bR }}" view="{{ view3d }}" autorotate="{{ spin3d }}" hint-size="100%,478px" style="position:absolute;inset:0;width:100%;height:100%"></x-import>
+                <x-import component-from-global-scope="pewi-3d" from="./pewi3d.js?v=20260618" model="{{ model3d }}" color="{{ color3d }}" print-mode="{{ printMode3d }}" front-axis="{{ frontAxis3d }}" decal-depth="{{ decalDepth3d }}" rot-y="{{ rotY3d }}" front-design="{{ frontDesign3d }}" back-design="{{ backDesign3d }}" front-x="{{ fX }}" front-y="{{ fY }}" front-scale="{{ fS }}" front-rot="{{ fR }}" back-x="{{ bX }}" back-y="{{ bY }}" back-scale="{{ bS }}" back-rot="{{ bR }}" view="{{ view3d }}" autorotate="{{ spin3d }}" hint-size="100%,478px" style="position:absolute;inset:0;width:100%;height:100%"></x-import>
                 <div style="position:absolute;top:12px;right:12px;display:flex;gap:6px;z-index:5">
                   <sc-for list="{{ view3dOpts }}" as="o" hint-placeholder-count="3"><span onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</span></sc-for>
                 </div>
