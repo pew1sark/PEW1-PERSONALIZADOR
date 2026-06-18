@@ -44,8 +44,17 @@
     .pew-hero-grid{grid-template-columns:1fr !important;gap:26px !important}
     .pew-config-grid{grid-template-columns:1fr !important;gap:20px !important}
     .pew-config-preview{position:static !important;top:auto !important}
+    /* RAÍZ del desborde: los items de grilla/flex tienen min-width:auto y no
+       se encogen bajo su contenido, empujando todo fuera de la pantalla.
+       Forzamos min-width:0 en toda la cadena para que el configurador quepa. */
+    .pew-config-grid,.pew-config-grid > *{min-width:0 !important;max-width:100% !important}
+    #config [style*="display:grid"],#config [style*="display:flex"]{min-width:0 !important;max-width:100% !important}
+    #config [style*="display:grid"] > *,#config [style*="display:flex"] > *{min-width:0 !important}
+    /* Tabla de medidas: que las 4 columnas se repartan el ancho disponible */
+    #config [style*="1fr 1fr 1fr 1fr"]{width:100% !important}
+    #config [style*="1fr 1fr 1fr 1fr"] > div{padding:8px 6px !important;min-width:0 !important;overflow:hidden;text-overflow:ellipsis}
     /* Configurador: menos padding lateral, evita textos pegados al borde */
-    #config{padding:40px 12px 24px !important}
+    #config{padding:40px 12px 24px !important;overflow-x:clip}
     #config > div[data-reveal]{padding:28px 16px 26px !important;border-radius:16px !important}
     #detalles,#pasos{padding-left:14px !important;padding-right:14px !important}
     /* 02 · Diseño: 5 columnas son ilegibles en móvil -> 3 */
