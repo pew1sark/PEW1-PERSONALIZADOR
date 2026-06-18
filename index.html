@@ -48,6 +48,25 @@
     .pew-hero h1{font-size:clamp(2.4rem,11vw,3.4rem) !important}
     .pew-config-preview [style*="height:478px"]{height:62vh !important}
   }
+  /* ===== Fluidez móvil: contener desbordes ===== */
+  @media (max-width:820px){
+    #coleccion{padding:54px 16px 30px !important}
+    #config{padding:34px 13px 24px !important}
+    #config > div{padding:26px 15px 22px !important}
+    #detalles{padding:50px 16px !important}
+    #pasos{padding:40px 13px !important}
+    #pasos > div{padding:34px 18px !important}
+    .pew-config-preview img,.pew-config-preview svg,.pew-config-preview canvas,
+    #coleccion img,#coleccion svg{max-width:100% !important;height:auto !important}
+    .pew-2d-grid > div{min-width:0 !important}
+    .pew-pricebar{flex-direction:column !important;align-items:stretch !important;gap:14px !important;text-align:center}
+    .pew-pricebar-actions{width:100% !important;flex-direction:column !important;align-items:stretch !important;gap:12px !important}
+    .pew-pricebar-actions > div{justify-content:center !important}
+    .pew-pricebar-actions x-import{display:block !important;width:100% !important}
+    .pew-steps{grid-template-columns:1fr !important;gap:16px !important}
+    .pew-steps > div{box-shadow:4px 4px 0 var(--pewi-ink) !important}
+    .pew-steps > div[style*="justify-content:center"] svg{transform:rotate(90deg)}
+  }
 </style>
 </helmet>
 
@@ -174,7 +193,7 @@
               </div>
             </sc-if>
             <sc-if value="{{ is2D }}" hint-placeholder-val="">
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start">
+              <div class="pew-2d-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start">
                 <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
                   <div style="width:100%;border-radius:8px;filter:drop-shadow(0 18px 24px rgba(0,0,0,.5))">{{ frontGarment }}</div>
                   <span style="font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted)">Frente</span>
@@ -284,12 +303,12 @@
           </div>
 
           <!-- price bar -->
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--pewi-ink);color:#fff;border-radius:10px;padding:18px 22px;margin-top:4px">
+          <div class="pew-pricebar" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--pewi-ink);color:#fff;border-radius:10px;padding:18px 22px;margin-top:4px">
             <div>
               <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--pewi-gray-300)">Precio unitario</div>
               <div style="font-family:var(--font-display);font-size:30px;line-height:1.05">{{ unitFmt }}</div>
             </div>
-            <div style="display:flex;align-items:center;gap:16px">
+            <div class="pew-pricebar-actions" style="display:flex;align-items:center;gap:16px">
               <div style="display:flex;align-items:center;border:2px solid #fff;border-radius:8px;overflow:hidden">
                 <span onClick="{{ decQty }}" style="cursor:pointer;padding:8px 14px;font-size:18px;font-weight:800;user-select:none">−</span>
                 <span style="padding:8px 6px;min-width:30px;text-align:center;font-weight:800">{{ qty }}</span>
@@ -338,7 +357,7 @@
       <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);line-height:1;text-transform:uppercase;margin:14px 0 8px">Del pedido a tu puerta.</h2>
       <p style="font-size:15px;color:var(--text-body);max-width:520px;margin:0 auto 44px">Cada prenda se confecciona a pedido, por eso la entrega toma 10–15 días hábiles.</p>
 
-      <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px">
+      <div class="pew-steps" style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px">
 
         <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:26px 18px;border:2px solid var(--pewi-ink);border-radius:12px;background:#fff;box-shadow:5px 5px 0 var(--pewi-ink)">
           <div style="position:relative;width:72px;height:72px;border-radius:50%;background:var(--accent);border:2px solid var(--pewi-ink);display:flex;align-items:center;justify-content:center">
