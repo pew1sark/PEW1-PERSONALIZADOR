@@ -47,39 +47,38 @@
     .pew-hero-grid{grid-template-columns:1fr !important;gap:26px !important}
     .pew-config-grid{grid-template-columns:1fr !important;gap:20px !important}
     .pew-config-preview{position:static !important;top:auto !important}
-    /* RAÍZ del desborde: los items de grilla/flex tienen min-width:auto y no
-       se encogen bajo su contenido, empujando todo fuera de la pantalla.
-       Forzamos min-width:0 en toda la cadena para que el configurador quepa. */
-    .pew-config-grid,.pew-config-grid > *{min-width:0 !important;max-width:100% !important}
-    #config [style*="display:grid"],#config [style*="display:flex"]{min-width:0 !important;max-width:100% !important}
-    #config [style*="display:grid"] > *,#config [style*="display:flex"] > *{min-width:0 !important}
-    /* Tabla de medidas: que las 4 columnas se repartan el ancho disponible */
-    #config [style*="1fr 1fr 1fr 1fr"]{width:100% !important}
-    #config [style*="1fr 1fr 1fr 1fr"] > div{padding:8px 6px !important;min-width:0 !important;overflow:hidden;text-overflow:ellipsis}
+    /* RAÍZ del desborde: min-width:auto impide que las grillas/flex se
+       encojan bajo su contenido. Lo forzamos a 0 para que todo quepa.
+       (Se usan CLASES porque el framework re-serializa los style inline,
+       lo que rompe los selectores por atributo [style*=...].) */
+    .pew-config-grid,.pew-config-grid > *,
+    .pew-design-grid,.pew-design-grid > *,
+    .pew-size-grid,.pew-size-grid > *,
+    .pew-pricebar,.pew-pricebar > *,.pew-pricebar-act,.pew-pricebar-act > *{min-width:0 !important;max-width:100% !important}
+    /* Tabla de medidas: las 4 columnas se reparten el ancho disponible */
+    .pew-size-grid{width:100% !important}
+    .pew-size-grid > div{padding:8px 6px !important;overflow:hidden;text-overflow:ellipsis}
     /* Configurador: menos padding lateral, evita textos pegados al borde */
     #config{padding:40px 12px 24px !important;overflow-x:clip}
     #config > div[data-reveal]{padding:28px 16px 26px !important;border-radius:16px !important}
     #detalles,#pasos{padding-left:14px !important;padding-right:14px !important}
-    /* 02 · Diseño: 5 columnas son ilegibles en móvil -> 3 */
-    #config [style*="repeat(5,1fr)"]{grid-template-columns:repeat(3,1fr) !important}
-    /* Barra de precio: apilar precio y acción, botón cómodo */
-    #config [style*="padding:18px 22px"]{flex-direction:column !important;align-items:stretch !important;gap:14px !important;padding:16px 18px !important}
-    #config [style*="padding:18px 22px"] > div:last-child{flex-wrap:wrap !important;justify-content:space-between !important;width:100% !important;gap:12px !important}
-    /* El botón "Confeccionar" salta a su propia línea a ancho completo */
-    #config [style*="padding:18px 22px"] > div:last-child > x-import{flex:1 1 100% !important;width:100% !important;display:block !important;text-align:center !important}
+    /* 02 · Diseño: 5 columnas -> 3 en móvil */
+    .pew-design-grid{grid-template-columns:repeat(3,1fr) !important}
+    /* Barra de precio: apilar precio y acción; botón a ancho completo */
+    .pew-pricebar{flex-direction:column !important;align-items:stretch !important;gap:14px !important;padding:16px 18px !important}
+    .pew-pricebar-act{flex-wrap:wrap !important;justify-content:space-between !important;width:100% !important;gap:12px !important}
+    .pew-pricebar-act > x-import{flex:1 1 100% !important;width:100% !important;display:block !important;text-align:center !important}
     /* Pasos "Cómo funciona": apilar tarjetas y girar las flechas */
-    #pasos [style*="1fr auto 1fr auto 1fr"]{grid-template-columns:1fr !important;gap:14px !important}
-    #pasos [style*="1fr auto 1fr auto 1fr"] > div:nth-child(even){transform:rotate(90deg)}
-    /* Modal de pedido: permitir scroll para no cortar el formulario ni los botones */
-    [style*="rgba(10,15,46,.74)"]{align-items:flex-start !important;overflow-y:auto !important;padding:14px !important;-webkit-overflow-scrolling:touch}
-    [style*="8px 8px 0 var(--accent)"]{margin:14px auto !important;box-shadow:5px 5px 0 var(--accent) !important}
+    .pew-steps{grid-template-columns:1fr !important;gap:14px !important}
+    .pew-steps > div:nth-child(even){transform:rotate(90deg)}
+    /* Modal de pedido: scroll para no cortar el formulario ni los botones */
+    .pew-modal-ov{align-items:flex-start !important;overflow-y:auto !important;padding:14px !important;-webkit-overflow-scrolling:touch}
+    .pew-modal{margin:14px auto !important;box-shadow:5px 5px 0 var(--accent) !important}
     /* Acciones del modal: apiladas, ordenadas y a ancho completo */
-    [style*="8px 8px 0 var(--accent)"] [style*="margin-top:16px;display:flex;gap:14px"]{flex-direction:column !important;align-items:stretch !important;gap:16px !important}
-    [style*="8px 8px 0 var(--accent)"] [style*="gap:16px;flex-wrap:wrap"]{width:100% !important;justify-content:center !important;gap:14px 22px !important;padding-top:4px;border-top:1px solid var(--border-hair)}
-    [style*="8px 8px 0 var(--accent)"] [style*="gap:10px;flex-wrap:wrap"]{flex-direction:column-reverse !important;gap:10px !important;width:100% !important}
-    [style*="8px 8px 0 var(--accent)"] [style*="gap:10px;flex-wrap:wrap"] > x-import{display:block !important;width:100% !important;text-align:center !important}
-    /* Panel admin: nunca más ancho que la pantalla */
-    [style*="width:344px"]{width:100% !important;max-width:344px !important}
+    .pew-modal-foot{flex-direction:column !important;align-items:stretch !important;gap:16px !important}
+    .pew-modal-links{width:100% !important;justify-content:center !important;gap:14px 22px !important;padding-top:8px !important;border-top:1px solid var(--border-hair)}
+    .pew-modal-btns{flex-direction:column-reverse !important;gap:10px !important;width:100% !important}
+    .pew-modal-btns > x-import{display:block !important;width:100% !important;text-align:center !important}
   }
   @media (max-width:560px){
     .pew-nav{height:60px !important}
@@ -95,10 +94,10 @@
     /* Stats del hero: que envuelvan en vez de cortarse */
     .pew-hero [style*="gap:28px;border-top"]{gap:16px 22px !important;flex-wrap:wrap !important}
     /* Tabla de medidas: celdas compactas y legibles */
-    #config [style*="1fr 1fr 1fr 1fr"]{font-size:11px !important}
-    #config [style*="1fr 1fr 1fr 1fr"] > div{padding-left:8px !important;padding-right:6px !important}
+    .pew-size-grid{font-size:11px !important}
+    .pew-size-grid > div{padding-left:8px !important;padding-right:6px !important}
     /* Modal: menos padding interno en pantallas chicas */
-    [style*="8px 8px 0 var(--accent)"] [style*="padding:22px 24px"]{padding:18px 16px !important}
+    .pew-modal > div:last-child{padding:18px 16px !important}
   }
 </style>
 </helmet>
@@ -261,7 +260,7 @@
               <span style="font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase">Tabla de medidas</span>
               <span style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--pewi-gray-300)">cm · referencial</span>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;font-size:12px">
+            <div class="pew-size-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;font-size:12px">
               <div style="padding:8px 12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);border-bottom:2px solid var(--border-hair)">Talla</div>
               <div style="padding:8px 12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);border-bottom:2px solid var(--border-hair)">Ancho</div>
               <div style="padding:8px 12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);border-bottom:2px solid var(--border-hair)">Largo</div>
@@ -291,7 +290,7 @@
 
           <div>
             <div style="font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--text-strong);margin-bottom:12px">02 · Diseño</div>
-            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px">
+            <div class="pew-design-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px">
               <sc-for list="{{ designOpts }}" as="o" hint-placeholder-count="5">
                 <div onClick="{{ o.onClick }}" style="{{ o.boxStyle }}">
                   <div style="height:54px;display:flex;align-items:center;justify-content:center;background:#0e0f12;border-radius:6px;width:100%;padding:5px">{{ o.thumb }}</div>
@@ -336,12 +335,12 @@
           </div>
 
           <!-- price bar -->
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--pewi-ink);color:#fff;border-radius:10px;padding:18px 22px;margin-top:4px">
+          <div class="pew-pricebar" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--pewi-ink);color:#fff;border-radius:10px;padding:18px 22px;margin-top:4px">
             <div>
               <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--pewi-gray-300)">Precio unitario</div>
               <div style="font-family:var(--font-display);font-size:30px;line-height:1.05">{{ unitFmt }}</div>
             </div>
-            <div style="display:flex;align-items:center;gap:16px">
+            <div class="pew-pricebar-act" style="display:flex;align-items:center;gap:16px">
               <div style="display:flex;align-items:center;border:2px solid #fff;border-radius:8px;overflow:hidden">
                 <span onClick="{{ decQty }}" style="cursor:pointer;padding:8px 14px;font-size:18px;font-weight:800;user-select:none">−</span>
                 <span style="padding:8px 6px;min-width:30px;text-align:center;font-weight:800">{{ qty }}</span>
@@ -390,7 +389,7 @@
       <h2 style="font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);line-height:1;text-transform:uppercase;margin:14px 0 8px">Del pedido a tu puerta.</h2>
       <p style="font-size:15px;color:var(--text-body);max-width:520px;margin:0 auto 44px">Cada prenda se confecciona a pedido, por eso la entrega toma 10–15 días hábiles.</p>
 
-      <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px">
+      <div class="pew-steps" style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px">
 
         <div style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:26px 18px;border:2px solid var(--pewi-ink);border-radius:12px;background:#fff;box-shadow:5px 5px 0 var(--pewi-ink)">
           <div style="position:relative;width:72px;height:72px;border-radius:50%;background:var(--accent);border:2px solid var(--pewi-ink);display:flex;align-items:center;justify-content:center">
@@ -558,8 +557,8 @@
 
   <!-- ===== ORDER MODAL ===== -->
   <sc-if value="{{ placed }}" hint-placeholder-val="">
-    <div onClick="{{ closeOrder }}" style="position:fixed;inset:0;z-index:100;background:rgba(10,15,46,.74);display:flex;align-items:center;justify-content:center;padding:24px;animation:pewrise .25s ease both">
-      <div style="background:#fff;border:2px solid var(--pewi-ink);border-radius:12px;max-width:460px;width:100%;overflow:hidden;box-shadow:8px 8px 0 var(--accent)">
+    <div onClick="{{ closeOrder }}" class="pew-modal-ov" style="position:fixed;inset:0;z-index:100;background:rgba(10,15,46,.74);display:flex;align-items:center;justify-content:center;padding:24px;animation:pewrise .25s ease both">
+      <div class="pew-modal" style="background:#fff;border:2px solid var(--pewi-ink);border-radius:12px;max-width:460px;width:100%;overflow:hidden;box-shadow:8px 8px 0 var(--accent)">
         <div style="background:var(--accent);border-bottom:2px solid var(--pewi-ink);padding:18px 24px;display:flex;align-items:center;gap:12px">
           <img src="{{ iconSrc }}" style="height:34px">
           <div>
@@ -595,13 +594,13 @@
             <div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--text-strong);margin-bottom:7px">Notas para tu pedido <span style="color:var(--text-faint);font-weight:600;text-transform:none;letter-spacing:0">(opcional)</span></div>
             <textarea value="{{ notes }}" onInput="{{ onNotes }}" placeholder="Detalles extra: color exacto, ajuste de talla, referencia del diseño, dirección, etc." style="width:100%;min-height:74px;resize:vertical;padding:11px 13px;border:2px solid var(--pewi-ink);border-radius:8px;font-family:var(--font-text);font-size:13px;line-height:1.5;color:var(--text-strong);outline:none;box-sizing:border-box"></textarea>
           </div>
-          <div style="margin-top:16px;display:flex;gap:14px;justify-content:space-between;align-items:center;flex-wrap:wrap">
-            <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <div class="pew-modal-foot" style="margin-top:16px;display:flex;gap:14px;justify-content:space-between;align-items:center;flex-wrap:wrap">
+            <div class="pew-modal-links" style="display:flex;gap:16px;flex-wrap:wrap">
               <span onClick="{{ copyReport }}" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--pewi-ink);border-bottom:2px solid var(--accent);padding-bottom:3px">{{ copyReportLabel }}</span>
               <span onClick="{{ whatsappOrder }}" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--pewi-ink);border-bottom:2px solid var(--accent);padding-bottom:3px">Enviar por WhatsApp</span>
               <span onClick="{{ downloadImage }}" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--pewi-ink);border-bottom:2px solid var(--accent);padding-bottom:3px">Descargar imagen</span>
             </div>
-            <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <div class="pew-modal-btns" style="display:flex;gap:10px;flex-wrap:wrap">
               <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Button" hint-size="auto,44px" variant="secondary" on-click="{{ closeOrder }}">Seguir creando</x-import>
               <x-import component-from-global-scope="PEWDesignSystem_d6ec52.Button" hint-size="auto,44px" variant="accent" on-click="{{ goShopify }}">{{ shopifyLabel }}</x-import>
             </div>
