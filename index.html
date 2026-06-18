@@ -105,7 +105,7 @@
   <!-- ===== NAV ===== -->
   <nav class="pew-nav" style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:24px;height:66px;padding:0 28px;background:rgba(8,12,32,0.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,152,0,0.35)">
     <div style="display:flex;align-items:center;gap:12px;cursor:pointer" onClick="{{ goTop }}">
-      <img src="assets/brand/pew1-lockup-white.png" alt="PEWÏ STREETWEAR" style="height:38px;display:block">
+      <img src="{{ logoWhiteSrc }}" alt="PEWÏ STREETWEAR" style="height:38px;display:block">
     </div>
     <div style="display:flex;align-items:center;gap:6px">
       <span onClick="{{ goColeccion }}" style="cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;padding:8px 12px">Colección</span>
@@ -238,7 +238,7 @@
             </sc-if>
           </div>
           <div style="display:flex;align-items:center;gap:10px;margin-top:12px;background:#fff;border:2px solid var(--pewi-ink);border-radius:9px;padding:11px 14px">
-            <img src="assets/brand/pewi-icon.png" style="height:26px;flex:none">
+            <img src="{{ iconSrc }}" style="height:26px;flex:none">
             <div style="font-size:12px;line-height:1.4;color:var(--text-body)"><strong style="color:var(--text-strong)">Distribución:</strong> {{ placementNote }}</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap">
@@ -357,14 +357,14 @@
         <div style="background:#0d1338;border:2px solid var(--accent);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px">
           <div style="height:130px;border-radius:6px;background:repeating-linear-gradient(135deg,#0A0F2E 0 3px,#10173d 3px 6px);display:flex;align-items:center;justify-content:center">
             <div style="background:#E7E0CE;border:2px solid #0B0B0D;border-radius:3px;padding:8px 12px;display:flex;align-items:center;gap:8px;box-shadow:3px 3px 0 rgba(0,0,0,.4)">
-              <img src="assets/brand/pewi-icon.png" style="height:26px"><span style="font-family:var(--font-display);font-size:15px;color:#0B0B0D">PEWÏ</span>
+              <img src="{{ iconSrc }}" style="height:26px"><span style="font-family:var(--font-display);font-size:15px;color:#0B0B0D">PEWÏ</span>
             </div>
           </div>
           <div><h3 style="font-family:var(--font-display);font-size:17px;text-transform:uppercase;margin:0 0 8px">Etiqueta tejida</h3><p style="font-size:13px;line-height:1.55;color:var(--pewi-gray-200);margin:0">Etiqueta de cuello tejida en jacquard con el ícono de la casa. Cosida, no impresa.</p></div>
         </div>
         <div style="background:#0d1338;border:2px solid var(--accent);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px">
           <div style="height:130px;border-radius:6px;overflow:hidden;position:relative;background:#0B0B0D">
-            <img src="assets/detail/serigrafia.png" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block">
+            <img src="{{ serigrafiaSrc }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block">
             <span style="position:absolute;bottom:8px;right:8px;background:var(--accent);color:var(--pewi-ink);font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:4px">Detalle · trama</span>
           </div>
           <div><h3 style="font-family:var(--font-display);font-size:17px;text-transform:uppercase;margin:0 0 8px">Serigrafía</h3><p style="font-size:13px;line-height:1.55;color:var(--pewi-gray-200);margin:0">Estampado a mano cuadro por cuadro. Tintas plastisol opacas sobre algodón pesado — mira la trama del estampado sobre la fibra.</p></div>
@@ -425,7 +425,7 @@
 
   <!-- ===== FOOTER ===== -->
   <footer style="color:#fff;padding:56px 28px 40px;text-align:center">
-    <img src="assets/brand/pew1-lockup-white.png" style="height:60px;margin-bottom:18px">
+    <img src="{{ logoWhiteSrc }}" style="height:60px;margin-bottom:18px">
     <div style="font-family:var(--font-display);font-size:22px;letter-spacing:-.01em;text-transform:uppercase">Arte que transforma. Identidad que perdura.</div>
     <div style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--pewi-gray-300);margin-top:14px">PEWÏ Streetwear · Hecho a pedido en Chile</div>
   </footer>
@@ -553,7 +553,7 @@
     <div onClick="{{ closeOrder }}" style="position:fixed;inset:0;z-index:100;background:rgba(10,15,46,.74);display:flex;align-items:center;justify-content:center;padding:24px;animation:pewrise .25s ease both">
       <div style="background:#fff;border:2px solid var(--pewi-ink);border-radius:12px;max-width:460px;width:100%;overflow:hidden;box-shadow:8px 8px 0 var(--accent)">
         <div style="background:var(--accent);border-bottom:2px solid var(--pewi-ink);padding:18px 24px;display:flex;align-items:center;gap:12px">
-          <img src="assets/brand/pewi-icon.png" style="height:34px">
+          <img src="{{ iconSrc }}" style="height:34px">
           <div>
             <div style="font-family:var(--font-display);font-size:18px;text-transform:uppercase;color:var(--pewi-ink)">Revisa tu pedido</div>
             <div style="font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--pewi-ink)">Folio {{ orderRef }}</div>
@@ -562,7 +562,7 @@
         <div style="padding:22px 24px">
           <div style="display:flex;align-items:center;gap:14px;background:var(--pewi-paper-2);border:2px solid var(--pewi-ink);border-radius:10px;padding:14px 16px;margin:0 0 16px">
             <div style="width:46px;height:46px;flex:none;border-radius:8px;background:var(--pewi-navy);display:flex;align-items:center;justify-content:center">
-              <img src="assets/brand/pewi-icon-white.png" style="height:26px">
+              <img src="{{ iconWhiteSrc }}" style="height:26px">
             </div>
             <div style="flex:1;min-width:0">
               <div style="font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted)">Prenda seleccionada</div>
@@ -725,6 +725,7 @@ class Component extends DCLogic {
     return JSON.stringify({
       overrides: this.state.overrides,
       overrides3d: this.state.overrides3d,
+      imgOverrides: this.state.imgOverrides,
       prices: this.state.prices,
       store: this.state.store
     }, null, 2);
@@ -1396,6 +1397,10 @@ class Component extends DCLogic {
       onStoreP3: e => this.setStore('p3', e.target.value),
       onStoreP4: e => this.setStore('p4', e.target.value),
       imgItems: this.imgItems(),
+      serigrafiaSrc: this.imgSrc('assets/detail/serigrafia.png'),
+      logoWhiteSrc: this.imgSrc('assets/brand/pew1-lockup-white.png'),
+      iconSrc: this.imgSrc('assets/brand/pewi-icon.png'),
+      iconWhiteSrc: this.imgSrc('assets/brand/pewi-icon-white.png'),
       store: s.store,
       onStoreDomain: e => this.setStore('domain', e.target.value),
       onStoreHandle: e => this.setStore('handle', e.target.value),
@@ -1419,6 +1424,10 @@ class Component extends DCLogic {
     add('Prenda · frente', 'assets/mockup/' + prefix + '-front-' + s.colorId + '.png');
     add('Prenda · espalda', 'assets/mockup/' + prefix + '-back-' + s.colorId + '.png');
     this.designs.forEach(d => add('Diseño · ' + d.name, dir + d.id + '.png'));
+    add('Detalle · Serigrafía', 'assets/detail/serigrafia.png');
+    add('Marca · Logo (claro)', 'assets/brand/pew1-lockup-white.png');
+    add('Marca · Ícono', 'assets/brand/pewi-icon.png');
+    add('Marca · Ícono (blanco)', 'assets/brand/pewi-icon-white.png');
     return items;
   }
 }
